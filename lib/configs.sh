@@ -5,6 +5,16 @@ JUNJO_IGNORE_FILES='*.json
 *.txt
 *.log'
 
+# File parsing configs
+readonly KNOWN_COMPOUND_EXTS=(
+  ".HEIC.MOV"
+  ".JPG.MOV"
+  ".JPEG.MOV"
+  ".HEIC.MP4"
+  ".JPG.MP4"
+  ".JPEG.MP4"
+)
+
 # Sort configs
 JUNJO_OUTPUT_DIR="./output"
 JUNJO_SORT_PLAN_FILE="junjo_sort_plan.map"
