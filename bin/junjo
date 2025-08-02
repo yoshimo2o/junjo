@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+# ------------------------------------------------------------------
+# Junjo
+# A photo sorting tool. Drop your folder containing photos and videos,
+# and it will organize them for you. Also works with Google Takeout.
+#
+# Usage:
+#  junjo [OPTIONS] [FOLDER|FILE]
+#
+# Options:
+#   -r, --recursive   Recursively scan subdirectories
+#   -v, --verbose     Enable verbose output
+#
+# Arguments:
+#   FOLDER            Folder to scan (default: current directory)
+#   FILE              File to analyze
+#
+# Usage Examples:
+# To scan and organize a folder:
+#   junjo -r -v /path/to/photos
+#
+# To analyze a single media file:
+#   junjo /path/to/photo.jpg
+#
+# Author: Yoshi Nakamoto (@yoshimo2o) <yoshi@nkmt.to>
+# License: MIT
+# ------------------------------------------------------------------
+
+# Init path variables
+JUNJO_BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+JUNJO_DIR="$(cd "$JUNJO_BIN_DIR/.." && pwd)"
+JUNJO_LIB_DIR="$JUNJO_DIR/lib"
+
+# Init global variables & functions
+source "$JUNJO_LIB_DIR/configs.sh"
+source "$JUNJO_LIB_DIR/globals.sh"
+source "$JUNJO_LIB_DIR/functions.sh"
+
+# Check for required dependencies.
+# If dependencies are missing, the script
+# will exit with an error message.
+check_dependencies
+
+# Parse command line arguments
+args=()
+for arg in "$@"; do
+  case $arg in
+    -r|--recursive)
+      JUNJO_SCAN_RECURSIVE=1
+      ;;
+    -v|--verbose)
+      JUNJO_LOG_VERBOSE=1
+      ;;
+    *)
+      args+=("$arg")
+      ;;
+  esac
+done
+
+# Use the last argument as scan_dir,
+# else default to current directory.
+if [[ ${#args[@]} -gt 0 ]]; then
+  media_path="${args[-1]}"
+fi
+
+# Scan media folder
+source "$JUNJO_LIB_DIR/media_scanner.sh"
+
+# If media_path is a folder, scan it.
+if [[ -d "$media_path" ]]; then
+  JUNJO_SCAN_DIR="$media_path"
+  scan_media_folder "$media_path"
+fi
+
+# If media_path is a file, analyze it.
+if [[ -f "$media_path" ]]; then
+  # Get the directory of the file
+  media_path="$(dirname "$media_path")"
+  JUNJO_SCAN_DIR="$media_path"
+  analyze_media_file "$media_path"
+fi
