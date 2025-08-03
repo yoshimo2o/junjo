@@ -6,7 +6,7 @@ setup() {
   # Source the required files
   source "$BATS_TEST_DIRNAME/../lib/globals.sh"
   source "$BATS_TEST_DIRNAME/../lib/parser_live.sh"
-  
+
   # Initialize global arrays for testing
   declare -gA live_photo_by_cid
   declare -gA live_video_by_cid

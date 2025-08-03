@@ -6,7 +6,7 @@ setup() {
   # Source the required files
   source "$BATS_TEST_DIRNAME/../lib/globals.sh"
   source "$BATS_TEST_DIRNAME/../lib/parser_live.sh"
-  
+
   # Initialize global arrays for testing
   declare -gA live_photo_duplicates
   declare -gA file_duplicate_score
@@ -170,7 +170,7 @@ teardown() {
 
 @test "determine_best_live_photo_duplicate_candidate: handles empty duplicates array" {
   # No setup needed - array is empty by default
-  
+
   # Run the function (should not error)
   determine_best_live_photo_duplicate_candidate
 

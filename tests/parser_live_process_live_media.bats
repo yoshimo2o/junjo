@@ -6,7 +6,7 @@ setup() {
   # Source the required files
   source "$BATS_TEST_DIRNAME/../lib/globals.sh"
   source "$BATS_TEST_DIRNAME/../lib/parser_live.sh"
-  
+
   # Initialize global arrays for testing
   declare -gA live_photo_files
   declare -gA live_video_files
@@ -69,11 +69,11 @@ teardown() {
   # Verify live photo and video are properly mapped
   [ "${live_photo_by_cid[cid123]}" = "fid1" ]
   [ "${live_video_by_cid[cid123]}" = "fid2" ]
-  
+
   # Verify no missing components
   [[ ! -v live_photo_missing_video[cid123] ]]
   [[ ! -v live_video_missing_photo[cid123] ]]
-  
+
   # Verify no duplicates detected
   [[ ! -v live_photo_duplicates[cid123] ]]
   [[ ! -v live_video_duplicates[cid123] ]]
@@ -92,10 +92,10 @@ teardown() {
 
   # Verify live photo is mapped
   [ "${live_photo_by_cid[cid123]}" = "fid1" ]
-  
+
   # Verify missing video is detected
   [ "${live_photo_missing_video[cid123]}" = "1" ]
-  
+
   # Verify no video mapping exists
   [[ ! -v live_video_by_cid[cid123] ]]
 }
@@ -113,10 +113,10 @@ teardown() {
 
   # Verify live video is mapped
   [ "${live_video_by_cid[cid123]}" = "fid2" ]
-  
+
   # Verify missing photo is detected
   [ "${live_video_missing_photo[cid123]}" = "1" ]
-  
+
   # Verify no photo mapping exists
   [[ ! -v live_photo_by_cid[cid123] ]]
 }
@@ -140,14 +140,14 @@ teardown() {
 
   # Verify best candidate is selected as primary (fid1 has higher score)
   [ "${live_photo_by_cid[cid123]}" = "fid1" ]
-  
+
   # Verify duplicates are detected (order may vary based on processing)
   [[ "${live_photo_duplicates[cid123]}" == "fid1|fid2" || "${live_photo_duplicates[cid123]}" == "fid2|fid1" ]]
-  
+
   # Verify both files are marked as having duplicates
   [ "${file_has_duplicates[fid1]}" = "1" ]
   [ "${file_has_duplicates[fid2]}" = "1" ]
-  
+
   # Verify best duplicate is selected (fid1 should win due to takeout metadata and be the primary)
   [ "${live_photo_by_cid[cid123]}" = "fid1" ]
   [ "${file_is_preferred_duplicate[fid1]}" = "1" ]

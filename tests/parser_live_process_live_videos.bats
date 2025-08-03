@@ -6,7 +6,7 @@ setup() {
   # Source the required files
   source "$BATS_TEST_DIRNAME/../lib/globals.sh"
   source "$BATS_TEST_DIRNAME/../lib/parser_live.sh"
-  
+
   # Initialize global arrays for testing
   declare -gA live_video_files
   declare -gA file_src
@@ -43,7 +43,7 @@ teardown() {
 
   # Verify the video is mapped to its CID
   [ "${live_video_by_cid[cid123]}" = "fid1" ]
-  
+
   # Verify no duplicates are created
   [[ ! -v live_video_duplicates[cid123] ]]
   [[ ! -v file_has_duplicates[fid1] ]]
@@ -64,7 +64,7 @@ teardown() {
   # Verify both videos are mapped to their respective CIDs
   [ "${live_video_by_cid[cid123]}" = "fid1" ]
   [ "${live_video_by_cid[cid456]}" = "fid2" ]
-  
+
   # Verify no duplicates are created
   [[ ! -v live_video_duplicates[cid123] ]]
   [[ ! -v live_video_duplicates[cid456] ]]
@@ -84,14 +84,14 @@ teardown() {
 
   # Verify one of the videos is mapped as primary (order not guaranteed with associative arrays)
   [[ "${live_video_by_cid[cid123]}" == "fid1" || "${live_video_by_cid[cid123]}" == "fid2" ]]
-  
+
   # Verify duplicates array contains both files (order may vary)
   [[ "${live_video_duplicates[cid123]}" == "fid1|fid2" || "${live_video_duplicates[cid123]}" == "fid2|fid1" ]]
-  
+
   # Verify duplicate markers are set
   [ "${file_has_duplicates[fid1]}" = "1" ]
   [ "${file_has_duplicates[fid2]}" = "1" ]
-  
+
   # Verify the primary video is marked as preferred duplicate (initially)
   primary_fid="${live_video_by_cid[cid123]}"
   [ "${file_is_preferred_duplicate[$primary_fid]}" = "1" ]
@@ -114,12 +114,12 @@ teardown() {
 
   # Verify one of the videos is mapped as primary (order not guaranteed with associative arrays)
   [[ "${live_video_by_cid[cid123]}" =~ ^(fid1|fid2|fid3)$ ]]
-  
+
   # Verify duplicates array contains all three files (order may vary)
   duplicates="${live_video_duplicates[cid123]}"
   [[ "$duplicates" =~ fid1 && "$duplicates" =~ fid2 && "$duplicates" =~ fid3 ]]
   [[ $(echo "$duplicates" | tr '|' '\n' | wc -l) -eq 3 ]]
-  
+
   # Verify all files are marked as having duplicates
   [ "${file_has_duplicates[fid1]}" = "1" ]
   [ "${file_has_duplicates[fid2]}" = "1" ]
@@ -128,7 +128,7 @@ teardown() {
 
 @test "process_live_videos: handles empty live_video_files array" {
   # No setup needed - arrays are empty by default
-  
+
   # Run the function (should not error)
   process_live_videos
 

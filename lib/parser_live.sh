@@ -126,10 +126,10 @@ add_to_live_photo_duplicates() {
   else
     # If this is the first time we've found a duplicate for this CID,
     # handle also the first found live photo.
-    
+
     # Get the first live photo fid for this CID
     local first_live_photo_fid="${live_photo_by_cid[$cid]}"
-    
+
     # Add both the first found file and the new duplicate to the duplicates list
     live_photo_duplicates[$cid]="$first_live_photo_fid|$fid"
 
@@ -174,10 +174,10 @@ add_to_live_video_duplicates() {
   else
     # If this is the first time we've found a duplicate for this CID,
     # handle also the first found live video.
-    
+
     # Get the first live video fid for this CID
     local first_live_video_fid="${live_video_by_cid[$cid]}"
-    
+
     # Add both the first found file and the new duplicate to the duplicates list
     live_video_duplicates[$cid]="$first_live_video_fid|$fid"
 
