@@ -1,0 +1,33 @@
+{
+  "title": "IMG_9087.HEIC",
+  "description": "",
+  "imageViews": "8",
+  "creationTime": {
+    "timestamp": "1544451140",
+    "formatted": "Dec 10, 2018, 2:12:20 PM UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1543491026",
+    "formatted": "Nov 29, 2018, 11:30:26 AM UTC"
+  },
+  "geoData": {
+    "latitude": 54.6855889,
+    "longitude": 25.287377799999998,
+    "altitude": 96.99884035562428,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 54.6855889,
+    "longitude": 25.287377799999998,
+    "altitude": 96.99884035562428,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/TestData1234PlaceHolderXYZ998877AABBccDDEEff",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}

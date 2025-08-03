@@ -1,0 +1,33 @@
+{
+  "title": "IMG_3238.JPG",
+  "description": "",
+  "imageViews": "6",
+  "creationTime": {
+    "timestamp": "1487832037",
+    "formatted": "Feb 23, 2017, 6:40:37 AM UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1487420483",
+    "formatted": "Feb 18, 2017, 12:21:23 PM UTC"
+  },
+  "geoData": {
+    "latitude": 52.4739389,
+    "longitude": 4.817241699999999,
+    "altitude": -10.038054968287527,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 52.4739389,
+    "longitude": 4.817241699999999,
+    "altitude": -10.038054968287527,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/TestData1234PlaceHolderXYZ998877AABBccDDEEff",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}

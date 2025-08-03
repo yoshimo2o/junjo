@@ -1,0 +1,33 @@
+{
+  "title": "IMG_9224.JPG",
+  "description": "",
+  "imageViews": "7",
+  "creationTime": {
+    "timestamp": "1496459923",
+    "formatted": "Jun 3, 2017, 3:18:43 AM UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1495785269",
+    "formatted": "May 26, 2017, 7:54:29 AM UTC"
+  },
+  "geoData": {
+    "latitude": 29.970799999999993,
+    "longitude": 31.122399999999995,
+    "altitude": 173.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 29.9708083,
+    "longitude": 31.122436099999998,
+    "altitude": 86.87908496732027,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/TestData1234PlaceHolderXYZ998877AABBccDDEEff",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}
