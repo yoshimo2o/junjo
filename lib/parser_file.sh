@@ -8,8 +8,8 @@
 # Parameters:
 #   1. media_file  → The media file path to generate an ID for
 #
-# Output:
-#   Prints the Base64-encoded file ID to stdout
+# Return:
+#   The Base64-encoded file ID
 #
 # Example usage:
 #   file_id="$(get_media_file_id "/path/to/IMG_1234.jpg")"
