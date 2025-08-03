@@ -6,12 +6,16 @@ declare -A file_src_stem
 declare -A file_src_compound_ext
 declare -A file_src_ext
 declare -A file_src_root_stem
+declare -A file_src_create_date
+declare -A file_src_modify_date
 declare -A file_dest
 declare -A file_dest_dir
 declare -A file_dest_name
 declare -A file_dest_stem
 declare -A file_dest_compound_ext
 declare -A file_dest_ext
+declare -A file_dest_create_date
+declare -A file_dest_modify_date
 declare -A file_type
 
 # File type constants
@@ -49,7 +53,6 @@ declare -A file_takeout_geo_data
 declare -A file_takeout_device_type
 declare -A file_takeout_device_folder
 declare -A file_takeout_upload_origin
-declare -A file_has_duplicates
 
 # Exif metadata keyed by file id (fid)
 declare -A file_exif_cid
@@ -65,6 +68,13 @@ declare -A file_exif_create_date
 declare -A file_exif_track_create_date
 declare -A file_exif_media_create_date
 declare -A file_exif_user_comment
+
+# Other file properties
+declare -A file_timestamp
+declare -A file_timestamp_source
+declare -A file_device_name
+declare -A file_has_duplicates
+declare -A file_is_apple_media
 
 # List of files by file type keyed by fid
 declare -A apple_photo_files
