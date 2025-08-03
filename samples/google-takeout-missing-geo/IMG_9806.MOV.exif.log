@@ -1,0 +1,86 @@
+ExifTool Version Number         : 13.30
+File Name                       : IMG_9806.MOV
+Directory                       : .
+File Size                       : 7.2 MB
+File Modification Date/Time     : 2025:07:27 16:59:02+08:00
+File Access Date/Time           : 2025:08:03 14:14:48+08:00
+File Inode Change Date/Time     : 2025:08:03 12:30:43+08:00
+File Permissions                : -rw-r--r--
+File Type                       : MP4
+File Type Extension             : mp4
+MIME Type                       : video/mp4
+Major Brand                     : MP4 v2 [ISO 14496-14]
+Minor Version                   : 0.0.0
+Compatible Brands               : isom, mp42
+Movie Header Version            : 0
+Create Date                     : 2018:01:12 06:40:50
+Modify Date                     : 2018:08:07 09:44:12
+Time Scale                      : 600
+Duration                        : 11.49 s
+Preferred Rate                  : 1
+Preferred Volume                : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Preview Time                    : 0 s
+Preview Duration                : 0 s
+Poster Time                     : 0 s
+Selection Time                  : 0 s
+Selection Duration              : 0 s
+Current Time                    : 0 s
+Next Track ID                   : 3
+Track Header Version            : 0
+Track Create Date               : 0000:00:00 00:00:00
+Track Modify Date               : 2018:08:07 09:44:12
+Track ID                        : 1
+Track Duration                  : 11.41 s
+Track Layer                     : 0
+Track Volume                    : 0.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Image Width                     : 1920
+Image Height                    : 1080
+Media Header Version            : 0
+Media Create Date               : 0000:00:00 00:00:00
+Media Modify Date               : 2018:08:07 09:44:12
+Media Time Scale                : 60000
+Media Duration                  : 11.41 s
+Media Language Code             : und
+Handler Type                    : Video Track
+Handler Description             : VideoHandler
+Graphics Mode                   : srcCopy
+Op Color                        : 0 0 0
+Compressor ID                   : avc1
+Source Image Width              : 1920
+Source Image Height             : 1080
+X Resolution                    : 72
+Y Resolution                    : 72
+Bit Depth                       : 24
+Buffer Size                     : 139691
+Max Bitrate                     : 5847072
+Average Bitrate                 : 4959376
+Video Frame Rate                : 59.94
+Track Header Version            : 0
+Track Create Date               : 2018:08:07 09:44:12
+Track Modify Date               : 2018:08:07 09:44:12
+Track ID                        : 2
+Track Duration                  : 11.49 s
+Track Layer                     : 0
+Track Volume                    : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Media Header Version            : 0
+Media Create Date               : 2018:08:07 09:44:12
+Media Modify Date               : 2018:08:07 09:44:12
+Media Time Scale                : 44100
+Media Duration                  : 11.49 s
+Media Language Code             : und
+Handler Type                    : Audio Track
+Handler Description             : IsoMedia File Produced by Google, 5-11-2011
+Balance                         : 0
+Audio Format                    : mp4a
+Audio Channels                  : 1
+Audio Bits Per Sample           : 16
+Audio Sample Rate               : 44100
+Media Data Size                 : 7212110
+Media Data Offset               : 6221
+Image Size                      : 1920x1080
+Megapixels                      : 2.1
+Avg Bitrate                     : 5.02 Mbps
+Rotation                        : 0

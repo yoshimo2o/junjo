@@ -1,0 +1,93 @@
+ExifTool Version Number         : 13.30
+File Name                       : IMG_2295.jpg
+Directory                       : .
+File Size                       : 1722 kB
+File Modification Date/Time     : 2021:01:08 22:21:00+08:00
+File Access Date/Time           : 2025:08:03 14:24:26+08:00
+File Inode Change Date/Time     : 2025:08:03 14:24:24+08:00
+File Permissions                : -rw-r--r--
+File Type                       : JPEG
+File Type Extension             : jpg
+MIME Type                       : image/jpeg
+Exif Byte Order                 : Big-endian (Motorola, MM)
+Orientation                     : Horizontal (normal)
+X Resolution                    : 72
+Y Resolution                    : 72
+Resolution Unit                 : inches
+Modify Date                     : 2014:05:04 23:44:37
+Y Cb Cr Positioning             : Centered
+Exposure Time                   : 1/17
+F Number                        : 2.8
+Exposure Program                : Program AE
+ISO                             : 640
+Exif Version                    : 0221
+Date/Time Original              : 2014:05:04 23:44:37
+Create Date                     : 2014:05:04 23:44:37
+Components Configuration        : Y, Cb, Cr, -
+Shutter Speed Value             : 1/17
+Aperture Value                  : 2.8
+Brightness Value                : -0.1558853634
+Metering Mode                   : Multi-segment
+Flash                           : Auto, Did not fire
+Focal Length                    : 3.9 mm
+Subject Area                    : 1295 967 699 696
+Maker Note Version              : 0
+Run Time Scale                  : 1000000000
+Run Time Value                  : 169174223076208
+Run Time Epoch                  : 0
+Run Time Flags                  : Valid
+AE Stable                       : Yes
+AE Average                      : 208
+AF Stable                       : Yes
+Flashpix Version                : 0100
+Color Space                     : sRGB
+Exif Image Width                : 2592
+Exif Image Height               : 1936
+Sensing Method                  : One-chip color area
+Scene Type                      : Directly photographed
+Exposure Mode                   : Auto
+White Balance                   : Auto
+Focal Length In 35mm Format     : 35 mm
+Scene Capture Type              : Standard
+Lens Info                       : 3.85mm f/2.8
+Lens Make                       : Apple
+Lens Model                      : iPhone 4 back camera 3.85mm f/2.8
+GPS Latitude Ref                : North
+GPS Latitude                    : 3 deg 4' 44.06"
+GPS Longitude Ref               : East
+GPS Longitude                   : 101 deg 36' 20.07"
+GPS Altitude Ref                : Above Sea Level
+GPS Altitude                    : 44.34329233 m
+GPS Speed Ref                   : km/h
+GPS Speed                       : 0
+GPS Track Ref                   : True North
+GPS Track                       : 0
+Compression                     : JPEG (old-style)
+X Resolution                    : 72
+Y Resolution                    : 72
+Resolution Unit                 : inches
+Thumbnail Offset                : 1276
+Thumbnail Length                : 9135
+Image Width                     : 2592
+Image Height                    : 1936
+Encoding Process                : Baseline DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:2:0 (2 2)
+Run Time Since Power Up         : 1 days 22:59:34
+Aperture                        : 2.8
+Image Size                      : 2592x1936
+Megapixels                      : 5.0
+Scale Factor To 35 mm Equivalent: 9.1
+Shutter Speed                   : 1/17
+Thumbnail Image                 : (Binary data 9135 bytes, use -b option to extract)
+GPS Altitude                    : 44.3 m Above Sea Level
+GPS Latitude                    : 3 deg 4' 44.06" N
+GPS Longitude                   : 101 deg 36' 20.07" E
+Circle Of Confusion             : 0.003 mm
+Field Of View                   : 54.4 deg
+Focal Length                    : 3.9 mm (35 mm equivalent: 35.0 mm)
+GPS Position                    : 3 deg 4' 44.06" N, 101 deg 36' 20.07" E
+Hyperfocal Distance             : 1.60 m
+Light Value                     : 4.4
+Lens ID                         : iPhone 4 back camera 3.85mm f/2.8

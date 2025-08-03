@@ -1,0 +1,296 @@
+ExifTool Version Number         : 13.30
+File Name                       : DSC09311.JPG
+Directory                       : .
+File Size                       : 533 kB
+File Modification Date/Time     : 2022:03:26 15:41:32+08:00
+File Access Date/Time           : 2025:08:03 14:55:50+08:00
+File Inode Change Date/Time     : 2025:08:03 10:57:25+08:00
+File Permissions                : -rw-r--r--
+File Type                       : JPEG
+File Type Extension             : jpg
+MIME Type                       : image/jpeg
+JFIF Version                    : 1.01
+Resolution Unit                 : None
+X Resolution                    : 1
+Y Resolution                    : 1
+Exif Byte Order                 : Little-endian (Intel, II)
+Image Description               : 
+Make                            : SONY
+Camera Model Name               : ILCE-7M3
+Orientation                     : Horizontal (normal)
+X Resolution                    : 350
+Y Resolution                    : 350
+Resolution Unit                 : inches
+Software                        : ILCE-7M3 v4.01
+Modify Date                     : 2022:03:11 12:48:26
+Y Cb Cr Positioning             : Co-sited
+Exposure Time                   : 1/1000
+F Number                        : 2.8
+Exposure Program                : Aperture-priority AE
+ISO                             : 2500
+Sensitivity Type                : Recommended Exposure Index
+Recommended Exposure Index      : 2500
+Exif Version                    : 0231
+Date/Time Original              : 2022:03:11 12:48:26
+Create Date                     : 2022:03:11 12:48:26
+Offset Time                     : +02:00
+Offset Time Original            : +02:00
+Offset Time Digitized           : +02:00
+Components Configuration        : Y, Cb, Cr, -
+Compressed Bits Per Pixel       : 4
+Brightness Value                : 3.59140625
+Exposure Compensation           : -0.3
+Max Aperture Value              : 2.8
+Metering Mode                   : Multi-segment
+Light Source                    : Unknown
+Flash                           : Off, Did not fire
+Focal Length                    : 70.0 mm
+Rating                          : 0
+Contrast                        : 0
+Saturation                      : 0
+Sharpness                       : 0
+Brightness                      : 0
+Long Exposure Noise Reduction   : On (unused)
+High ISO Noise Reduction        : Normal
+HDR                             : Off; Uncorrected image
+WB Shift AB GM                  : -2 0
+WB Shift AB GM Precise          : -2.00 0.00
+Face Info Offset                : 94
+Sony Date Time                  : 2022:03:11 12:48:26
+Sony Image Height               : 4000
+Sony Image Width                : 6000
+Faces Detected                  : 0
+Face Info Length                : 37
+Meta Version                    : DC7303320222000
+Creative Style                  : Standard
+Color Temperature               : Auto
+Color Compensation Filter       : 0
+Scene Mode                      : Standard
+Zone Matching                   : ISO Setting Used
+Dynamic Range Optimizer         : Lv5
+Image Stabilization             : On
+Color Mode                      : Standard
+Full Image Size                 : 6000x4000
+Preview Image Size              : 1616x1080
+File Format                     : ARW 2.3.5
+Quality                         : RAW + JPEG/HEIF
+Flash Exposure Compensation     : 0
+White Balance Fine Tune         : 0
+White Balance                   : Auto
+Sony Model ID                   : ILCE-7M3
+Multi Frame Noise Reduction     : Off
+Picture Effect                  : Off
+Soft Skin Effect                : Off
+Vignetting Correction           : Auto
+Lateral Chromatic Aberration    : Auto
+Distortion Correction Setting   : Off
+Lens Type                       : E-Mount, T-Mount, Other Lens or no lens
+Lens Spec                       : FE 24-70mm F2.8
+Auto Portrait Framed            : No
+Flash Action                    : Did not fire
+Electronic Front Curtain Shutter: On
+Focus Mode                      : Manual
+AF Area Mode Setting            : Zone
+Flexible Spot Position          : 0 0
+AF Point Selected               : Bottom Right Zone
+AF Points Used                  : (none)
+AF Tracking                     : Off
+Focal Plane AF Points Used      : 0
+Multi Frame NR Effect           : Normal
+Focus Location                  : 6000 4000 3365 2391
+Variable Low Pass Filter        : n/a
+Priority Set In AWB             : Standard
+Metering Mode 2                 : Multi-segment
+Exposure Standard Adjustment    : 0
+RAW File Type                   : Uncompressed RAW
+Quality                         : RAW + Extra Fine
+Pixel Shift Info                : n/a
+Exposure Mode                   : Aperture-priority AE
+Flash Level                     : Normal
+Release Mode                    : Normal
+Sequence Number                 : Single
+Anti-Blur                       : On (Shooting)
+Dynamic Range Optimizer         : Standard
+Intelligent Auto                : Off
+White Balance                   : Auto
+Release Mode 2                  : Normal
+Sequence Image Number           : 1
+Sequence Length                 : 1 shot
+Sequence File Number            : 1
+Sequence Length                 : 1 file
+Camera Orientation              : Horizontal (normal)
+Quality 2                       : RAW + JPEG
+Model Release Year              : 2017
+ISO Setting                     : Auto
+ISO Auto Min                    : 100
+ISO Auto Max                    : 25600
+Ambient Temperature             : 12 C
+Focus Mode                      : Manual
+AF Area Mode                    : Zone
+Focus Position 2                : 147
+Camera Temperature              : 22 C
+Exposure Program                : Aperture-priority AE
+Intelligent Auto                : Off
+Sony ISO                        : 2488
+Base ISO                        : 100
+Stops Above Base ISO            : 4.6
+Sony Exposure Time 2            : 1/1024
+Exposure Time                   : 1/1000
+Sony F Number                   : 2.8
+Sony Max Aperture Value         : 2.8
+Sequence Image Number           : 1
+Release Mode 2                  : Normal
+Sony Image Width Max            : 6024
+Sony Image Height Max           : 4024
+High ISO Noise Reduction        : Normal
+Long Exposure Noise Reduction   : On
+Picture Effect 2                : Off
+Exposure Program                : Aperture-priority AE
+Creative Style                  : Standard
+Sharpness                       : 0
+Distortion Corr Params Present  : Yes
+Distortion Correction           : None
+Lens Format                     : Full-frame
+Lens Mount                      : E-mount
+Lens Type 2                     : Sony FE 24-70mm F2.8 GM
+Distortion Corr Params          : 2 2 8 18 32 50 74 102 136 176 220 272 330 396 470 552
+Lens Zoom Position              : 100%
+Vignetting Corr Params          : 0 128 352 672 1024 1408 1824 2240 2688 3136 3616 4000 4608 5600 7200 9120
+Chromatic Aberration Corr Params: -545 -375 -251 -168 -130 -147 -182 -193 -196 -183 -174 -191 -206 -200 -159 -245 250 158 92 56 46 76 112 116 108 106 82 0 -108 -228 -352 -486
+Battery Temperature             : 25.6 C
+Battery Level                   : 68%
+Lens Mount 2                    : E-mount
+Lens Type 3                     : Sony FE 24-70mm F2.8 GM
+Camera E-mount Version          : 1.70
+Lens E-mount Version            : 1.60
+Lens Firmware Version           : Ver.02.016
+Tiff Metering Image Width       : 44
+Tiff Metering Image Height      : 30
+Tiff Metering Image             : (Binary data 2640 bytes, use -b option to extract)
+Release Mode 2                  : Normal
+Dynamic Range Optimizer         : Lv5
+Release Mode 3                  : Normal
+Release Mode 2                  : Normal
+Self Timer                      : Off
+Flash Mode                      : Fill-flash
+Stops Above Base ISO            : 4.6
+Brightness Value                : 3.59140625
+Dynamic Range Optimizer         : Lv5
+HDR Setting                     : Off
+Exposure Compensation           : -0.3
+Picture Profile                 : Gamma Still - Standard/Neutral (PP2)
+Picture Profile                 : Gamma Still - Standard/Neutral (PP2)
+Picture Effect 2                : Off
+Quality 2                       : RAW + JPEG
+Metering Mode                   : Multi-segment
+Exposure Program                : Aperture-priority AE
+WB RGB Levels                   : 632 255 446
+Focal Length                    : 70.0 mm
+Min Focal Length                : 24.0 mm
+Max Focal Length                : 70.0 mm
+Sony ISO                        : 2488
+Distortion Corr Params          : 2 2 8 18 32 50 74 102 136 176 220 272 330 396 470 552
+Lens Format                     : Full-frame
+Lens Mount                      : E-mount
+Lens Type 2                     : Sony FE 24-70mm F2.8 GM
+Distortion Corr Params Present  : Yes
+Distortion Corr Params Number   : 16 (Full-frame)
+Aspect Ratio                    : 3:2
+Shutter                         : Mechanical (2708 5202 6551)
+Flash Status                    : No Flash present
+Shutter Count                   : 17053
+Sony Exposure Time              : 1/1024
+Sony F Number                   : 2.8
+Release Mode 2                  : Normal
+Shutter Count 2                 : 17053
+Release Mode 2                  : Normal
+Internal Serial Number          : 6dff00000c09
+Lens Mount                      : E-mount
+Lens Format                     : Full-frame
+Lens Type 2                     : Sony FE 24-70mm F2.8 GM
+Distortion Corr Params Present  : Yes
+APS-C Size Capture              : Off
+Lens Spec Features              : FE
+Shutter Count 3                 : 17053
+APS-C Size Capture              : Off
+Lens Spec Features              : FE
+User Comment                    : 
+Flashpix Version                : 0100
+Color Space                     : sRGB
+Exif Image Width                : 6000
+Exif Image Height               : 4000
+Interoperability Index          : R98 - DCF basic file (sRGB)
+Interoperability Version        : 0100
+File Source                     : Digital Camera
+Scene Type                      : Directly photographed
+Custom Rendered                 : Normal
+Exposure Mode                   : Auto
+White Balance                   : Auto
+Digital Zoom Ratio              : 1
+Focal Length In 35mm Format     : 70 mm
+Scene Capture Type              : Standard
+Contrast                        : Normal
+Saturation                      : Normal
+Sharpness                       : Normal
+Lens Info                       : 24-70mm f/2.8
+Lens Model                      : FE 24-70mm F2.8 GM
+GPS Version ID                  : 2.3.0.0
+GPS Status                      : Measurement Void
+GPS Map Datum                   : WGS-84
+GPS Differential                : No Correction
+PrintIM Version                 : 0300
+Compression                     : JPEG (old-style)
+Image Description               : 
+Make                            : SONY
+Camera Model Name               : ILCE-7M3
+Orientation                     : Horizontal (normal)
+X Resolution                    : 72
+Y Resolution                    : 72
+Resolution Unit                 : inches
+Software                        : ILCE-7M3 v4.01
+Modify Date                     : 2022:03:11 12:48:26
+Thumbnail Offset                : 39174
+Thumbnail Length                : 8427
+Y Cb Cr Positioning             : Co-sited
+Rating                          : 0
+MPF Version                     : 0100
+Number Of Images                : 2
+MP Image Flags                  : Representative image, Dependent parent image
+MP Image Format                 : JPEG
+MP Image Type                   : Baseline MP Primary Image
+MP Image Length                 : 12546698
+MP Image Start                  : 0
+Dependent Image 1 Entry Number  : 2
+Dependent Image 2 Entry Number  : 0
+MP Image Flags                  : Dependent child image
+MP Image Format                 : JPEG
+MP Image Type                   : Large Thumbnail (full HD equivalent)
+MP Image Length                 : 409566
+MP Image Start                  : 12549138
+Dependent Image 1 Entry Number  : 0
+Dependent Image 2 Entry Number  : 0
+Image Width                     : 6000
+Image Height                    : 4000
+Encoding Process                : Progressive DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:2:0 (2 2)
+Aperture                        : 2.8
+Blue Balance                    : 1.74902
+Image Size                      : 6000x4000
+Lens ID                         : Sony FE 24-70mm F2.8 GM
+Megapixels                      : 24.0
+Red Balance                     : 2.478431
+Scale Factor To 35 mm Equivalent: 1.0
+Shutter Speed                   : 1/1000
+Create Date                     : 2022:03:11 12:48:26+02:00
+Date/Time Original              : 2022:03:11 12:48:26+02:00
+Modify Date                     : 2022:03:11 12:48:26+02:00
+Thumbnail Image                 : (Binary data 8427 bytes, use -b option to extract)
+Warning                         : [minor] Error reading PreviewImage from file
+Focus Distance 2                : 1.345 m
+Circle Of Confusion             : 0.030 mm
+Field Of View                   : 28.8 deg
+Focal Length                    : 70.0 mm (35 mm equivalent: 70.0 mm)
+Hyperfocal Distance             : 58.24 m
+Light Value                     : 8.3

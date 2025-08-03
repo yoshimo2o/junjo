@@ -1,14 +1,14 @@
 {
-  "title": "69550_183690131648458_3287312_n.jpg",
+  "title": "8BDF8051-2110-4653-8029-70A465C05DE9.jpg",
   "description": "",
-  "imageViews": "17",
+  "imageViews": "4",
   "creationTime": {
-    "timestamp": "1472647516",
-    "formatted": "Aug 31, 2016, 12:45:16 PM UTC"
+    "timestamp": "1524763754",
+    "formatted": "Apr 26, 2018, 5:29:14 PM UTC"
   },
   "photoTakenTime": {
-    "timestamp": "1454569318",
-    "formatted": "Feb 4, 2016, 7:01:58 AM UTC"
+    "timestamp": "1513179614",
+    "formatted": "Dec 13, 2017, 3:40:14 PM UTC"
   },
   "geoData": {
     "latitude": 0.0,
@@ -19,9 +19,8 @@
   },
   "url": "https://photos.google.com/photo/TestData1234PlaceHolderXYZ998877AABBccDDEEff",
   "googlePhotosOrigin": {
-    "webUpload": {
-      "computerUpload": {
-      }
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
     }
   }
 }

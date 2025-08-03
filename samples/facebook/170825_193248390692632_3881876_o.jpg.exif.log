@@ -1,0 +1,65 @@
+ExifTool Version Number         : 13.30
+File Name                       : 170825_193248390692632_3881876_o.jpg
+Directory                       : .
+File Size                       : 64 kB
+File Modification Date/Time     : 2025:07:27 16:54:05+08:00
+File Access Date/Time           : 2025:08:03 20:12:15+08:00
+File Inode Change Date/Time     : 2025:08:03 03:28:11+08:00
+File Permissions                : -rw-r--r--
+File Type                       : JPEG
+File Type Extension             : jpg
+MIME Type                       : image/jpeg
+JFIF Version                    : 1.01
+Resolution Unit                 : None
+X Resolution                    : 1
+Y Resolution                    : 1
+Exif Byte Order                 : Little-endian (Intel, II)
+Software                        : Picasa
+Exif Version                    : 0220
+Exif Image Width                : 480
+Exif Image Height               : 720
+Image Unique ID                 : 69ab365eb2535eda0000000000000000
+Compression                     : JPEG (old-style)
+X Resolution                    : 72
+Y Resolution                    : 72
+Resolution Unit                 : inches
+Thumbnail Offset                : 258
+Thumbnail Length                : 4655
+XMP Toolkit                     : XMP Core 5.5.0
+Profile CMM Type                : Little CMS
+Profile Version                 : 2.1.0
+Profile Class                   : Display Device Profile
+Color Space Data                : RGB
+Profile Connection Space        : XYZ
+Profile Date Time               : 2012:01:25 03:41:57
+Profile File Signature          : acsp
+Primary Platform                : Apple Computer Inc.
+CMM Flags                       : Not Embedded, Independent
+Device Manufacturer             : 
+Device Model                    : 
+Device Attributes               : Reflective, Glossy, Positive, Color
+Rendering Intent                : Perceptual
+Connection Space Illuminant     : 0.9642 1 0.82491
+Profile Creator                 : Little CMS
+Profile ID                      : 0
+Profile Description             : c2
+Profile Copyright               : FB
+Media White Point               : 0.9642 1 0.82491
+Media Black Point               : 0.01205 0.0125 0.01031
+Red Matrix Column               : 0.43607 0.22249 0.01392
+Green Matrix Column             : 0.38515 0.71687 0.09708
+Blue Matrix Column              : 0.14307 0.06061 0.7141
+Red Tone Reproduction Curve     : (Binary data 64 bytes, use -b option to extract)
+Green Tone Reproduction Curve   : (Binary data 64 bytes, use -b option to extract)
+Blue Tone Reproduction Curve    : (Binary data 64 bytes, use -b option to extract)
+Current IPTC Digest             : de357f101159f14030996591364f0c75
+Special Instructions            : FBMD01000aa8030000d4140000b62b0000822e0000b4300000ca3f0000f26100001f660000626a00007b6e00001eb10000
+Image Width                     : 480
+Image Height                    : 720
+Encoding Process                : Baseline DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:4:4 (1 1)
+Image Size                      : 480x720
+Megapixels                      : 0.346
+Thumbnail Image                 : (Binary data 4655 bytes, use -b option to extract)

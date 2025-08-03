@@ -1,0 +1,72 @@
+ExifTool Version Number         : 13.30
+File Name                       : IMG-20150916-WA0002.jpg
+Directory                       : .
+File Size                       : 451 kB
+File Modification Date/Time     : 2025:07:27 16:47:42+08:00
+File Access Date/Time           : 2025:08:03 16:01:58+08:00
+File Inode Change Date/Time     : 2025:08:03 03:19:07+08:00
+File Permissions                : -rw-r--r--
+File Type                       : JPEG
+File Type Extension             : jpg
+MIME Type                       : image/jpeg
+JFIF Version                    : 1.01
+Resolution Unit                 : None
+X Resolution                    : 1
+Y Resolution                    : 1
+Exif Byte Order                 : Big-endian (Motorola, MM)
+Make                            : oneplus
+Camera Model Name               : A0001
+X Resolution                    : 72
+Y Resolution                    : 72
+Resolution Unit                 : inches
+Y Cb Cr Positioning             : Centered
+Exposure Time                   : 1/10
+F Number                        : 2.0
+ISO                             : 800
+Exif Version                    : 0220
+Date/Time Original              : 2015:09:16 23:58:25
+Create Date                     : 2002:12:08 12:00:00
+Components Configuration        : Y, Cb, Cr, -
+Shutter Speed Value             : 1/10
+Aperture Value                  : 2.0
+Flash                           : Off, Did not fire
+Focal Length                    : 3.8 mm
+Flashpix Version                : 0100
+Color Space                     : sRGB
+Exif Image Width                : 4160
+Exif Image Height               : 3120
+Interoperability Index          : R98 - DCF basic file (sRGB)
+Interoperability Version        : 0100
+GPS Latitude Ref                : North
+GPS Latitude                    : 52 deg 2' 15.59"
+GPS Longitude Ref               : East
+GPS Longitude                   : 4 deg 19' 21.41"
+GPS Altitude Ref                : Above Sea Level
+GPS Altitude                    : 0 m
+GPS Time Stamp                  : 21:58:17
+GPS Processing Method           : ASCII
+GPS Date Stamp                  : 2015:09:16
+Compression                     : JPEG (old-style)
+X Resolution                    : 72
+Y Resolution                    : 72
+Resolution Unit                 : inches
+Thumbnail Offset                : 794
+Thumbnail Length                : 4555
+Image Width                     : 4160
+Image Height                    : 3120
+Encoding Process                : Baseline DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:2:0 (2 2)
+Aperture                        : 2.0
+Image Size                      : 4160x3120
+Megapixels                      : 13.0
+Shutter Speed                   : 1/10
+Thumbnail Image                 : (Binary data 4555 bytes, use -b option to extract)
+GPS Altitude                    : 0 m Above Sea Level
+GPS Date/Time                   : 2015:09:16 21:58:17Z
+GPS Latitude                    : 52 deg 2' 15.59" N
+GPS Longitude                   : 4 deg 19' 21.41" E
+Focal Length                    : 3.8 mm
+GPS Position                    : 52 deg 2' 15.59" N, 4 deg 19' 21.41" E
+Light Value                     : 2.3
