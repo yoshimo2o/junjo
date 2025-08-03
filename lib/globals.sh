@@ -95,6 +95,10 @@ declare -A live_photo_files
 declare -A live_video_files
 declare -A regular_photo_files
 declare -A regular_video_files
+declare -A regular_image_files
+declare -A screenshot_files
+declare -A screen_recording_files
+declare -A unknown_files
 
 # List of live photo and video fids keyed by cid
 declare -A live_photo_by_cid
