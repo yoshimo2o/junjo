@@ -72,7 +72,11 @@ declare -A file_exif_user_comment
 # Other file properties
 declare -A file_timestamp
 declare -A file_timestamp_source
+
+# Device & software
 declare -A file_device_name
+declare -A file_software_name
+
 declare -A file_has_duplicates
 
 # Apple-specific properties
