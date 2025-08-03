@@ -140,3 +140,88 @@ locate_takeout_meta_file() {
 
   return 1
 }
+
+# ====================================================================================================
+# extract_takeout_metadata <takeout_meta_file>
+#                          <&photo_taken_time>
+#                          <&geo_data>
+#                          <&device_type>
+#                          <&device_folder>
+#                          <&upload_origin>
+#
+# Extract specific metadata from a Google Takeout JSON file and assign values to reference variables.
+#
+# Parameters:
+#   1. takeout_meta_file → Path to the Google Takeout JSON metadata file
+#   2. &photo_taken_time → Reference to variable for photo taken timestamp (Unix epoch)
+#   3. &geo_data         → Reference to variable for geo data (JSON string from geoDataExif or geoData)
+#   4. &device_type      → Reference to variable for device type (e.g., "IOS_PHONE", "ANDROID_PHONE")
+#   5. &device_folder    → Reference to variable for device folder name (e.g., "Camera", "Screenshots")
+#   6. &upload_origin    → Reference to variable for upload origin ("mobile", "desktop", or "web")
+#
+# Returns:
+#   0 on success, 1 on error (file not found or invalid JSON)
+#
+# Example usage:
+#   local photo_time geo_info device_type folder_name origin
+#
+#   if extract_takeout_metadata "IMG_9087.HEIC.supplemental-metadata.json" \
+#        photo_time geo_info device_type folder_name origin; then
+#     echo "Photo taken: $photo_time"
+#     echo "Geo data: $geo_info"
+#     echo "Device: $device_type"
+#     echo "Folder: $folder_name"
+#     echo "Upload origin: $origin"
+#   else
+#     echo "Failed to extract metadata"
+#   fi
+# ====================================================================================================
+extract_takeout_metadata() {
+  local takeout_meta_file="$1"
+  local -n photo_taken_time_ref="$2"
+  local -n geo_data_ref="$3"
+  local -n device_type_ref="$4"
+  local -n device_folder_ref="$5"
+  local -n upload_origin_ref="$6"
+
+  # Validate input file exists
+  if [[ ! -f "$takeout_meta_file" ]]; then
+    return 1
+  fi
+
+  # Extract all metadata in a single jq call
+  local jq_output
+  jq_output=$(jq -r '
+    (.photoTakenTime.timestamp // ""),
+    (if .geoDataExif and (
+       .geoDataExif.latitude != 0.0 or
+       .geoDataExif.longitude != 0.0 or
+       .geoDataExif.altitude != 0.0
+     ) then
+       .geoDataExif | tostring
+     elif .geoData then
+       .geoData | tostring
+     else
+       ""
+     end),
+    (.googlePhotosOrigin.mobileUpload.deviceType // ""),
+    (.googlePhotosOrigin.mobileUpload.deviceFolder.localFolderName // ""),
+    (if .googlePhotosOrigin.mobileUpload then "mobile"
+     elif .googlePhotosOrigin.photosDesktopUploader then "desktop"
+     elif .googlePhotosOrigin.webUpload then "web"
+     else "" end)
+  ' "$takeout_meta_file" 2>/dev/null) || return 1
+
+  # Parse the output into local variables, then assign to references
+  local jq_values
+  mapfile -t jq_values <<< "$jq_output"
+
+  # Extract values from array and assign directly to reference variables
+  photo_taken_time_ref="${jq_values[0]:-}"
+  geo_data_ref="${jq_values[1]:-}"
+  device_type_ref="${jq_values[2]:-}"
+  device_folder_ref="${jq_values[3]:-}"
+  upload_origin_ref="${jq_values[4]:-}"
+
+  return 0
+}

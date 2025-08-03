@@ -1,0 +1,39 @@
+{
+  "title": "IMG-20150916-WA0002.jpg",
+  "description": "",
+  "imageViews": "8",
+  "creationTime": {
+    "timestamp": "1487783659",
+    "formatted": "Feb 22, 2017, 5:14:19 PM UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1442440705",
+    "formatted": "Sep 16, 2015, 9:58:25 PM UTC"
+  },
+  "geoData": {
+    "latitude": 52.037662499999996,
+    "longitude": 4.3226137,
+    "altitude": 0.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 52.037662499999996,
+    "longitude": 4.3226137,
+    "altitude": 0.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipNPJuNvacE6sVk8mVZ-zBiFZTt052ZW3Fh6wUqw",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": "WhatsApp Images"
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  },
+  "appSource": {
+    "androidPackageName": "com.whatsapp"
+  }
+}

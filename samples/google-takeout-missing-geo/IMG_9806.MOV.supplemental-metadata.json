@@ -1,0 +1,33 @@
+{
+  "title": "IMG_9806.MOV",
+  "description": "",
+  "imageViews": "3",
+  "creationTime": {
+    "timestamp": "1533634948",
+    "formatted": "Aug 7, 2018, 9:42:28 AM UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1515739249",
+    "formatted": "Jan 12, 2018, 6:40:49 AM UTC"
+  },
+  "geoData": {
+    "latitude": 25.0333,
+    "longitude": 121.56490000000001,
+    "altitude": 39.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 25.0333,
+    "longitude": 121.56490000000001,
+    "altitude": 39.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipOEAy4VWJbEnD8zEKkEUfqFTqVSSZfV3It_MO7j",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}
