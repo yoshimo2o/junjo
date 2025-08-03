@@ -18,7 +18,7 @@
 
 get_media_file_id() {
   local media_file="$1"
-  printf '%s' "$media_file" | base64
+  printf '%s' "$media_file" | base64 | tr -d '=+/'
 }
 
 # ====================================================================================================
