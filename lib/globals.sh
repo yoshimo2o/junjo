@@ -12,13 +12,6 @@ declare -A file_dest_name
 declare -A file_dest_stem
 declare -A file_dest_compound_ext
 declare -A file_dest_ext
-declare -A file_type # See file_types for possible values
-declare -A file_cid
-declare -A file_make
-declare -A file_model
-declare -A file_timestamp
-declare -A file_timestamp_source
-declare -A file_device_name
 declare -A file_type
 
 # File type constants
@@ -58,6 +51,20 @@ declare -A file_takeout_device_folder
 declare -A file_takeout_upload_origin
 declare -A file_has_duplicates
 
+# Exif metadata keyed by file id (fid)
+declare -A file_exif_cid
+declare -A file_exif_make
+declare -A file_exif_model
+declare -A file_exif_lens_make
+declare -A file_exif_lens_model
+declare -A file_exif_image_width
+declare -A file_exif_image_height
+declare -A file_exif_image_size
+declare -A file_exif_date_time_original
+declare -A file_exif_create_date
+declare -A file_exif_track_create_date
+declare -A file_exif_media_create_date
+declare -A file_exif_user_comment
 
 # List of files by file type keyed by fid
 declare -A apple_photo_files
