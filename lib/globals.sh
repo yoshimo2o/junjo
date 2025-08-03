@@ -47,12 +47,12 @@ declare -A file_types=(
 # Takeout metadata keyed by file id (fid)
 declare -A file_takeout_meta_file
 declare -A file_takeout_meta_file_name
-declare -A file_takeout_meta_file_match_strategy
+declare -A file_takeout_meta_file_match_strategy # "direct", "truncation", "duplication"
 declare -A file_takeout_photo_taken_time
 declare -A file_takeout_geo_data
-declare -A file_takeout_device_type
-declare -A file_takeout_device_folder
-declare -A file_takeout_upload_origin
+declare -A file_takeout_device_type # IOS_PHONE, IOS_TABLET, ANDROID_PHONE, ANDROID_TABLET
+declare -A file_takeout_device_folder # "WhatsApp Images", "Photoshop Express", etc.
+declare -A file_takeout_upload_origin # "mobile", "desktop", "web"
 
 # Exif metadata keyed by file id (fid)
 declare -A file_exif_cid
@@ -74,6 +74,8 @@ declare -A file_timestamp
 declare -A file_timestamp_source
 declare -A file_device_name
 declare -A file_has_duplicates
+
+# Apple-specific properties
 declare -A file_is_apple_media
 
 # List of files by file type keyed by fid
