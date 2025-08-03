@@ -12,7 +12,7 @@
 #   3. duplication   → filename.supplemental-metadata(n).json
 #
 # Parameters:
-#   1. media_file                → Path to the media file (e.g., "./IMG_5140(1).JPG")
+#   1. media_file                → Path to the media file (e.g. "./IMG_5140(1).JPG")
 #   2. &meta_file                → Reference to variable for JSON file path
 #   3. &meta_file_name           → Reference to variable for JSON file name
 #   4. &meta_file_match_strategy → Reference to variable for match strategy
@@ -155,23 +155,23 @@ locate_takeout_meta_file() {
 #   1. takeout_meta_file → Path to the Google Takeout JSON metadata file
 #   2. &photo_taken_time → Reference to variable for photo taken timestamp (Unix epoch)
 #   3. &geo_data         → Reference to variable for geo data (JSON string from geoDataExif or geoData)
-#   4. &device_type      → Reference to variable for device type (e.g., "IOS_PHONE", "ANDROID_PHONE")
-#   5. &device_folder    → Reference to variable for device folder name (e.g., "Camera", "Screenshots")
-#   6. &upload_origin    → Reference to variable for upload origin ("mobile", "desktop", or "web")
+#   4. &device_type      → Reference to variable for device type (e.g. "IOS_PHONE", "ANDROID_PHONE")
+#   5. &device_folder    → Reference to variable for device folder name (e.g. "Camera", "Screenshots")
+#   6. &upload_origin    → Reference to variable for upload origin (e.g. "mobile", "desktop", or "web")
 #
 # Returns:
 #   0 on success, 1 on error (file not found or invalid JSON)
 #
 # Example usage:
-#   local photo_time geo_info device_type folder_name origin
+#   local photo_taken_time geo_data device_type device_folder upload_origin
 #
 #   if extract_takeout_metadata "IMG_9087.HEIC.supplemental-metadata.json" \
-#        photo_time geo_info device_type folder_name origin; then
-#     echo "Photo taken: $photo_time"
-#     echo "Geo data: $geo_info"
+#        photo_taken_time geo_data device_type device_folder upload_origin; then
+#     echo "Photo taken: $photo_taken_time"
+#     echo "Geo data: $geo_data"
 #     echo "Device: $device_type"
-#     echo "Folder: $folder_name"
-#     echo "Upload origin: $origin"
+#     echo "Folder: $device_folder"
+#     echo "Upload origin: $upload_origin"
 #   else
 #     echo "Failed to extract metadata"
 #   fi
