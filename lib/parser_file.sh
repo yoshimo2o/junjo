@@ -1,3 +1,26 @@
+
+# ====================================================================================================
+# get_media_file_id <media_file>
+#
+# Generates a unique file ID for a media file path using Base64 encoding.
+# This provides collision-free IDs suitable for use as associative array keys.
+#
+# Parameters:
+#   1. media_file  → The media file path to generate an ID for
+#
+# Output:
+#   Prints the Base64-encoded file ID to stdout
+#
+# Example usage:
+#   file_id="$(get_media_file_id "/path/to/IMG_1234.jpg")"
+#   echo "File ID: $file_id"
+# ====================================================================================================
+
+get_media_file_id() {
+  local media_file="$1"
+  printf '%s' "$media_file" | base64
+}
+
 # ====================================================================================================
 # get_media_file_path_components <media_file>
 #                                <&media_file_dir>
