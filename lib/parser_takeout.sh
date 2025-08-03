@@ -95,9 +95,9 @@ locate_takeout_meta_file() {
 
   if [[ -f "$file" ]]; then
     match_strategy="truncation"
-    meta_file="$file"
-    meta_file_name="$file_name"
-    meta_file_match_strategy="$match_strategy"
+    meta_file_ref="$file"
+    meta_file_name_ref="$file_name"
+    meta_file_match_strategy_ref="$match_strategy"
     return 0
   fi
 
@@ -130,9 +130,9 @@ locate_takeout_meta_file() {
       file="$media_file_dir/$file_name"
       if [[ -f "$file" ]]; then
         match_strategy="duplication"
-        meta_file="$file"
-        meta_file_name="$file_name"
-        meta_file_match_strategy="$match_strategy"
+        meta_file_ref="$file"
+        meta_file_name_ref="$file_name"
+        meta_file_match_strategy_ref="$match_strategy"
         return 0
       fi
     fi

@@ -68,9 +68,22 @@
 
 get_media_file_path_components() {
   local media_file="$1"
-  local -n media_file_ext="$6"
-  local -n media_file_compound_ext="$7"
-  local -n media_file_dupe_marker="$8"
+  local -n media_file_dir_ref="$2"
+  local -n media_file_name_ref="$3"
+  local -n media_file_stem_ref="$4"
+  local -n media_file_root_stem_ref="$5"
+  local -n media_file_ext_ref="$6"
+  local -n media_file_compound_ext_ref="$7"
+  local -n media_file_dupe_marker_ref="$8"
+
+  # Local working variables
+  local media_file_dir \
+        media_file_name \
+        media_file_stem \
+        media_file_root_stem \
+        media_file_ext \
+        media_file_compound_ext \
+        media_file_dupe_marker
 
   # Get media file name and directory
   media_file_name=$(basename "$media_file")
@@ -129,4 +142,13 @@ get_media_file_path_components() {
   else
     media_file_dupe_marker=""
   fi
+
+  # Assign local variables back to reference variables
+  media_file_dir_ref="$media_file_dir"
+  media_file_name_ref="$media_file_name"
+  media_file_stem_ref="$media_file_stem"
+  media_file_root_stem_ref="$media_file_root_stem"
+  media_file_ext_ref="$media_file_ext"
+  media_file_compound_ext_ref="$media_file_compound_ext"
+  media_file_dupe_marker_ref="$media_file_dupe_marker"
 }
