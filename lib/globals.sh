@@ -3,14 +3,14 @@ declare -A file_src
 declare -A file_src_dir
 declare -A file_src_name
 declare -A file_src_stem
-declare -A file_src_full_ext
+declare -A file_src_compound_ext
 declare -A file_src_ext
-declare -A file_src_clean_stem
+declare -A file_src_root_stem
 declare -A file_dest
 declare -A file_dest_dir
 declare -A file_dest_name
 declare -A file_dest_stem
-declare -A file_dest_full_ext
+declare -A file_dest_compound_ext
 declare -A file_dest_ext
 declare -A file_type # See file_types for possible values
 declare -A file_cid
@@ -19,12 +19,14 @@ declare -A file_model
 declare -A file_timestamp
 declare -A file_timestamp_source
 declare -A file_device_name
-declare -A file_device_type
-declare -A file_device_folder
-declare -A file_device_origin
 declare -A file_takeout_meta_file
 declare -A file_takeout_meta_file_name
 declare -A file_takeout_meta_file_match_strategy
+declare -A file_takeout_photo_taken_time
+declare -A file_takeout_geo_data
+declare -A file_takeout_device_type
+declare -A file_takeout_device_folder
+declare -A file_takeout_upload_origin
 declare -A file_has_duplicates
 
 # File types enumerations
