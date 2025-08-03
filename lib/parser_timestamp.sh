@@ -72,20 +72,31 @@ get_best_available_timestamp() {
         file_create_date \
         file_modify_date
 
-  extract_exif_to_vars "$media_file" \
-    "DateTimeOriginal" \
-    "CreateDate" \
-    "TrackCreateDate" \
-    "MediaCreateDate" \
-    "FileCreateDate" \
-    "FileModifyDate" \
-    -- \
-    datetime_original \
-    create_date \
-    track_create_date \
-    media_create_date \
-    file_create_date \
-    file_modify_date
+  # If fid exists, use already extracted EXIF data from global arrays
+  if [[ -n "$fid" ]]; then
+    datetime_original="${file_exif_date_time_original[$fid]:-}"
+    create_date="${file_exif_create_date[$fid]:-}"
+    track_create_date="${file_exif_track_create_date[$fid]:-}"
+    media_create_date="${file_exif_media_create_date[$fid]:-}"
+    file_create_date="${file_create_date[$fid]:-}"
+    file_modify_date="${file_modify_date[$fid]:-}"
+  else
+    # Extract from EXIF if fid is not available
+    extract_exif_to_vars "$media_file" \
+      "DateTimeOriginal" \
+      "CreateDate" \
+      "TrackCreateDate" \
+      "MediaCreateDate" \
+      "FileCreateDate" \
+      "FileModifyDate" \
+      -- \
+      datetime_original \
+      create_date \
+      track_create_date \
+      media_create_date \
+      file_create_date \
+      file_modify_date
+  fi
 
   if [[ -n "$datetime_original" ]]; then
     ts=$(normalize_timestamp "$datetime_original")
