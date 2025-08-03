@@ -1,4 +1,4 @@
-# ========================================================================================================================
+# ====================================================================================================
 # locate_takeout_meta_file <media_file>
 #                          <&meta_file>
 #                          <&meta_file_name>
@@ -31,13 +31,13 @@
 #   else
 #     echo "No Google Takeout metadata file found for $media_file"
 #   fi
-# ========================================================================================================================
+# ====================================================================================================
 
 locate_takeout_meta_file() {
   local media_file="$1"
-  local -n meta_file="$2"
-  local -n meta_file_name="$3"
-  local -n meta_file_match_strategy="$4"
+  local -n meta_file_ref="$2"
+  local -n meta_file_name_ref="$3"
+  local -n meta_file_match_strategy_ref="$4"
 
   local media_file_name="$(basename "$media_file")"
   local media_file_dir="$(dirname "$media_file")"
@@ -46,7 +46,7 @@ locate_takeout_meta_file() {
   local file_name=""
   local match_strategy=""
 
-  # ---------------------------------------------------------
+  # --------------------------------------------------------------------------------
   # Strategy 1: Direct match
   #
   # Examples:
@@ -56,18 +56,18 @@ locate_takeout_meta_file() {
   #     → FOOBAR (001).jpg.supplemental-metadata.json
   #   FOO BAR (1).jpg
   #     → FOO BAR (1).jpg.supplemental-metadata.json
-  # ---------------------------------------------------------
+  # --------------------------------------------------------------------------------
   file_name="${media_file_name}.supplemental-metadata.json"
   file="$media_file_dir/$file_name"
   if [[ -f "$file" ]]; then
     match_strategy="direct"
-    meta_file="$file"
-    meta_file_name="$file_name"
-    meta_file_match_strategy="$match_strategy"
+    meta_file_ref="$file"
+    meta_file_name_ref="$file_name"
+    meta_file_match_strategy_ref="$match_strategy"
     return 0
   fi
 
-  # ---------------------------------------------------------
+  # --------------------------------------------------------------------------------
   # Strategy 2: Truncation match
   #
   # Google appears to:
@@ -84,7 +84,7 @@ locate_takeout_meta_file() {
   #
   #   0d7b086cdcb68a4b6279fabaa0928e90.jpg
   #     → 0d7b086cdcb68a4b6279fabaa0928e90.jpg.supplemen.json
-  # ---------------------------------------------------------
+  # --------------------------------------------------------------------------------
   local json_suffix=".json"
   local max_len=50
   local max_prefix_len=$(( max_len - ${#json_suffix} + 1))
@@ -101,7 +101,7 @@ locate_takeout_meta_file() {
     return 0
   fi
 
-  # ---------------------------------------------------------
+  # --------------------------------------------------------------------------------
   # Strategy 3: Duplication match
   #
   # Matches files like:
@@ -110,7 +110,7 @@ locate_takeout_meta_file() {
   #
   #   IMG_20250801_120808(2).jpg
   #     → IMG_20250801_120808.jpg.supplemental-metadata(2).json
-  # ---------------------------------------------------------
+  # --------------------------------------------------------------------------------
   local duplicate_pattern='^(.*)\(([0-9]+)\)\.([^.]+)$'
   if [[ "$media_file_name" =~ $duplicate_pattern ]]; then
     local base_part="${BASH_REMATCH[1]}"

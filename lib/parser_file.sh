@@ -1,4 +1,4 @@
-# ========================================================================================================================
+# ====================================================================================================
 # get_media_file_path_components <media_file>
 #                                <&media_file_dir>
 #                                <&media_file_name>
@@ -13,7 +13,8 @@
 #                                  "./" or "rel/path/" or "/abs/path/"
 #   2. media_file_name         → Basename, e.g. "IMG_9999(1).HEIC.MOV"
 #   3. media_file_stem         → Filename without extension, e.g. "IMG_9999(1)"
-#   6. media_file_root_stem    → Root stem without duplicate markers , e.g. "IMG_9999(1)" -> "IMG_9999"
+#   6. media_file_root_stem    → Root stem without duplicate markers , e.g.
+#                                  "IMG_9999(1)" -> "IMG_9999"
 #   5. media_file_ext          → Base extension with leading dot, e.g. ".MOV"
 #   4. media_file_compound_ext → Compound extension with leading dot, e.g. ".HEIC.MOV"
 #   7. media_file_dupe_marker  → Duplicate marker if exists, e.g. "1"
@@ -63,14 +64,10 @@
 #     "$file_ext" \
 #     "$file_compound_ext" \
 #     "$file_dupe_marker"
-# ========================================================================================================================
+# ====================================================================================================
 
 get_media_file_path_components() {
   local media_file="$1"
-  local -n media_file_dir="$2"
-  local -n media_file_name="$3"
-  local -n media_file_stem="$4"
-  local -n media_file_root_stem="$5"
   local -n media_file_ext="$6"
   local -n media_file_compound_ext="$7"
   local -n media_file_dupe_marker="$8"
