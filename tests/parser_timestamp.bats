@@ -8,7 +8,7 @@ setup() {
 
   # Load the library functions
   source "$BATS_TEST_DIRNAME/../lib/globals.sh"
-  source "$BATS_TEST_DIRNAME/../lib/utils_exif.sh"
+  source "$BATS_TEST_DIRNAME/../lib/parser_exif.sh"
   source "$BATS_TEST_DIRNAME/../lib/parser_file.sh"
   source "$BATS_TEST_DIRNAME/../lib/parser_takeout.sh"
   source "$BATS_TEST_DIRNAME/../lib/parser_timestamp.sh"
