@@ -175,3 +175,70 @@ get_media_file_path_components() {
   media_file_compound_ext_ref="$media_file_compound_ext"
   media_file_dupe_marker_ref="$media_file_dupe_marker"
 }
+
+# ====================================================================================================
+# get_media_file_type <fid>
+#
+# Determines the media file type based on file extension and metadata.
+#
+# Parameters:
+#   1. fid → File ID to analyze (must exist in global arrays)
+#
+# Return:
+#   File type constant corresponding to the detected media type (see $file_types in globals.sh)
+#
+# Example usage:
+#   file_type=$(get_media_file_type "$fid")
+#   echo "File type: $file_type"
+# ====================================================================================================
+
+get_media_file_type() {
+  local fid="$1"
+
+  # Get file extension by fid
+  local file_ext="${file_src_ext[$fid]}"
+  local cid="${file_exif_content_identifier[$fid]:-}"
+  local is_apple="${file_is_apple_media[$fid]:-0}"
+
+  # Determine file type based on all the information collected above
+  case "${file_ext,,}" in
+    .jpg|.jpeg|.heic)
+      if [[ -n "$cid" ]]; then
+        echo $FILE_TYPE_LIVE_PHOTO
+        return 0
+      elif [[ $is_apple -eq 1 ]]; then
+        echo $FILE_TYPE_APPLE_PHOTO
+        return 0
+      else
+        echo $FILE_TYPE_REGULAR_PHOTO
+        return 0
+      fi
+      ;;
+    .mov|.mp4|.mpg|.mpeg|.avi|.3gp|.wmv|.webm)
+      if [[ -n "$cid" ]]; then
+        echo $FILE_TYPE_LIVE_VIDEO
+        return 0
+      elif [[ $is_apple -eq 1 ]]; then
+        echo $FILE_TYPE_APPLE_VIDEO
+        return 0
+      else
+        echo $FILE_TYPE_REGULAR_VIDEO
+        return 0
+      fi
+      ;;
+    .png)
+      echo $FILE_TYPE_REGULAR_IMAGE
+      return 0
+      ;;
+    .gif|.webp)
+      echo $FILE_TYPE_REGULAR_IMAGE
+      return 0
+      ;;
+    *)
+      echo $FILE_TYPE_UNKNOWN
+      return 0
+      # TODO: Handle screenshots
+      # TODO: Handle downloaded images
+      ;;
+  esac
+}

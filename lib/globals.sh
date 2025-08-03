@@ -19,6 +19,35 @@ declare -A file_model
 declare -A file_timestamp
 declare -A file_timestamp_source
 declare -A file_device_name
+declare -A file_type
+
+# File type constants
+readonly FILE_TYPE_APPLE_PHOTO="AP"
+readonly FILE_TYPE_APPLE_VIDEO="AV"
+readonly FILE_TYPE_LIVE_PHOTO="LP"
+readonly FILE_TYPE_LIVE_VIDEO="LV"
+readonly FILE_TYPE_REGULAR_PHOTO="RP"
+readonly FILE_TYPE_REGULAR_VIDEO="RV"
+readonly FILE_TYPE_REGULAR_IMAGE="RI"
+readonly FILE_TYPE_SCREENSHOT="SS"
+readonly FILE_TYPE_SCREEN_RECORDING="SR"
+readonly FILE_TYPE_UNKNOWN="?"
+
+# File types enumerations
+declare -A file_types=(
+  ["$FILE_TYPE_APPLE_PHOTO"]="Apple Photo"
+  ["$FILE_TYPE_APPLE_VIDEO"]="Apple Video"
+  ["$FILE_TYPE_LIVE_PHOTO"]="Apple Live Photo"
+  ["$FILE_TYPE_LIVE_VIDEO"]="Apple Live Video"
+  ["$FILE_TYPE_REGULAR_PHOTO"]="Regular Photo"
+  ["$FILE_TYPE_REGULAR_VIDEO"]="Regular Video"
+  ["$FILE_TYPE_REGULAR_IMAGE"]="Regular Image"
+  ["$FILE_TYPE_SCREENSHOT"]="Screenshot"
+  ["$FILE_TYPE_SCREEN_RECORDING"]="Screen Recording"
+  ["$FILE_TYPE_UNKNOWN"]="Unknown"
+)
+
+# Takeout metadata keyed by file id (fid)
 declare -A file_takeout_meta_file
 declare -A file_takeout_meta_file_name
 declare -A file_takeout_meta_file_match_strategy
@@ -29,19 +58,6 @@ declare -A file_takeout_device_folder
 declare -A file_takeout_upload_origin
 declare -A file_has_duplicates
 
-# File types enumerations
-declare -A file_types=(
-  ["AP"]="Apple Photo"
-  ["AV"]="Apple Video"
-  ["LP"]="Apple Live Photo"
-  ["LV"]="Apple Live Video"
-  ["RP"]="Regular Photo"
-  ["RV"]="Regular Video"
-  ["RI"]="Regular Image"
-  ["SS"]="Screenshot"
-  ["SR"]="Screen Recording"
-  ["?"]="Unknown"
-)
 
 # List of files by file type keyed by fid
 declare -A apple_photo_files
