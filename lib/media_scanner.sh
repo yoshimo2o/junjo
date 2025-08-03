@@ -5,11 +5,89 @@ source "$JUNJO_LIB_DIR/parser_exif.sh"
 source "$JUNJO_LIB_DIR/parser_device.sh"
 source "$JUNJO_LIB_DIR/parser_software.sh"
 
+# ====================================================================================================
+# analyze_media_file <media_file>
+#
+# Performs comprehensive analysis of a media file and populates global arrays with extracted metadata.
+# This function serves as the main entry point for analyzing individual media files, extracting and
+# organizing metadata from multiple sources including file system, EXIF data, and Google Takeout.
+#
+# Parameters:
+#   media_file - Path to the media file to analyze
+#
+# Global Arrays Populated:
+#   File Source Properties:
+#     - file_src[fid]                    → Full path to the source file
+#     - file_src_dir[fid]                → Directory containing the file
+#     - file_src_name[fid]               → Full filename with extension
+#     - file_src_stem[fid]               → Filename without extension
+#     - file_src_root_stem[fid]          → Filename without extension and duplicate markers
+#     - file_src_ext[fid]                → File extension (e.g., ".JPG")
+#     - file_src_compound_ext[fid]       → Compound extension (e.g., ".HEIC.MOV")
+#     - file_src_dupe_marker[fid]        → Duplicate marker (e.g., "1" from "IMG_001(1).JPG")
+#     - file_src_create_date[fid]        → File system creation date
+#     - file_src_modify_date[fid]        → File system modification date
+#
+#   Google Takeout Metadata:
+#     - file_takeout_meta_file[fid]      → Path to associated JSON metadata file
+#     - file_takeout_meta_file_name[fid] → Name of the JSON metadata file
+#     - file_takeout_meta_file_match_strategy[fid] → Matching strategy used ("direct", "truncation", "duplication")
+#     - file_takeout_photo_taken_time[fid] → Photo taken timestamp from Google Takeout
+#     - file_takeout_geo_data[fid]       → Geographic location data (JSON format)
+#     - file_takeout_device_type[fid]    → Device type (e.g., "IOS_PHONE", "ANDROID_PHONE")
+#     - file_takeout_device_folder[fid]  → Source folder/app name
+#     - file_takeout_upload_origin[fid]  → Upload origin ("mobile", "desktop", "web")
+#
+#   EXIF Metadata:
+#     - file_exif_cid[fid]               → Content Identifier from EXIF
+#     - file_exif_make[fid]              → Camera/device manufacturer
+#     - file_exif_model[fid]             → Camera/device model
+#     - file_exif_lens_make[fid]         → Lens manufacturer
+#     - file_exif_lens_model[fid]        → Lens model
+#     - file_exif_image_width[fid]       → Image width in pixels
+#     - file_exif_image_height[fid]      → Image height in pixels
+#     - file_exif_image_size[fid]        → Image dimensions (e.g., "4032x3024")
+#     - file_exif_date_time_original[fid] → Original date/time from EXIF
+#     - file_exif_create_date[fid]       → Creation date from EXIF
+#     - file_exif_track_create_date[fid] → Track creation date (for videos)
+#     - file_exif_media_create_date[fid] → Media creation date
+#     - file_exif_user_comment[fid]      → User comment from EXIF
+#
+#   Analysis Results:
+#     - file_is_apple_media[fid]         → "1" if Apple device, "0" otherwise
+#     - file_timestamp[fid]              → Best available timestamp (formatted)
+#     - file_timestamp_source[fid]       → Source of the timestamp (e.g., "PhotoTakenTime", "EXIF")
+#     - file_device_name[fid]            → Friendly device name
+#     - file_software_name[fid]          → Software/app name that created the file
+#
+#   File Type Arrays (adds file to appropriate category):
+#     - live_photo_files[fid]            → Apple Live Photos
+#     - live_video_files[fid]            → Apple Live Photo videos
+#     - apple_photo_files[fid]           → Apple device photos
+#     - apple_video_files[fid]           → Apple device videos
+#     - regular_photo_files[fid]         → Regular photos
+#     - regular_video_files[fid]         → Regular videos
+#     - regular_image_files[fid]         → Regular images
+#     - screenshot_files[fid]            → Screenshots
+#     - screen_recording_files[fid]      → Screen recordings
+#     - unknown_files[fid]               → Files of unknown type
+#
+# Returns:
+#   Outputs the generated file ID (base64-encoded file path)
+#
+# Example:
+#   fid=$(analyze_media_file "/path/to/IMG_1234.jpg")
+#   echo "Device: ${file_device_name[$fid]}"
+#   echo "Timestamp: ${file_timestamp[$fid]}"
+#
+# ====================================================================================================
+
 # Analyze a single file
 analyze_media_file() {
   local media_file="$1"
 
-  # Generate a unique file id based on the file path's Base64 encoding.
+  # Generate a unique file ID based on the file path's Base64 encoding
+  # This ID is used as the key for all global arrays to store file metadata
   fid="$(get_media_file_id "$media_file")"
 
   # Analyze file components
