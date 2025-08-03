@@ -3,17 +3,20 @@ declare -A file_src
 declare -A file_src_dir
 declare -A file_src_name
 declare -A file_src_stem
-declare -A file_src_compound_ext
-declare -A file_src_ext
 declare -A file_src_root_stem
+declare -A file_src_ext
+declare -A file_src_compound_ext
+declare -A file_src_dupe_marker
 declare -A file_src_create_date
 declare -A file_src_modify_date
 declare -A file_dest
 declare -A file_dest_dir
 declare -A file_dest_name
 declare -A file_dest_stem
-declare -A file_dest_compound_ext
+declare -A file_dest_root_stem
 declare -A file_dest_ext
+declare -A file_dest_compound_ext
+declare -A file_dest_dupe_marker
 declare -A file_dest_create_date
 declare -A file_dest_modify_date
 declare -A file_type
@@ -77,7 +80,10 @@ declare -A file_timestamp_source
 declare -A file_device_name
 declare -A file_software_name
 
+# Duplicates
 declare -A file_has_duplicates
+declare -A file_duplicate_score
+declare -A file_is_preferred_duplicate
 
 # Apple-specific properties
 declare -A file_is_apple_media
@@ -93,7 +99,7 @@ declare -A regular_video_files
 # List of live photo and video fids keyed by cid
 declare -A live_photo_by_cid
 declare -A live_video_by_cid
-declare -A live_photo_dupes
-declare -A live_video_dupes
 declare -A live_photo_missing_video
 declare -A live_video_missing_photo
+declare -A live_photo_duplicates
+declare -A live_video_duplicates
