@@ -22,9 +22,9 @@ declare -A file_device_name
 declare -A file_device_type
 declare -A file_device_folder
 declare -A file_device_origin
-declare -A file_takeout_json_file
-declare -A file_takeout_json_file_name
-declare -A file_takeout_json_file_match_strategy
+declare -A file_takeout_meta_file
+declare -A file_takeout_meta_file_name
+declare -A file_takeout_meta_file_match_strategy
 declare -A file_has_duplicates
 
 # File types enumerations
