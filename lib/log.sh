@@ -242,6 +242,11 @@ log_tree_last_start() {
 log_tree_end() {
   local message="$1"
 
+  if [[ -z "$message" ]]; then
+    log_tree_stop
+    return 0
+  fi
+
   local lines
   mapfile -t lines <<< "$message"
 
@@ -254,6 +259,10 @@ log_tree_end() {
     fi
   done
 
+  log_tree_stop
+}
+
+log_tree_stop() {
   LOG_TREE_INDENT_LEVEL=$(( \
     (LOG_TREE_INDENT_LEVEL - 1) > 0 ? \
     (LOG_TREE_INDENT_LEVEL - 1) : \
