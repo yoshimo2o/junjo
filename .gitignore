@@ -1,0 +1,7 @@
+# Log files
+junjo.log
+junjo_scan.log
+junjo_sort.log
+
+# Output directory
+output/
