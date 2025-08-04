@@ -1,8 +1,3 @@
-log_error() {
-  local message="$1"
-  echo "Error: $message" >&2
-}
-
 check_dependencies() {
   # Check for required dependencies
   if ((BASH_VERSINFO[0] < 4)); then
