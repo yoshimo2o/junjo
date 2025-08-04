@@ -169,7 +169,9 @@ log_timestamp() {
 log_tree_indentation() {
   local indent=""
   for ((i = 0; i < LOG_TREE_INDENT_LEVEL; i++)); do
-    indent+="│   "
+    if [[ $i -gt 0 ]]; then
+      indent+="│   "
+    fi
   done
   echo -n "$indent"
 }
