@@ -184,12 +184,7 @@ log_tree_start() {
 # Log tree message with branch prefix
 log_tree() {
   local message="$1"
-  local prefix=""
-  if [[ "$LOG_TREE_INDENT_LEVEL" -gt 0 ]]; then
-    prefix="$(log_tree_indentation)├── "
-  fi
 
-  # Split the messages by newlines and iterate over them
   local lines
   mapfile -t lines <<< "$message"
 
@@ -203,12 +198,45 @@ log_tree() {
   done
 }
 
+# End tree section and decrease indent
+log_tree_end() {
+  local message="$1"
+
+  local lines
+  mapfile -t lines <<< "$message"
+
+  for idx in "${!lines[@]}"; do
+    local line="${lines[$idx]}"
+    if [[ $idx -eq 0 ]]; then
+      log_tree_branch_end "$line" "${@:2}"
+    else
+      log_tree_newline "$line" "${@:2}"
+    fi
+  done
+
+  LOG_TREE_INDENT_LEVEL=$(( \
+    (LOG_TREE_INDENT_LEVEL - 1) > 0 ? \
+    (LOG_TREE_INDENT_LEVEL - 1) : \
+    0 \
+  ))
+}
+
 # Log tree branch line
 log_tree_branch() {
   local message="$1"
   local prefix=""
   if [[ "$LOG_TREE_INDENT_LEVEL" -gt 0 ]]; then
     prefix="$(log_tree_indentation)├── "
+  fi
+  log "${prefix}${message}" "${@:2}"
+}
+
+# Log tree branch line
+log_tree_branch_end() {
+  local message="$1"
+  local prefix=""
+  if [[ "$LOG_TREE_INDENT_LEVEL" -gt 0 ]]; then
+    prefix="$(log_tree_indentation)└── "
   fi
   log "${prefix}${message}" "${@:2}"
 }
@@ -221,21 +249,6 @@ log_tree_newline() {
     prefix="$(log_tree_indentation)│   "
   fi
   log "${prefix}${message}" "${@:2}"
-}
-
-# End tree section and decrease indent
-log_tree_end() {
-  local message="$1"
-  local prefix=""
-  if [[ "$LOG_TREE_INDENT_LEVEL" -gt 0 ]]; then
-    prefix="$(log_tree_indentation)└── "
-  fi
-  log "${prefix}${message}" "${@:2}"
-  LOG_TREE_INDENT_LEVEL=$(( \
-    (LOG_TREE_INDENT_LEVEL - 1) > 0 ? \
-    (LOG_TREE_INDENT_LEVEL - 1) : \
-    0 \
-  ))
 }
 
 # Reset tree indentation to zero
