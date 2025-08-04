@@ -218,7 +218,7 @@ analyze_media_files() {
 # Analyze a single file
 analyze_media_file() {
   local media_file="$1"
-  local -n fid_ref=""
+  local -n fid_ref="$2"
 
   # Generate a unique file ID based on the file path's Base64 encoding
   # This ID is used as the key for all global arrays to store file metadata
