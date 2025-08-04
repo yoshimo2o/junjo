@@ -128,7 +128,7 @@ analyze_media_files() {
 
   for media_file in "${media_files[@]}"; do
     local fid
-    log "[$index/$total] Analyzing file: $media_file"
+    log "[$(progress "$index" "$total" "/")] Analyzing file: $media_file"
     analyze_media_file "$media_file" fid
     index=$((index + 1))
   done
