@@ -225,7 +225,13 @@ analyze_media_file() {
   fid="$(get_media_file_id "$media_file")"
 
   # Analyze file components
-  local file_dir file_name file_stem file_root_stem file_ext file_compound_ext file_dupe_marker
+  local file_dir \
+        file_name \
+        file_stem \
+        file_root_stem \
+        file_ext \
+        file_compound_ext \
+        file_dupe_marker
 
   get_media_file_path_components "$media_file" \
     file_dir \
