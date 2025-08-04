@@ -443,11 +443,19 @@ determine_best_live_video_duplicate_candidate() {
 # ====================================================================================================
 
 find_live_photo_missing_video() {
+  log "Identifying live photos with missing video pair."
   for cid in "${!live_photo_by_cid[@]}"; do
     if [[ -z "${live_video_by_cid[$cid]}" ]]; then
+      local $fid = "${live_photo_by_cid[$cid]}"
+      local media_file = "${file_src[$fid]}"
       live_photo_missing_video[$cid]=1
+      log_scan_tree_start "CID: $cid"
+        log_scan_tree "File: ${live_photo_by_cid[$cid]}"
+        log_scan_tree_end "Missing Video Pair: Yes"
+      log "Live photo missing video pair: $media_file (CID: $cid)"
     fi
   done
+  log_scan "Total live photos missing video pairs: ${#live_photo_missing_video[@]}"
 }
 
 # ====================================================================================================
@@ -467,9 +475,15 @@ find_live_photo_missing_video() {
 # ====================================================================================================
 
 find_live_video_missing_photo() {
+  log "Identifying live videos with missing photo pair."
   for cid in "${!live_video_by_cid[@]}"; do
     if [[ -z "${live_photo_by_cid[$cid]}" ]]; then
       live_video_missing_photo[$cid]=1
+      log_scan_tree_start "CID: $cid"
+        log_scan_tree "File: ${live_video_by_cid[$cid]}"
+        log_scan_tree_end "Missing Photo Pair: Yes"
+      log "Live video missing photo pair: $media_file (CID: $cid)"
     fi
   done
+  log_scan "Total live videos missing photo pairs: ${#live_video_missing_photo[@]}"
 }
