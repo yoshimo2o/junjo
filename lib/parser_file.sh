@@ -194,48 +194,49 @@ get_media_file_path_components() {
 
 get_media_file_type() {
   local fid="$1"
+  local -n file_type_ref="$2"
 
   # Get file extension by fid
   local file_ext="${file_src_ext[$fid]}"
-  local cid="${file_exif_content_identifier[$fid]:-}"
+  local cid="${file_exif_cid[$fid]:-}"
   local is_apple="${file_is_apple_media[$fid]:-0}"
 
   # Determine file type based on all the information collected above
   case "${file_ext,,}" in
     .jpg|.jpeg|.heic)
       if [[ -n "$cid" ]]; then
-        echo $FILE_TYPE_LIVE_PHOTO
+        file_type_ref=$FILE_TYPE_LIVE_PHOTO
         return 0
       elif [[ $is_apple -eq 1 ]]; then
-        echo $FILE_TYPE_APPLE_PHOTO
+        file_type_ref=$FILE_TYPE_APPLE_PHOTO
         return 0
       else
-        echo $FILE_TYPE_REGULAR_PHOTO
+        file_type_ref=$FILE_TYPE_REGULAR_PHOTO
         return 0
       fi
       ;;
     .mov|.mp4|.mpg|.mpeg|.avi|.3gp|.wmv|.webm)
       if [[ -n "$cid" ]]; then
-        echo $FILE_TYPE_LIVE_VIDEO
+        file_type_ref=$FILE_TYPE_LIVE_VIDEO
         return 0
       elif [[ $is_apple -eq 1 ]]; then
-        echo $FILE_TYPE_APPLE_VIDEO
+        file_type_ref=$FILE_TYPE_APPLE_VIDEO
         return 0
       else
-        echo $FILE_TYPE_REGULAR_VIDEO
+        file_type_ref=$FILE_TYPE_REGULAR_VIDEO
         return 0
       fi
       ;;
     .png)
-      echo $FILE_TYPE_REGULAR_IMAGE
+      file_type_ref=$FILE_TYPE_REGULAR_IMAGE
       return 0
       ;;
     .gif|.webp)
-      echo $FILE_TYPE_REGULAR_IMAGE
+      file_type_ref=$FILE_TYPE_REGULAR_IMAGE
       return 0
       ;;
     *)
-      echo $FILE_TYPE_UNKNOWN
+      file_type_ref=$FILE_TYPE_UNKNOWN
       return 0
       # TODO: Handle screenshots
       # TODO: Handle downloaded images
