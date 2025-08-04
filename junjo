@@ -60,13 +60,11 @@ for arg in "$@"; do
       ;;
     --log-dir=*)
       JUNJO_LOG_DIR="${arg#*=}"
-      # Remove trailing slash if present
-      JUNJO_LOG_DIR="${JUNJO_LOG_DIR%/}"
+      JUNJO_LOG_DIR="${JUNJO_LOG_DIR}"
       ;;
     --output-dir=*)
       JUNJO_OUTPUT_DIR="${arg#*=}"
-      # Remove trailing slash if present
-      JUNJO_OUTPUT_DIR="${JUNJO_OUTPUT_DIR%/}"
+      JUNJO_OUTPUT_DIR="${JUNJO_OUTPUT_DIR}"
       ;;
     *)
       args+=("$arg")
