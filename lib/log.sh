@@ -140,7 +140,7 @@ log() {
   fi
 
   # Append the log message to the appropriate log file (no color)
-  echo "${timestamp} ${category} ${message}" >> "$log_file"
+  echo "${timestamp} ${message}" >> "$log_file"
 }
 
 # Log error message with timestamp
