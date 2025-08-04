@@ -136,7 +136,8 @@ analyze_media_files() {
   log "Analysis complete. Processed $total files."
 
   # Process live photos and videos
-  # process_live_media()
+  log "Starting processing of live photos and videos."
+  process_live_media
 }
 
 # ====================================================================================================
