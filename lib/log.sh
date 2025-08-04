@@ -198,6 +198,25 @@ log_tree() {
   done
 }
 
+log_tree_last_start() {
+  local message="$1"
+
+  local lines
+  mapfile -t lines <<< "$message"
+
+  for idx in "${!lines[@]}"; do
+    local line="${lines[$idx]}"
+    if [[ $idx -eq 0 ]]; then
+      log_tree_branch_end "$line" "${@:2}"
+    else
+      log_tree_newline "$line" "${@:2}"
+    fi
+  done
+
+  # Increase the indentation level for the next log message
+  LOG_TREE_INDENT_LEVEL=$((LOG_TREE_INDENT_LEVEL + 1))
+}
+
 # End tree section and decrease indent
 log_tree_end() {
   local message="$1"
@@ -273,6 +292,10 @@ log_scan_tree_newline() {
   log_tree_newline "$@" "$SCAN_LOG"
 }
 
+log_scan_tree_last_start() {
+  log_tree_last_start "$@" "$SCAN_LOG"
+}
+
 log_scan_tree_end() {
   log_tree_end "$@" "$SCAN_LOG"
 }
@@ -291,6 +314,10 @@ log_sort_tree() {
 
 log_sort_tree_newline() {
   log_tree_newline "$@" "$SORT_LOG"
+}
+
+log_sort_tree_last_start() {
+  log_tree_last_start "$@" "$SORT_LOG"
 }
 
 log_sort_tree_end() {
