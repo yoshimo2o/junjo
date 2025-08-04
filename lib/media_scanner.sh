@@ -73,10 +73,11 @@ source "$JUNJO_LIB_DIR/parser_software.sh"
 #     - unknown_files[fid]               → Files of unknown type
 #
 # Returns:
-#   Outputs the generated file ID (base64-encoded file path)
+#   0 on success, non-zero on error
 #
 # Example:
-#   fid=$(analyze_media_file "/path/to/IMG_1234.jpg")
+#   analyze_media_file "/path/to/IMG_1234.jpg"
+#   fid=$(get_media_file_id "/path/to/IMG_1234.jpg")
 #   echo "Device: ${file_device_name[$fid]}"
 #   echo "Timestamp: ${file_timestamp[$fid]}"
 #
@@ -85,6 +86,7 @@ source "$JUNJO_LIB_DIR/parser_software.sh"
 # Analyze a single file
 analyze_media_file() {
   local media_file="$1"
+  local -n fid_ref=""
 
   # Generate a unique file ID based on the file path's Base64 encoding
   # This ID is used as the key for all global arrays to store file metadata
@@ -261,7 +263,6 @@ analyze_media_file() {
   software_name=$(get_most_likely_software_name "$fid")
   file_software_name["$fid"]="$software_name"
 
-  # Return the file id
-  echo "$fid"
+  fid_ref="$fid"
   return 0
 }
