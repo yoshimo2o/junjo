@@ -124,6 +124,34 @@ log() {
   echo "$log_message" >> "$log_file"
 }
 
+# Log error message with timestamp
+# Only to the main log.
+log_error() {
+  local message="$1"
+  local timestamp="$(log_timestamp)"
+  local log_message="${timestamp} Error: ${message}"
+
+  # Show error message on screen
+  echo "$log_message" >&2
+
+  # Append the error message to the main log file
+  echo "$log_message" >> "$JUNJO_LOG_FILE"
+}
+
+log_debug() {
+  local message="$1"
+  local timestamp="$(log_timestamp)"
+  local log_message="${timestamp} Debug: ${message}"
+
+  # Show debug message on screen if verbose mode is enabled
+  if [[ "$JUNJO_LOG_VERBOSE" -eq 1 ]]; then
+    echo "$log_message"
+  fi
+
+  # Append the debug message to the main log file
+  echo "$log_message" >> "$JUNJO_LOG_FILE"
+}
+
 # Log without timestamp
 log_raw() {
   echo "$1"
