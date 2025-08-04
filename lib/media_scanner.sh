@@ -1,3 +1,141 @@
+# ====================================================================================================
+# scan_media_folder
+#
+# Scans a directory for media files based on configuration settings and initiates analysis.
+# This function handles file discovery using configurable include/exclude patterns and
+# depth settings, then passes discovered files to the analysis pipeline.
+#
+# Configuration Variables Used:
+#   - JUNJO_SCAN_DIR           → Directory to scan for media files
+#   - JUNJO_SCAN_RECURSIVE     → Enable recursive scanning (1) or single level (0)
+#   - JUNJO_INCLUDE_FILES[]    → Array of filename patterns to include (e.g., "*.jpg")
+#   - JUNJO_EXCLUDE_FILES[]    → Array of filename patterns to exclude (e.g., ".*")
+#
+# Process Flow:
+#   1. Configure find command depth based on recursive setting
+#   2. Build include/exclude arguments from pattern arrays
+#   3. Execute find command to locate matching files
+#   4. Log scan parameters and file count
+#   5. Exit early if no files found, otherwise start analysis
+#
+# Returns:
+#   0 on success, exits with 0 if no files found
+# ====================================================================================================
+scan_media_folder() {
+
+  # Set find depth option based on recursive flag
+  if [[ $JUNJO_SCAN_RECURSIVE -eq 1 ]]; then
+    find_depth=""
+  else
+    find_depth="-maxdepth 1"
+  fi
+
+  # Build include_args from JUNJO_INCLUDE_FILES array
+  include_args=""
+  if [[ ${#JUNJO_INCLUDE_FILES[@]} -gt 0 ]]; then
+    include_args="\\("
+    for i in "${!JUNJO_INCLUDE_FILES[@]}"; do
+      if [[ $i -gt 0 ]]; then
+        include_args+=" -o"
+      fi
+      include_args+=" -iname \"${JUNJO_INCLUDE_FILES[$i]}\""
+    done
+    include_args+=" \\)"
+  fi
+
+  # Build exclude_args from JUNJO_EXCLUDE_FILES array
+  exclude_args=""
+  if [[ ${#JUNJO_EXCLUDE_FILES[@]} -gt 0 ]]; then
+    for pattern in "${JUNJO_EXCLUDE_FILES[@]}"; do
+      [[ -n "$pattern" ]] && exclude_args+=" ! -iname \"$pattern\""
+    done
+  fi
+
+  # Inform user we're about to scan the directory
+  log_tree_start "Starting folder scan with parameters:"
+    log_tree "Directory: $(realpath "$JUNJO_SCAN_DIR")"
+    log_tree "Recursive: $([ $JUNJO_SCAN_RECURSIVE -eq 1 ] && echo 'Yes' || echo 'No')"
+    log_tree "Include patterns: ${JUNJO_INCLUDE_FILES[*]}"
+    log_tree_end "Exclude patterns: ${JUNJO_EXCLUDE_FILES[*]}"
+
+  # Get the list of files to analyze
+  mapfile -t files < <(eval "find \"$JUNJO_SCAN_DIR\" $find_depth -type f $include_args $exclude_args")
+
+  # If no files found, exit early
+  if [[ ${#files[@]} -eq 0 ]]; then
+    log_error "No scannable files found in '$JUNJO_SCAN_DIR'."
+    exit 0
+  fi
+
+  # Inform user the number of files found
+  log "Found ${#files[@]} files to analyze in '$JUNJO_SCAN_DIR'."
+
+  # If interactive mode is enabled, ask users to confirm before proceeding
+  if [[ $JUNJO_INTERACTIVE -eq 1 ]]; then
+    log_raw ""
+    if ! confirm "Do you want to analyze these files?"; then
+      exit 0
+    fi
+    log_raw ""
+  fi
+
+  # Analyze the files
+  analyze_media_files "${files[@]}"
+}
+
+# ====================================================================================================
+# analyze_media_files <media_file1> [media_file2] [...]
+#
+# Processes an array of media files through comprehensive analysis pipeline.
+# This function orchestrates the analysis of multiple files, providing progress tracking
+# and coordinating individual file analysis through analyze_media_file().
+#
+# Parameters:
+#   media_files  → Variable number of media file paths to analyze
+#
+# Process Flow:
+#   1. Log analysis start with file count
+#   2. Iterate through each media file with progress tracking
+#   3. Call analyze_media_file() for detailed metadata extraction
+#   4. Update progress counter and log completion status
+#   5. Prepare for live photo/video processing (currently commented)
+#
+# Global Arrays Modified:
+#   All file metadata arrays are populated via analyze_media_file() calls:
+#   - file_src[], file_exif_*, file_takeout_*, file_timestamp[], etc.
+#   - File type categorization arrays: live_photo_files[], apple_photo_files[], etc.
+#
+# Configuration Variables Used:
+#   - JUNJO_SCAN_DIR  → Used in logging messages
+#
+# Returns:
+#   0 on success
+#
+# Example usage:
+#   files=("/path/to/img1.jpg" "/path/to/video.mov" "/path/to/photo.heic")
+#   analyze_media_files "${files[@]}"
+# ====================================================================================================
+# Analyze an array of files
+analyze_media_files() {
+  local media_files=("$@")
+
+  # For each file, we will extract all the information we need for analysis and sorting
+  local index=1
+  local total=${#media_files[@]}
+
+  # Inform user we're starting the analysis
+  log "Starting analysis of $total files in '$JUNJO_SCAN_DIR'."
+
+  for media_file in "${media_files[@]}"; do
+    local fid
+    log "[$index/$total] Analyzing file: $media_file"
+    analyze_media_file "$media_file" fid
+    index=$((index + 1))
+  done
+
+  # Process live photos and videos
+  # process_live_media()
+}
 
 # ====================================================================================================
 # analyze_media_file <media_file>
