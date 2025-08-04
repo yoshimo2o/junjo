@@ -101,8 +101,6 @@ log() {
   local color_secondary
   local color_reset="\033[0m"
 
-  # (Reverted) No static variables for last timestamp/category
-
   # Determine the log file and color based on the category
   local log_file
   case "$category" in
@@ -327,6 +325,10 @@ log_scan_tree_last_start() {
 }
 
 log_scan_tree_end() {
+  if [[ -z "$1" ]]; then
+    log_tree_end "" "$SCAN_LOG"
+    return 0
+  fi
   log_tree_end "$@" "$SCAN_LOG"
 }
 
