@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
 # Load required libraries
-load '../lib/configs.sh'
+load '../junjo.config'
 load '../lib/parser_takeout.sh'
 
 # Test direct match strategy

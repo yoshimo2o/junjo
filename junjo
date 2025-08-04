@@ -1,0 +1,128 @@
+#!/usr/bin/env bash
+# ------------------------------------------------------------------
+# Junjo
+# A photo sorting tool. Drop your folder containing photos and videos,
+# and it will organize them for you. Also works with Google Takeout.
+#
+# Usage:
+#  junjo [OPTIONS] [FOLDER|FILE]
+#
+# Options:
+#   -r, --recursive       Recursively scan subdirectories
+#   -v, --verbose         Enable verbose output (show scan & sort logs)
+#   --log-dir=PATH        Directory to store log files (default: current directory)
+#   --output-dir=PATH     Directory to store sorted files (default: ./output)
+#
+# Arguments:
+#   FOLDER            Folder to scan (default: current directory)
+#   FILE              File to analyze
+#
+# Usage Examples:
+# To scan and organize a folder:
+#   junjo -r -v /path/to/photos
+#
+# To analyze a single media file:
+#   junjo /path/to/photo.jpg
+#
+# To specify a custom log directory:
+#   junjo -r -v --log-dir="/var/log/junjo" /path/to/photos
+#
+# Author: Yoshi Nakamoto (@yoshimo2o) <yoshi@nkmt.to>
+# License: MIT
+# ------------------------------------------------------------------
+
+# Init path variables
+JUNJO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+JUNJO_LIB_DIR="$JUNJO_DIR/lib"
+
+# Init global variables & functions
+source "$JUNJO_DIR/junjo.config"
+source "$JUNJO_LIB_DIR/globals.sh"
+source "$JUNJO_LIB_DIR/functions.sh"
+source "$JUNJO_LIB_DIR/log.sh"
+source "$JUNJO_LIB_DIR/media_scanner.sh"
+
+# Parse command line arguments
+args=()
+for arg in "$@"; do
+  case $arg in
+    -r|--recursive)
+      JUNJO_SCAN_RECURSIVE=1
+      ;;
+    -v|--verbose)
+      JUNJO_LOG_VERBOSE=1
+      ;;
+    --log-dir=*)
+      JUNJO_LOG_DIR="${arg#*=}"
+      # Remove trailing slash if present
+      JUNJO_LOG_DIR="${JUNJO_LOG_DIR%/}"
+      ;;
+    --output-dir=*)
+      JUNJO_OUTPUT_DIR="${arg#*=}"
+      # Remove trailing slash if present
+      JUNJO_OUTPUT_DIR="${JUNJO_OUTPUT_DIR%/}"
+      ;;
+    *)
+      args+=("$arg")
+      ;;
+  esac
+done
+
+# Use the last argument as scan_dir,
+# else default to current directory.
+if [[ ${#args[@]} -gt 0 ]]; then
+  media_path="${args[-1]}"
+fi
+
+# Check for required dependencies.
+# If dependencies are missing, stop.
+check_dependencies
+
+# Init log.
+# If unable to write logs, stop.
+init_log || exit 1
+
+# If media_path is a folder, scan it.
+if [[ -d "$media_path" ]]; then
+
+  JUNJO_SCAN_DIR="$media_path"
+
+  # Print initial log message
+  log_raw ""
+  log_raw "  ░░█ █░█ █▄░█ ░░█ █▀█ "
+  log_raw "  █▄█ █▄█ █░▀█ █▄█ █▄█ "
+  log_raw "                       "
+  log_raw ""
+  log_raw "Arguments: $*"
+  log_raw ""
+  log_raw "Log directory: $JUNJO_LOG_DIR"
+  log_raw "├── Main log: $JUNJO_LOG_FILE_NAME"
+  log_raw "├── Scan log: $JUNJO_SCAN_LOG_FILE_NAME"
+  log_raw "└── Sort log: $JUNJO_SORT_LOG_FILE_NAME"
+  log_raw "Scan directory: $JUNJO_SCAN_DIR"
+  log_raw "└── Recursive scan: $JUNJO_SCAN_RECURSIVE"
+  log_raw "Sort directory: $JUNJO_OUTPUT_DIR"
+  log_raw "└── Sort plan file: $JUNJO_SORT_PLAN_FILE"
+  log_raw "Verbose mode: $JUNJO_LOG_VERBOSE"
+  low_raw ""
+
+  # If verbose mode is disabled, inform user on
+  # how to monitor scan and sort logs using tail -f.
+  if [[ $JUNJO_LOG_VERBOSE -eq 0 ]]; then
+    log_raw "To monitor scan and sort progress, use:"
+    log_raw "  tail -f $JUNJO_SCAN_LOG_FILE"
+    log_raw "  tail -f $JUNJO_SORT_LOG_FILE"
+    log_raw ""
+  fi
+
+  scan_media_folder "$media_path"
+fi
+
+# If media_path is a file, analyze it.
+if [[ -f "$media_path" ]]; then
+  # Get the directory of the file just to setup the environment
+  JUNJO_SCAN_DIR="$(dirname "$media_path")"
+
+  # Analyze just this one file
+  analyze_media_file "$media_path"
+fi

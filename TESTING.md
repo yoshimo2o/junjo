@@ -80,7 +80,7 @@ Each `.bats` file follows this structure:
 #!/usr/bin/env bats
 
 # Load required libraries
-load '../lib/configs.sh'
+load '../lib/junjo.config'
 load '../lib/parser_file.sh'
 
 @test "descriptive test name" {
@@ -175,7 +175,7 @@ Tests timestamp normalization and conversion functions.
    ```bash
    #!/usr/bin/env bats
 
-   load '../lib/configs.sh'
+   load '../junjo.config'
    load '../lib/new_feature.sh'
    ```
 
