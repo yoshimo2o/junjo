@@ -134,5 +134,6 @@ if [[ -f "$media_path" ]]; then
   JUNJO_SCAN_DIR="$(dirname "$media_path")"
 
   # Analyze just this one file
-  analyze_media_file "$media_path"
+  fid=""
+  analyze_media_file "$media_path" fid
 fi
