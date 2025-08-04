@@ -254,34 +254,49 @@ add_to_live_video_duplicates() {
 
 determine_best_live_photo_duplicate_candidate() {
 
+  log "Determining best live photo duplicate candidates."
+
   # Go through each CID in live_photo_duplicates
   for cid in "${!live_photo_duplicates[@]}"; do
 
     # Split the fids into an array
     IFS='|' read -r -a fids <<< "${live_photo_duplicates[$cid]}"
 
-    local best_fid=""
+    local index=1
+    local total=${#fids[@]}
+
+    log "Processing CID: $cid with $total live photo duplicates."
 
     # Go through each of the fids and score the quality of the live photo
+    local best_fid=""
+    log_scan_tree_start "CID: $cid"
     for fid in "${fids[@]}"; do
 
       local score=0
 
+      log_scan_tree_start "[$(progress "$index" "$total" "/")] Scoring live photo duplicate: ${file_src[$fid]}"
+
       # If this file has takeout metadata, increase the score.
       if [[ -n "${file_takeout_meta_file[$fid]}" ]]; then
         score=$((score + 100))
+        log_scan_tree "Has Takeout metadata: +100"
       fi
 
       # If this file's filename starts with "IMG", increase the score.
       if [[ "${file_src_root_stem[$fid]}" =~ ^IMG ]]; then
         score=$((score + 100))
+        log_scan_tree "Filename starts with IMG: +100"
       fi
 
       # If this file's filename has duplicate marker, decrease the score
       # by the value of the dupe marker.
-      if [[ ${file_dest_dupe_marker[$fid]} > 0 ]]; then
-        score=$((score - file_dest_dupe_marker[$fid]))
+      if [[ ${file_src_dupe_marker[$fid]} > 0 ]]; then
+        local -i dupe_marker="${file_src_dupe_marker[$fid]}"
+        score=$((score - dupe_marker))
+        log_scan_tree "Has duplicate marker: -$dupe_marker"
       fi
+
+      log_scan_tree_end "Final Score: $score"
 
       # Assign the score
       file_duplicate_score[$fid]=$score
@@ -296,7 +311,9 @@ determine_best_live_photo_duplicate_candidate() {
         best_fid="$fid"
       fi
 
+      index=$((index + 1))
     done
+    log_scan_tree_end "Best candidate: ${file_src[$best_fid]} (Score: ${file_duplicate_score[$best_fid]})"
 
     # After scoring all duplicates, update the mappings to point to the best candidate
     # Remove the current preferred fid duplicate marker (the old primary)
@@ -308,6 +325,8 @@ determine_best_live_photo_duplicate_candidate() {
 
     # Set the best fid as preferred duplicate
     file_is_preferred_duplicate["$best_fid"]=1
+
+    log "Best candidate: ${file_src[$best_fid]} (Score: ${file_duplicate_score[$best_fid]})"
   done
 }
 
@@ -335,31 +354,45 @@ determine_best_live_photo_duplicate_candidate() {
 
 determine_best_live_video_duplicate_candidate() {
 
+  log "Determining best live video duplicate candidates."
+
   # Go through each CID in live_video_duplicates
   for cid in "${!live_video_duplicates[@]}"; do
 
     # Split the fids into an array
     IFS='|' read -r -a fids <<< "${live_video_duplicates[$cid]}"
 
-    local best_fid=""
+    local index=1
+    local total=${#fids[@]}
+
+    log "Processing CID: $cid with $total live video duplicates."
 
     # Go through each of the fids and score the quality of the live video
+    local best_fid=""
+    log_scan_tree_start "CID: $cid"
     for fid in "${fids[@]}"; do
 
       local score=0
+
+      log_scan_tree_start "[$(progress "$index" "$total" "/")] Scoring live photo duplicate: ${file_src[$fid]}"
 
       # Note: Live video has no takeout metadata.
 
       # If this file's filename starts with "IMG", increase the score.
       if [[ "${file_src_root_stem[$fid]}" =~ ^IMG ]]; then
         score=$((score + 100))
+        log_scan_tree "Filename starts with IMG: +100"
       fi
 
       # If this file's filename has duplicate marker, decrease the score
       # by the value of the dupe marker.
-      if [[ ${file_dest_dupe_marker[$fid]} > 0 ]]; then
-        score=$((score - file_dest_dupe_marker[$fid]))
+      if [[ ${file_src_dupe_marker[$fid]} > 0 ]]; then
+        local -i dupe_marker="${file_src_dupe_marker[$fid]}"
+        score=$((score - dupe_marker))
+        log_scan_tree "Has duplicate marker: -$dupe_marker"
       fi
+
+      log_scan_tree_end "Final Score: $score"
 
       # Assign the score
       file_duplicate_score[$fid]=$score
@@ -374,7 +407,9 @@ determine_best_live_video_duplicate_candidate() {
         best_fid="$fid"
       fi
 
+      index=$((index + 1))
     done
+    log_scan_tree_end "Best candidate: ${file_src[$best_fid]} (Score: ${file_duplicate_score[$best_fid]})"
 
     # After scoring all duplicates, update the mappings to point to the best candidate
     # Remove the current preferred fid duplicate marker (the old primary)
@@ -386,6 +421,8 @@ determine_best_live_video_duplicate_candidate() {
 
     # Set the best fid as preferred duplicate
     file_is_preferred_duplicate["$best_fid"]=1
+
+    log "Best candidate: ${file_src[$best_fid]} (Score: ${file_duplicate_score[$best_fid]})"
   done
 }
 
