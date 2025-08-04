@@ -133,11 +133,27 @@ analyze_media_files() {
     index=$((index + 1))
   done
 
-  log "Analysis complete. Processed $total files."
+  log_tree_start "Analysis complete. Processed $total files."
+    log_tree "Apple Photo: ${#apple_photo_files[@]}"
+    log_tree "Apple Video: ${#apple_video_files[@]}"
+    log_tree "Live Photo: ${#live_photo_files[@]}"
+    log_tree "Live Video: ${#live_video_files[@]}"
+    log_tree "Regular Photo: ${#regular_photo_files[@]}"
+    log_tree "Regular Video: ${#regular_video_files[@]}"
+    log_tree "Regular Image: ${#regular_image_files[@]}"
+    log_tree "Screenshot: ${#screenshot_files[@]}"
+    log_tree "Screen Recording: ${#screen_recording_files[@]}"
+    log_tree_end "Unknown: ${#unknown_files[@]}"
 
   # Process live photos and videos
   log "Starting processing of live photos and videos."
   process_live_media
+
+  log_tree_start "Completed processing of live photos and videos."
+    log_tree "Live Photos with duplicates: ${#live_photo_duplicates[@]}"
+    log_tree "Live Videos with duplicates: ${#live_video_duplicates[@]}"
+    log_tree "Live Photos missing video pair: ${#live_photo_missing_video[@]}"
+    log_tree_end "Live Videos missing photo pair: ${#live_video_missing_photo[@]}"
 }
 
 # ====================================================================================================
