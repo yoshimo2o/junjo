@@ -106,11 +106,10 @@ if [[ -d "$media_path" ]]; then
 
   # Print initial log message
   log_raw ""
-  log_raw "  ░░█ █░█ █▄░█ ░░█ █▀█ "
-  log_raw "  █▄█ █▄█ █░▀█ █▄█ █▄█ "
-  log_raw "                       "
   log_raw ""
-  log_raw "Arguments: $*"
+  log_raw "░░█ █░█ █▄░█ ░░█ █▀█ "
+  log_raw "█▄█ █▄█ █░▀█ █▄█ █▄█ "
+  log_raw ""
   log_raw ""
   log_raw "Log directory: $JUNJO_LOG_DIR"
   log_raw "├── Main log: $JUNJO_LOG_FILE_NAME"
@@ -120,17 +119,11 @@ if [[ -d "$media_path" ]]; then
   log_raw "└── Recursive scan: $JUNJO_SCAN_RECURSIVE"
   log_raw "Sort directory: $JUNJO_OUTPUT_DIR"
   log_raw "└── Sort plan file: $JUNJO_SORT_PLAN_FILE"
-  log_raw "Verbose mode: $JUNJO_LOG_VERBOSE"
-  low_raw ""
-
-  # If verbose mode is disabled, inform user on
-  # how to monitor scan and sort logs using tail -f.
-  if [[ $JUNJO_LOG_VERBOSE -eq 0 ]]; then
-    log_raw "To monitor scan and sort progress, use:"
-    log_raw "  tail -f $JUNJO_SCAN_LOG_FILE"
-    log_raw "  tail -f $JUNJO_SORT_LOG_FILE"
-    log_raw ""
-  fi
+  log_raw ""
+  log_raw "To monitor scan and sort progress, use:"
+  log_raw "  tail -f $JUNJO_SCAN_LOG_FILE"
+  log_raw "  tail -f $JUNJO_SORT_LOG_FILE"
+  log_raw ""
 
   scan_media_folder "$media_path"
 fi
