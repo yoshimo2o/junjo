@@ -402,9 +402,10 @@ analyze_media_file() {
   file_software_name["$fid"]="$software_name"
 
   # Log analysis
-  log_scan_tree_start "File ID: $fid"
+  log_scan_tree_start "File: $media_file"
+    log_scan_tree "FID: $fid"
     log_scan_tree "Type: $file_type (${file_types[$file_type]})"
-    log_scan_tree_start "Source: $media_file"
+    log_scan_tree_start "File Components"
       log_scan_tree "Directory: $file_dir"
       log_scan_tree "Name: $file_name"
       log_scan_tree "Stem: $file_stem"
