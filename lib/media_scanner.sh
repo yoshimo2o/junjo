@@ -123,7 +123,7 @@ analyze_media_files() {
   local index=1
   local total=${#media_files[@]}
 
-  # Inform user we're starting the analysis
+  # Analyze the media files
   log "Starting analysis of $total files in '$JUNJO_SCAN_DIR'."
 
   for media_file in "${media_files[@]}"; do
@@ -132,6 +132,8 @@ analyze_media_files() {
     analyze_media_file "$media_file" fid
     index=$((index + 1))
   done
+
+  log "Analysis complete. Processed $total files."
 
   # Process live photos and videos
   # process_live_media()
