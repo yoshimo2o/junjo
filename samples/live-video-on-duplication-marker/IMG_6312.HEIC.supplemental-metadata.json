@@ -1,0 +1,33 @@
+{
+  "title": "IMG_6312.HEIC",
+  "description": "",
+  "imageViews": "19",
+  "creationTime": {
+    "timestamp": "1509706230",
+    "formatted": "Nov 3, 2017, 10:50:30 AM UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1508581220",
+    "formatted": "Oct 21, 2017, 10:20:20 AM UTC"
+  },
+  "geoData": {
+    "latitude": 51.9656,
+    "longitude": 4.572,
+    "altitude": 13.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 51.9656,
+    "longitude": 4.572,
+    "altitude": 13.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/TestData1234PlaceHolderXYZ998877AABBccDDEEff",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "title": "IMG_6312.JPG",
+  "description": "",
+  "imageViews": "7",
+  "creationTime": {
+    "timestamp": "1493550791",
+    "formatted": "Apr 30, 2017, 11:13:11 AM UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1492820048",
+    "formatted": "Apr 22, 2017, 12:14:08 AM UTC"
+  },
+  "geoData": {
+    "latitude": -37.806799999999996,
+    "longitude": 144.95659999999998,
+    "altitude": 76.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -37.806799999999996,
+    "longitude": 144.95659999999998,
+    "altitude": 76.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/TestData1234PlaceHolderXYZ998877AABBccDDEEff",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}

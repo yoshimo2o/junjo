@@ -1,0 +1,202 @@
+ExifTool Version Number         : 13.30
+File Name                       : IMG_6312.HEIC
+Directory                       : .
+File Size                       : 1304 kB
+File Modification Date/Time     : 2025:07:27 17:00:55+08:00
+File Access Date/Time           : 2025:08:03 20:12:15+08:00
+File Inode Change Date/Time     : 2025:08:03 03:00:50+08:00
+File Permissions                : -rw-r--r--
+File Type                       : HEIC
+File Type Extension             : heic
+MIME Type                       : image/heic
+Major Brand                     : High Efficiency Image Format HEVC still image (.HEIC)
+Minor Version                   : 0.0.0
+Compatible Brands               : mif1, heic
+Handler Type                    : Picture
+Primary Item Reference          : 49
+Meta Image Size                 : 4032x3024
+Exif Byte Order                 : Big-endian (Motorola, MM)
+Make                            : Apple
+Camera Model Name               : iPhone 7 Plus
+Orientation                     : Horizontal (normal)
+X Resolution                    : 72
+Y Resolution                    : 72
+Resolution Unit                 : inches
+Software                        : 11.0.3
+Modify Date                     : 2017:10:21 12:20:20
+Y Cb Cr Positioning             : Centered
+Exposure Time                   : 1/33
+F Number                        : 1.8
+Exposure Program                : Program AE
+ISO                             : 32
+Exif Version                    : 0221
+Date/Time Original              : 2017:10:21 12:20:20
+Create Date                     : 2017:10:21 12:20:20
+Components Configuration        : Y, Cb, Cr, -
+Shutter Speed Value             : 1/33
+Aperture Value                  : 1.8
+Brightness Value                : 3.89309808
+Exposure Compensation           : 0
+Metering Mode                   : Spot
+Flash                           : Off, Did not fire
+Focal Length                    : 4.0 mm
+Subject Area                    : 2504 1581 753 756
+Maker Note Version              : 9
+Run Time Flags                  : Valid
+Run Time Value                  : 286026827085750
+Run Time Scale                  : 1000000000
+Run Time Epoch                  : 0
+AE Stable                       : Yes
+AE Target                       : 189
+AE Average                      : 179
+AF Stable                       : Yes
+Acceleration Vector             : -0.2310416052 0.021171056 -0.9837231569
+Focus Distance Range            : 0.34 - 0.47 m
+OIS Mode                        : 2
+Content Identifier              : 86499A14-3DB9-4BBF-991E-2894A581D78C
+Image Capture Type              : Unknown (5)
+Live Photo Video Index          : 0
+Photos App Feature Flags        : 0
+Sub Sec Time Original           : 832
+Sub Sec Time Digitized          : 832
+Flashpix Version                : 0100
+Color Space                     : Uncalibrated
+Exif Image Width                : 4032
+Exif Image Height               : 3024
+Sensing Method                  : One-chip color area
+Scene Type                      : Directly photographed
+Exposure Mode                   : Auto
+White Balance                   : Auto
+Focal Length In 35mm Format     : 28 mm
+Scene Capture Type              : Standard
+Lens Info                       : 3.99-6.6mm f/1.8-2.8
+Lens Make                       : Apple
+Lens Model                      : iPhone 7 Plus back dual camera 3.99mm f/1.8
+GPS Latitude Ref                : North
+GPS Latitude                    : 51 deg 57' 56.03"
+GPS Longitude Ref               : East
+GPS Longitude                   : 4 deg 34' 19.14"
+GPS Altitude Ref                : Below Sea Level
+GPS Altitude                    : 6.736136784 m
+GPS Time Stamp                  : 10:20:19.99
+GPS Speed Ref                   : km/h
+GPS Speed                       : 0
+GPS Img Direction Ref           : Magnetic North
+GPS Img Direction               : 68.17090069
+GPS Dest Bearing Ref            : Magnetic North
+GPS Dest Bearing                : 68.17090069
+GPS Date Stamp                  : 2017:10:21
+GPS Horizontal Positioning Error: 65 m
+Profile CMM Type                : Apple Computer Inc.
+Profile Version                 : 4.0.0
+Profile Class                   : Display Device Profile
+Color Space Data                : RGB
+Profile Connection Space        : XYZ
+Profile Date Time               : 2017:07:07 13:22:32
+Profile File Signature          : acsp
+Primary Platform                : Apple Computer Inc.
+CMM Flags                       : Not Embedded, Independent
+Device Manufacturer             : Apple Computer Inc.
+Device Model                    : 
+Device Attributes               : Reflective, Glossy, Positive, Color
+Rendering Intent                : Perceptual
+Connection Space Illuminant     : 0.9642 1 0.82491
+Profile Creator                 : Apple Computer Inc.
+Profile ID                      : ca1a9582257f104d389913d5d1ea1582
+Profile Description             : Display P3
+Profile Copyright               : Copyright Apple Inc., 2017
+Media White Point               : 0.95045 1 1.08905
+Red Matrix Column               : 0.51512 0.2412 -0.00105
+Green Matrix Column             : 0.29198 0.69225 0.04189
+Blue Matrix Column              : 0.1571 0.06657 0.78407
+Red Tone Reproduction Curve     : (Binary data 32 bytes, use -b option to extract)
+Chromatic Adaptation            : 1.04788 0.02292 -0.0502 0.02959 0.99048 -0.01706 -0.00923 0.01508 0.75168
+Blue Tone Reproduction Curve    : (Binary data 32 bytes, use -b option to extract)
+Green Tone Reproduction Curve   : (Binary data 32 bytes, use -b option to extract)
+HEVC Configuration Version      : 1
+General Profile Space           : Conforming
+General Tier Flag               : Main Tier
+General Profile IDC             : Main Still Picture
+Gen Profile Compatibility Flags : Main Still Picture, Main 10, Main
+Constraint Indicator Flags      : 176 0 0 0 0 0
+General Level IDC               : 90 (level 3.0)
+Min Spatial Segmentation IDC    : 0
+Parallelism Type                : 0
+Chroma Format                   : 4:2:0
+Bit Depth Luma                  : 8
+Bit Depth Chroma                : 8
+Average Frame Rate              : 0
+Constant Frame Rate             : Unknown
+Num Temporal Layers             : 1
+Temporal ID Nested              : No
+Image Spatial Extent            : 512x512
+Image Width                     : 4032
+Image Height                    : 3024
+Image Spatial Extent            : 4032x3024
+Rotation                        : Horizontal (Normal)
+Image Pixel Depth               : 8 8 8
+Profile CMM Type                : Apple Computer Inc.
+Profile Version                 : 4.0.0
+Profile Class                   : Display Device Profile
+Color Space Data                : RGB
+Profile Connection Space        : XYZ
+Profile Date Time               : 2017:07:07 13:22:32
+Profile File Signature          : acsp
+Primary Platform                : Apple Computer Inc.
+CMM Flags                       : Not Embedded, Independent
+Device Manufacturer             : Apple Computer Inc.
+Device Model                    : 
+Device Attributes               : Reflective, Glossy, Positive, Color
+Rendering Intent                : Perceptual
+Connection Space Illuminant     : 0.9642 1 0.82491
+Profile Creator                 : Apple Computer Inc.
+Profile ID                      : ca1a9582257f104d389913d5d1ea1582
+Profile Description             : Display P3
+Profile Copyright               : Copyright Apple Inc., 2017
+Media White Point               : 0.95045 1 1.08905
+Red Matrix Column               : 0.51512 0.2412 -0.00105
+Green Matrix Column             : 0.29198 0.69225 0.04189
+Blue Matrix Column              : 0.1571 0.06657 0.78407
+Red Tone Reproduction Curve     : (Binary data 32 bytes, use -b option to extract)
+Chromatic Adaptation            : 1.04788 0.02292 -0.0502 0.02959 0.99048 -0.01706 -0.00923 0.01508 0.75168
+Blue Tone Reproduction Curve    : (Binary data 32 bytes, use -b option to extract)
+Green Tone Reproduction Curve   : (Binary data 32 bytes, use -b option to extract)
+HEVC Configuration Version      : 1
+General Profile Space           : Conforming
+General Tier Flag               : Main Tier
+General Profile IDC             : Main Still Picture
+Gen Profile Compatibility Flags : Main Still Picture, Main 10, Main
+Constraint Indicator Flags      : 176 0 0 0 0 0
+General Level IDC               : 60 (level 2.0)
+Min Spatial Segmentation IDC    : 0
+Parallelism Type                : 0
+Chroma Format                   : 4:2:0
+Bit Depth Luma                  : 8
+Bit Depth Chroma                : 8
+Average Frame Rate              : 0
+Constant Frame Rate             : Unknown
+Num Temporal Layers             : 1
+Temporal ID Nested              : No
+Image Spatial Extent            : 320x240
+Image Pixel Depth               : 8 8 8
+Media Data Size                 : 1299856
+Media Data Offset               : 3996
+Run Time Since Power Up         : 3 days 7:27:07
+Aperture                        : 1.8
+Image Size                      : 4032x3024
+Megapixels                      : 12.2
+Scale Factor To 35 mm Equivalent: 7.0
+Shutter Speed                   : 1/33
+Create Date                     : 2017:10:21 12:20:20.832
+Date/Time Original              : 2017:10:21 12:20:20.832
+GPS Altitude                    : 6.7 m Below Sea Level
+GPS Date/Time                   : 2017:10:21 10:20:19.99Z
+GPS Latitude                    : 51 deg 57' 56.03" N
+GPS Longitude                   : 4 deg 34' 19.14" E
+Circle Of Confusion             : 0.004 mm
+Field Of View                   : 65.5 deg
+Focal Length                    : 4.0 mm (35 mm equivalent: 28.0 mm)
+GPS Position                    : 51 deg 57' 56.03" N, 4 deg 34' 19.14" E
+Hyperfocal Distance             : 2.07 m
+Light Value                     : 8.4
+Lens ID                         : iPhone 7 Plus back dual camera 3.99mm f/1.8

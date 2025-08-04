@@ -1,0 +1,33 @@
+{
+  "title": "DUPE2276.JPG",
+  "description": "",
+  "imageViews": "8",
+  "creationTime": {
+    "timestamp": "1487783395",
+    "formatted": "Feb 22, 2017, 5:09:55 PM UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1486131138",
+    "formatted": "Feb 3, 2017, 2:12:18 PM UTC"
+  },
+  "geoData": {
+    "latitude": 33.9818,
+    "longitude": 35.651199999999996,
+    "altitude": 1177.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 33.9818,
+    "longitude": 35.651199999999996,
+    "altitude": 1177.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/TestData1234PlaceHolderXYZ998877AABBccDDEEff",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}

@@ -1,0 +1,232 @@
+ExifTool Version Number         : 13.30
+File Name                       : IMG_9113.MP4
+Directory                       : .
+File Size                       : 993 kB
+File Modification Date/Time     : 2025:07:27 16:59:38+08:00
+File Access Date/Time           : 2025:08:03 14:17:40+08:00
+File Inode Change Date/Time     : 2025:08:03 02:36:10+08:00
+File Permissions                : -rw-r--r--
+File Type                       : MP4
+File Type Extension             : mp4
+MIME Type                       : video/quicktime
+Major Brand                     : Apple QuickTime (.MOV/QT)
+Minor Version                   : 0.0.0
+Compatible Brands               : qt
+Media Data Size                 : 987001
+Media Data Offset               : 36
+Movie Header Version            : 0
+Create Date                     : 2018:01:02 08:40:38
+Modify Date                     : 2018:01:02 08:40:39
+Time Scale                      : 600
+Duration                        : 1.10 s
+Preferred Rate                  : 1
+Preferred Volume                : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Preview Time                    : 0 s
+Preview Duration                : 0 s
+Poster Time                     : 0 s
+Selection Time                  : 0 s
+Selection Duration              : 0 s
+Current Time                    : 0 s
+Next Track ID                   : 5
+Track Header Version            : 0
+Track Create Date               : 2018:01:02 08:40:38
+Track Modify Date               : 2018:01:02 08:40:39
+Track ID                        : 1
+Track Duration                  : 1.10 s
+Track Layer                     : 0
+Track Volume                    : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Image Width                     : 1440
+Image Height                    : 1080
+Clean Aperture Dimensions       : 1308x980
+Production Aperture Dimensions  : 1440x1080
+Encoded Pixels Dimensions       : 1440x1080
+Media Header Version            : 0
+Media Create Date               : 2018:01:02 08:40:38
+Media Modify Date               : 2018:01:02 08:40:39
+Media Time Scale                : 600
+Media Duration                  : 1.10 s
+Media Language Code             : und
+Handler Class                   : Media Handler
+Handler Type                    : Video Track
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Video
+Graphics Mode                   : ditherCopy
+Op Color                        : 32768 32768 32768
+Handler Class                   : Data Handler
+Handler Type                    : Alias Data
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Data Handler
+Compressor ID                   : hvc1
+Source Image Width              : 1440
+Source Image Height             : 1080
+X Resolution                    : 72
+Y Resolution                    : 72
+Compressor Name                 : HEVC
+Bit Depth                       : 24
+Video Frame Rate                : 18.154
+Track Header Version            : 0
+Track Create Date               : 2018:01:02 08:40:38
+Track Modify Date               : 2018:01:02 08:40:39
+Track ID                        : 2
+Track Duration                  : 1.10 s
+Track Layer                     : 0
+Track Volume                    : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Media Header Version            : 0
+Media Create Date               : 2018:01:02 08:40:38
+Media Modify Date               : 2018:01:02 08:40:39
+Media Time Scale                : 44100
+Media Duration                  : 1.10 s
+Media Language Code             : und
+Handler Class                   : Media Handler
+Handler Type                    : Audio Track
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Audio
+Balance                         : 0
+Handler Class                   : Data Handler
+Handler Type                    : Alias Data
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Data Handler
+Audio Format                    : lpcm
+Audio Channels                  : 3
+Audio Bits Per Sample           : 16
+Audio Sample Rate               : 1
+Track Header Version            : 0
+Track Create Date               : 2018:01:02 08:40:38
+Track Modify Date               : 2018:01:02 08:40:39
+Track ID                        : 3
+Track Duration                  : 1.10 s
+Track Layer                     : 0
+Track Volume                    : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Content Describes               : Track 1
+Media Header Version            : 0
+Media Create Date               : 2018:01:02 08:40:38
+Media Modify Date               : 2018:01:02 08:40:39
+Media Time Scale                : 600
+Media Duration                  : 1.10 s
+Media Language Code             : und
+Handler Class                   : Media Handler
+Handler Type                    : NRT Metadata
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Metadata
+Gen Media Version               : 0
+Gen Flags                       : 0 0 0
+Gen Graphics Mode               : ditherCopy
+Gen Op Color                    : 32768 32768 32768
+Gen Balance                     : 0
+Handler Class                   : Data Handler
+Handler Type                    : Alias Data
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Data Handler
+Meta Format                     : mebx
+Sample Time                     : 0 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.00180700002238154 162826820 0 0 0 -0.867425322532654 -0.286867707967758 1 1.00390625 2 4 -1 0 0
+Sample Time                     : 0.03 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.00180700002238154 193765538 0 -2.44279384613037 -1.68600785732269 -0.481279671192169 -0.705905556678772 1 1.00390625 2 4 -1 0 0
+Sample Time                     : 0.07 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.00143099995329976 140036156 0 -5.40750503540039 -3.62348198890686 -0.151109427213669 -0.475708305835724 1 1 2 4 -1 0 0
+Sample Time                     : 0.10 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.00143099995329976 149748475 0 -8.83888721466064 -5.67714738845825 -0.179519042372704 -0.317764073610306 1 1 2 4 -1 0 0
+Sample Time                     : 0.13 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.00143099995329976 155006261 0 -12.838996887207 -7.9639368057251 -0.375598967075348 -0.222665563225746 1 1 2 4 -1 0 0
+Sample Time                     : 0.17 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.00122199999168515 126185520 0 -17.4523677825928 -10.4835176467896 -0.511084139347076 -0.0355673618614674 1 1 2 4 -1 0 0
+Sample Time                     : 0.20 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.00122199999168515 135207277 0 -22.7473602294922 -13.1893730163574 -0.643606722354889 -0.00818986725062132 1 1 2 4 -1 0 0
+Sample Time                     : 0.23 s
+Sample Duration                 : 0.07 s
+Live Photo Info                 : 1 0.00122199999168515 143142762 0 -28.6321983337402 -15.8041248321533 -0.571201801300049 -0.145602285861969 1 1 2 4 -1 0 0
+Sample Time                     : 0.30 s
+Sample Duration                 : 0.07 s
+Live Photo Info                 : 1 0.0010550000006333 140389651 0 -40.469783782959 -17.8683013916016 -0.0448945127427578 -0.0335305482149124 1 1.0078125 2 4 -1 0 0
+Sample Time                     : 0.37 s
+Sample Duration                 : 0.07 s
+Live Photo Info                 : 1 0.000928999972529709 110038865 0 -50.8149108886719 -15.3366241455078 0.162546426057816 0.0698041841387749 1 1 2 4 -1 0 0
+Sample Time                     : 0.43 s
+Sample Duration                 : 0.07 s
+Live Photo Info                 : 1 0.000835000013466924 84010857 0 -55.9412384033203 -4.9236364364624 -0.374511152505875 0.174288719892502 1 1.01171875 2 4 -1 0 0
+Sample Time                     : 0.50 s
+Sample Duration                 : 0.07 s
+Live Photo Info                 : 1 0.000835000013466924 95699404 0 -54.4006233215332 11.2392816543579 -0.219673752784729 0.321480810642242 1 1.01171875 2 4 -1 0 0
+Sample Time                     : 0.57 s
+Sample Duration                 : 0.07 s
+Live Photo Info                 : 1 0.000793999992311001 82281343 0 -48.8819160461426 25.5370597839355 0.413924664258957 0.0509900003671646 1 1.01171875 2 4 -1 0 0
+Sample Time                     : 0.63 s
+Sample Duration                 : 0.07 s
+Live Photo Info                 : 1 0.000793999992311001 58570063 0 -43.9044990539551 33.6029510498047 0.31303396821022 0.129633337259293 1 1 4 0 -1 0 0
+Sample Time                     : 0.70 s
+Sample Duration                 : 0.07 s
+Live Photo Info                 : 1 0.000814999977592379 57900854 0 -39.9624633789062 38.0476036071777 -0.0556944198906422 0.236205607652664 1 1 4 0 -1 0 0
+Sample Time                     : 0.77 s
+Sample Duration                 : 0.07 s
+Live Photo Info                 : 1 0.000814999977592379 47935628 0 -18.5494651794434 54.5354423522949 0.439481675624847 0.266966164112091 1 1 4 0 -1 0 0
+Sample Time                     : 0.83 s
+Sample Duration                 : 0.07 s
+Live Photo Info                 : 1 0.000971000001300126 61169275 0 12.3650188446045 75.718017578125 0.454526513814926 0.129922091960907 1 1.0078125 4 0 -1 0 0
+Sample Time                     : 0.90 s
+Sample Duration                 : 0.07 s
+Live Photo Info                 : 1 0.000971000001300126 59054368 0 46.215934753418 99.3869781494141 0.761421144008636 0.298378646373749 1 1.0078125 4 0 -1 0 0
+Sample Time                     : 0.97 s
+Sample Duration                 : 0.07 s
+Live Photo Info                 : 1 0.00113800005055964 71454416 0 80.3458099365234 123.67756652832 0.66387277841568 0.478181481361389 1 1.00390625 2 4 -1 0 0
+Sample Time                     : 1.03 s
+Sample Duration                 : 0.07 s
+Live Photo Info                 : 1 0.0013269999762997 86414108 0 103.797393798828 140.419387817383 0.101005211472511 0.538998782634735 1 1 2 4 -1 0 0
+Track Header Version            : 0
+Track Create Date               : 2018:01:02 08:40:38
+Track Modify Date               : 2018:01:02 08:40:39
+Track ID                        : 4
+Track Duration                  : 0.73 s
+Track Layer                     : 0
+Track Volume                    : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Content Describes               : Track 1
+Media Header Version            : 0
+Media Create Date               : 2018:01:02 08:40:38
+Media Modify Date               : 2018:01:02 08:40:39
+Media Time Scale                : 600
+Media Duration                  : 0.00 s
+Media Language Code             : und
+Handler Class                   : Media Handler
+Handler Type                    : NRT Metadata
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Metadata
+Gen Media Version               : 0
+Gen Flags                       : 0 0 0
+Gen Graphics Mode               : ditherCopy
+Gen Op Color                    : 32768 32768 32768
+Gen Balance                     : 0
+Handler Class                   : Data Handler
+Handler Type                    : Alias Data
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Data Handler
+Meta Format                     : mebx
+Sample Time                     : 0 s
+Sample Duration                 : 0.00 s
+Still Image Time                : -1
+Handler Type                    : Metadata Tags
+Content Identifier              : FAB55846-4D10-4821-B588-29067FC75B4F
+GPS Coordinates                 : 5 deg 24' 54.36" N, 100 deg 20' 20.40" E, 12.807 m Above Sea Level
+Make                            : Apple
+Model                           : iPhone 7 Plus
+Software                        : 11.2.1
+Creation Date                   : 2018:01:02 16:40:37+08:00
+Image Size                      : 1440x1080
+Megapixels                      : 1.6
+Avg Bitrate                     : 7.17 Mbps
+GPS Altitude                    : 12.807 m
+GPS Altitude Ref                : Above Sea Level
+GPS Latitude                    : 5 deg 24' 54.36" N
+GPS Longitude                   : 100 deg 20' 20.40" E
+Rotation                        : 0
+GPS Position                    : 5 deg 24' 54.36" N, 100 deg 20' 20.40" E

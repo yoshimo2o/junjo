@@ -1,0 +1,343 @@
+ExifTool Version Number         : 13.30
+File Name                       : IMG_6312.MP4
+Directory                       : .
+File Size                       : 2.0 MB
+File Modification Date/Time     : 2025:07:27 17:00:56+08:00
+File Access Date/Time           : 2025:08:03 14:57:16+08:00
+File Inode Change Date/Time     : 2025:08:03 03:00:50+08:00
+File Permissions                : -rw-r--r--
+File Type                       : MP4
+File Type Extension             : mp4
+MIME Type                       : video/quicktime
+Major Brand                     : Apple QuickTime (.MOV/QT)
+Minor Version                   : 0.0.0
+Compatible Brands               : qt
+Media Data Size                 : 2000732
+Media Data Offset               : 36
+Movie Header Version            : 0
+Create Date                     : 2017:10:21 10:20:20
+Modify Date                     : 2017:10:21 10:20:21
+Time Scale                      : 600
+Duration                        : 1.96 s
+Preferred Rate                  : 1
+Preferred Volume                : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Preview Time                    : 0 s
+Preview Duration                : 0 s
+Poster Time                     : 0 s
+Selection Time                  : 0 s
+Selection Duration              : 0 s
+Current Time                    : 0 s
+Next Track ID                   : 5
+Track Header Version            : 0
+Track Create Date               : 2017:10:21 10:20:20
+Track Modify Date               : 2017:10:21 10:20:21
+Track ID                        : 1
+Track Duration                  : 1.96 s
+Track Layer                     : 0
+Track Volume                    : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Image Width                     : 1440
+Image Height                    : 1080
+Clean Aperture Dimensions       : 1308x980
+Production Aperture Dimensions  : 1440x1080
+Encoded Pixels Dimensions       : 1440x1080
+Media Header Version            : 0
+Media Create Date               : 2017:10:21 10:20:20
+Media Modify Date               : 2017:10:21 10:20:21
+Media Time Scale                : 600
+Media Duration                  : 1.96 s
+Media Language Code             : und
+Handler Class                   : Media Handler
+Handler Type                    : Video Track
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Video
+Graphics Mode                   : ditherCopy
+Op Color                        : 32768 32768 32768
+Handler Class                   : Data Handler
+Handler Type                    : Alias Data
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Data Handler
+Compressor ID                   : hvc1
+Source Image Width              : 1440
+Source Image Height             : 1080
+X Resolution                    : 72
+Y Resolution                    : 72
+Compressor Name                 : HEVC
+Bit Depth                       : 24
+Video Frame Rate                : 29.057
+Track Header Version            : 0
+Track Create Date               : 2017:10:21 10:20:20
+Track Modify Date               : 2017:10:21 10:20:21
+Track ID                        : 2
+Track Duration                  : 1.96 s
+Track Layer                     : 0
+Track Volume                    : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Media Header Version            : 0
+Media Create Date               : 2017:10:21 10:20:20
+Media Modify Date               : 2017:10:21 10:20:21
+Media Time Scale                : 44100
+Media Duration                  : 1.96 s
+Media Language Code             : und
+Handler Class                   : Media Handler
+Handler Type                    : Audio Track
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Audio
+Balance                         : 0
+Handler Class                   : Data Handler
+Handler Type                    : Alias Data
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Data Handler
+Audio Format                    : lpcm
+Audio Channels                  : 3
+Audio Bits Per Sample           : 16
+Audio Sample Rate               : 1
+Track Header Version            : 0
+Track Create Date               : 2017:10:21 10:20:20
+Track Modify Date               : 2017:10:21 10:20:21
+Track ID                        : 3
+Track Duration                  : 1.96 s
+Track Layer                     : 0
+Track Volume                    : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Content Describes               : Track 1
+Media Header Version            : 0
+Media Create Date               : 2017:10:21 10:20:20
+Media Modify Date               : 2017:10:21 10:20:21
+Media Time Scale                : 600
+Media Duration                  : 1.96 s
+Media Language Code             : und
+Handler Class                   : Media Handler
+Handler Type                    : NRT Metadata
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Metadata
+Gen Media Version               : 0
+Gen Flags                       : 0 0 0
+Gen Graphics Mode               : ditherCopy
+Gen Op Color                    : 32768 32768 32768
+Gen Balance                     : 0
+Handler Class                   : Data Handler
+Handler Type                    : Alias Data
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Data Handler
+Meta Format                     : mebx
+Sample Time                     : 0 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 138470190 0 0 0 2.63219094276428 2.44573903083801 1 1.19184982776642 4 0 -1 0 0
+Sample Time                     : 0.03 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 129463983 0 0.590599060058594 0.0682264938950539 3.09607267379761 1.54005968570709 1 1.19184982776642 4 0 -1 0 0
+Sample Time                     : 0.07 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 162551798 0 1.02422225475311 0.171471953392029 2.74386811256409 -0.436989158391953 1 1.19184982776642 4 0 -1 0 0
+Sample Time                     : 0.10 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 178202740 0 1.39807820320129 0.285458922386169 2.47910642623901 -0.618226408958435 1 1.19184982776642 4 0 -1 0 0
+Sample Time                     : 0.13 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 197720720 0 1.80274271965027 0.401434004306793 1.57283544540405 -1.10950446128845 1 1.19184982776642 4 0 -1 0 0
+Sample Time                     : 0.17 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 180153905 0 2.28340315818787 0.509921014308929 0.136159628629684 -1.72527372837067 1 1.19184982776642 4 0 -1 0 0
+Sample Time                     : 0.20 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 161384776 0 2.76022744178772 0.617498397827148 -0.993542611598969 -1.24072468280792 1 1.19184982776642 4 0 -1 0 0
+Sample Time                     : 0.23 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 167942824 0 3.25323987007141 0.726906657218933 -2.19077920913696 -0.147346720099449 1 1.19184982776642 4 0 -1 0 0
+Sample Time                     : 0.27 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 174820009 0 3.82595992088318 0.812314569950104 -1.77547812461853 0.696384608745575 1 1.19184982776642 4 0 -1 0 0
+Sample Time                     : 0.30 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 153822501 0 4.45215129852295 0.579684197902679 -0.210647568106651 4.61859607696533 1 1.19184982776642 4 0 -1 0 0
+Sample Time                     : 0.33 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 189046595 0 4.44216632843018 1.01597428321838 -1.33869934082031 -0.0700174942612648 1 1.19184982776642 4 0 -1 0 0
+Sample Time                     : 0.37 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 195404111 0 4.69044351577759 1.27240788936615 -0.242822721600533 0.0182234030216932 1 1.19184982776642 4 0 -1 0 0
+Sample Time                     : 0.40 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 284271670 0 5.02574920654297 1.4254537820816 0.975370407104492 0.331404119729996 1 1.1796875 4 0 -1 0 0
+Sample Time                     : 0.43 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 277615547 0 5.38329839706421 1.48503923416138 1.64056026935577 0.411682814359665 1 1.1796875 4 0 -1 0 0
+Sample Time                     : 0.47 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 281911038 0 5.7818431854248 1.49762225151062 0.37214919924736 -0.619877219200134 1 1.27734375 4 0 -1 0 0
+Sample Time                     : 0.50 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 281828684 0 6.1978702545166 1.5246274471283 0.122798830270767 -0.871458053588867 1 1.33203125 4 0 -1 0 0
+Sample Time                     : 0.53 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 312084361 0 6.62219333648682 1.53297460079193 0.835830211639404 -0.672094106674194 1 1.3671875 4 0 -1 0 0
+Sample Time                     : 0.57 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 330985717 0 7.00153255462646 1.48913407325745 1.05669355392456 -0.196818798780441 1 1.390625 4 0 -1 0 0
+Sample Time                     : 0.60 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 333559630 0 7.32677888870239 1.44877779483795 1.08938896656036 0.864125430583954 1 1.390625 4 0 -1 0 0
+Sample Time                     : 0.63 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 335618875 0 7.60713052749634 1.41329979896545 1.13399612903595 0.94068431854248 1 1.390625 2 4 -1 0 0
+Sample Time                     : 0.67 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 334923052 0 7.88197326660156 1.40212535858154 -0.173191264271736 0.0604801438748837 1 1.390625 2 4 -1 0 0
+Sample Time                     : 0.70 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 332583201 0 8.17260551452637 1.41298508644104 -0.52238804101944 -0.130235075950623 1 1.390625 2 4 -1 0 0
+Sample Time                     : 0.73 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 339328696 0 8.47413921356201 1.41485822200775 0.396938443183899 1.16072976589203 1 1.390625 2 4 -1 0 0
+Sample Time                     : 0.77 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 332349217 0 8.81902694702148 1.41232740879059 0.212868750095367 0.42255237698555 1 1.390625 2 4 -1 0 0
+Sample Time                     : 0.80 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 331989233 0 9.20101070404053 1.38490855693817 -0.848347187042236 -1.7940434217453 1 1.390625 2 4 -1 0 0
+Sample Time                     : 0.83 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 325616803 0 9.69572067260742 1.28641664981842 -0.096313551068306 -1.3323962688446 1 1.390625 2 4 -1 0 0
+Sample Time                     : 0.87 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 326832594 0 9.97382259368896 1.19996559619904 0.21603798866272 -1.22057473659515 1 1.390625 4 0 -1 0 0
+Sample Time                     : 0.90 s
+Sample Duration                 : 0.04 s
+Live Photo Info                 : 1 0.0299989990890026 318979856 0 10.3141984939575 1.11813116073608 1.21781802177429 -0.762237250804901 1 1.390625 4 0 -1 0 0
+Sample Time                     : 0.94 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 311519332 0 10.6451015472412 1.04700171947479 1.75350952148438 0.276448369026184 1 1.390625 4 0 -1 0 0
+Sample Time                     : 0.97 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 336791203 0 10.9449815750122 0.982682943344116 1.51763868331909 -0.876914918422699 1 1.390625 4 0 -1 0 0
+Sample Time                     : 1.00 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 332803026 0 11.2183237075806 0.932060360908508 1.19422602653503 -0.305302441120148 1 1.390625 4 0 -1 0 0
+Sample Time                     : 1.03 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 342427675 0 11.4837894439697 0.902152717113495 0.21387130022049 -0.152003362774849 1 1.390625 4 0 -1 0 0
+Sample Time                     : 1.07 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 334571582 0 11.7457590103149 0.887842118740082 -0.247719869017601 0.649945914745331 1 1.390625 4 0 -1 0 0
+Sample Time                     : 1.10 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 325228850 0 12.0550336837769 0.801664352416992 -2.44747614860535 1.15980696678162 1 1.390625 4 0 -1 0 0
+Sample Time                     : 1.14 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 335738190 0 12.107536315918 0.99893581867218 -0.11635959148407 0.86522388458252 1 1.390625 4 0 -1 0 0
+Sample Time                     : 1.17 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 311614773 0 12.2450876235962 1.06046330928802 1.33462834358215 1.64661478996277 1 1.390625 4 0 -1 0 0
+Sample Time                     : 1.20 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 325510170 0 12.3952589035034 1.08413171768188 -0.0644738003611565 -0.770544946193695 1 1.390625 4 0 -1 0 0
+Sample Time                     : 1.24 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 326765761 0 12.5847864151001 1.02708840370178 -2.42617774009705 -2.07509112358093 1 1.390625 4 0 -1 0 0
+Sample Time                     : 1.27 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.00999899953603745 229319672 0 12.6108827590942 1.29985809326172 -0.144277736544609 -0.0868359804153442 1 4.1742787361145 4 0 -1 0 0
+Sample Time                     : 1.30 s
+Sample Duration                 : 0.09 s
+Live Photo Info                 : 1 0.00999899953603745 225649070 0 12.7597637176514 1.48094546794891 0.540450632572174 1.15082323551178 1 4.1742787361145 4 0 -1 0 0
+Sample Time                     : 1.40 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 330739593 0 13.1241846084595 1.80179786682129 -0.223945796489716 0.00735199032351375 1 1.390625 4 0 -1 0 0
+Sample Time                     : 1.43 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 339769154 0 13.5355634689331 1.81727826595306 0.0274955052882433 -0.0121362451463938 1 1.4375 4 0 -1 0 0
+Sample Time                     : 1.46 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 336022240 0 14.0227222442627 1.81437981128693 0.98646479845047 0.175651490688324 1 1.4375 4 0 -1 0 0
+Sample Time                     : 1.50 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 328400342 0 14.5905704498291 1.78335702419281 0.849594950675964 0.233992993831635 1 1.4375 4 0 -1 0 0
+Sample Time                     : 1.53 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 340756789 0 15.2300796508789 1.70475482940674 0.0904625877737999 -0.0499794036149979 1 1.4375 4 0 -1 0 0
+Sample Time                     : 1.56 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 339678925 0 15.9393014907837 1.5747138261795 0.360048055648804 -0.137026518583298 1 1.4375 4 0 -1 0 0
+Sample Time                     : 1.59 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 341922899 0 16.7135200500488 1.39109301567078 0.753619909286499 0.89598673582077 1 1.4375 4 0 -1 0 0
+Sample Time                     : 1.63 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 339655646 0 17.5545272827148 1.14873921871185 0.898964405059814 1.10003638267517 1 1.4375 4 0 -1 0 0
+Sample Time                     : 1.66 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 339210476 0 18.4610195159912 0.847804963588715 0.400506049394608 0.620770752429962 1 1.4375 4 0 -1 0 0
+Sample Time                     : 1.70 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 336733226 0 19.4366111755371 0.483120292425156 0.200225532054901 0.0399222038686275 1 1.4375 4 0 -1 0 0
+Sample Time                     : 1.73 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 335660763 0 20.4777870178223 0.062797337770462 1.02801883220673 0.164630711078644 1 1.4375 4 0 -1 0 0
+Sample Time                     : 1.76 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 332163281 0 21.5622234344482 -0.406577318906784 1.5490574836731 0.704706013202667 1 1.4375 4 0 -1 0 0
+Sample Time                     : 1.79 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 322961423 0 22.70387840271 -0.910111904144287 1.29969429969788 -0.301340162754059 1 1.4375 4 0 -1 0 0
+Sample Time                     : 1.83 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 313907258 0 23.9412441253662 -1.40461421012878 0.950518548488617 -1.7650705575943 1 1.4375 4 0 -1 0 0
+Sample Time                     : 1.86 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 331349648 0 25.4842872619629 -1.76407516002655 3.78926944732666 -3.09574055671692 1 1.4375 4 0 -1 0 0
+Sample Time                     : 1.90 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 324487796 0 28.6241989135742 -3.00679159164429 7.84128046035767 -6.00354385375977 1 1.4375 4 0 -1 0 0
+Sample Time                     : 1.93 s
+Sample Duration                 : 0.03 s
+Live Photo Info                 : 1 0.0299989990890026 308013130 0 32.3453712463379 -6.36942577362061 7.56170225143433 -9.34789752960205 1 1.4375 4 0 -1 0 0
+Track Header Version            : 0
+Track Create Date               : 2017:10:21 10:20:20
+Track Modify Date               : 2017:10:21 10:20:21
+Track ID                        : 4
+Track Duration                  : 1.27 s
+Track Layer                     : 0
+Track Volume                    : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Content Describes               : Track 1
+Media Header Version            : 0
+Media Create Date               : 2017:10:21 10:20:20
+Media Modify Date               : 2017:10:21 10:20:21
+Media Time Scale                : 600
+Media Duration                  : 0.00 s
+Media Language Code             : und
+Handler Class                   : Media Handler
+Handler Type                    : NRT Metadata
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Metadata
+Gen Media Version               : 0
+Gen Flags                       : 0 0 0
+Gen Graphics Mode               : ditherCopy
+Gen Op Color                    : 32768 32768 32768
+Gen Balance                     : 0
+Handler Class                   : Data Handler
+Handler Type                    : Alias Data
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Data Handler
+Meta Format                     : mebx
+Sample Time                     : 0 s
+Sample Duration                 : 0.00 s
+Still Image Time                : -1
+Handler Type                    : Metadata Tags
+Content Identifier              : 86499A14-3DB9-4BBF-991E-2894A581D78C
+GPS Coordinates                 : 51 deg 57' 56.16" N, 4 deg 34' 19.20" E, 6.736 m Below Sea Level
+Make                            : Apple
+Model                           : iPhone 7 Plus
+Software                        : 11.0.3
+Creation Date                   : 2017:10:21 12:20:20+02:00
+Image Size                      : 1440x1080
+Megapixels                      : 1.6
+Avg Bitrate                     : 8.16 Mbps
+GPS Altitude                    : 6.736 m
+GPS Altitude Ref                : Below Sea Level
+GPS Latitude                    : 51 deg 57' 56.16" N
+GPS Longitude                   : 4 deg 34' 19.20" E
+Rotation                        : 0
+GPS Position                    : 51 deg 57' 56.16" N, 4 deg 34' 19.20" E

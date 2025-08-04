@@ -1,0 +1,143 @@
+ExifTool Version Number         : 13.30
+File Name                       : IMG_6312(1).MP4
+Directory                       : .
+File Size                       : 3.7 MB
+File Modification Date/Time     : 2025:07:27 17:07:26+08:00
+File Access Date/Time           : 2025:08:03 14:17:43+08:00
+File Inode Change Date/Time     : 2025:08:03 03:00:50+08:00
+File Permissions                : -rw-r--r--
+File Type                       : MP4
+File Type Extension             : mp4
+MIME Type                       : video/quicktime
+Major Brand                     : Apple QuickTime (.MOV/QT)
+Minor Version                   : 0.0.0
+Compatible Brands               : qt
+Media Data Size                 : 3705556
+Media Data Offset               : 36
+Movie Header Version            : 0
+Create Date                     : 2017:04:22 00:14:08
+Modify Date                     : 2017:04:22 00:14:10
+Time Scale                      : 600
+Duration                        : 3.04 s
+Preferred Rate                  : 1
+Preferred Volume                : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Preview Time                    : 0 s
+Preview Duration                : 0 s
+Poster Time                     : 0 s
+Selection Time                  : 0 s
+Selection Duration              : 0 s
+Current Time                    : 0 s
+Next Track ID                   : 4
+Track Header Version            : 0
+Track Create Date               : 2017:04:22 00:14:08
+Track Modify Date               : 2017:04:22 00:14:10
+Track ID                        : 1
+Track Duration                  : 3.04 s
+Track Layer                     : 0
+Track Volume                    : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Image Width                     : 1440
+Image Height                    : 1080
+Clean Aperture Dimensions       : 1308x980
+Production Aperture Dimensions  : 1440x1080
+Encoded Pixels Dimensions       : 1440x1080
+Media Header Version            : 0
+Media Create Date               : 2017:04:22 00:14:08
+Media Modify Date               : 2017:04:22 00:14:10
+Media Time Scale                : 600
+Media Duration                  : 3.04 s
+Media Language Code             : und
+Handler Class                   : Media Handler
+Handler Type                    : Video Track
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Video
+Graphics Mode                   : ditherCopy
+Op Color                        : 32768 32768 32768
+Handler Class                   : Data Handler
+Handler Type                    : Alias Data
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Data Handler
+Compressor ID                   : avc1
+Source Image Width              : 1440
+Source Image Height             : 1080
+X Resolution                    : 72
+Y Resolution                    : 72
+Compressor Name                 : H.264
+Bit Depth                       : 24
+Video Frame Rate                : 29.967
+Track Header Version            : 0
+Track Create Date               : 2017:04:22 00:14:08
+Track Modify Date               : 2017:04:22 00:14:10
+Track ID                        : 2
+Track Duration                  : 3.04 s
+Track Layer                     : 0
+Track Volume                    : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Media Header Version            : 0
+Media Create Date               : 2017:04:22 00:14:08
+Media Modify Date               : 2017:04:22 00:14:10
+Media Time Scale                : 44100
+Media Duration                  : 3.04 s
+Media Language Code             : und
+Handler Class                   : Media Handler
+Handler Type                    : Audio Track
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Audio
+Balance                         : 0
+Handler Class                   : Data Handler
+Handler Type                    : Alias Data
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Data Handler
+Audio Format                    : lpcm
+Audio Channels                  : 3
+Audio Bits Per Sample           : 16
+Audio Sample Rate               : 1
+Track Header Version            : 0
+Track Create Date               : 2017:04:22 00:14:08
+Track Modify Date               : 2017:04:22 00:14:10
+Track ID                        : 3
+Track Duration                  : 1.47 s
+Track Layer                     : 0
+Track Volume                    : 100.00%
+Matrix Structure                : 1 0 0 0 1 0 0 0 1
+Content Describes               : Track 1
+Media Header Version            : 0
+Media Create Date               : 2017:04:22 00:14:08
+Media Modify Date               : 2017:04:22 00:14:10
+Media Time Scale                : 600
+Media Duration                  : 0.00 s
+Media Language Code             : und
+Handler Class                   : Media Handler
+Handler Type                    : NRT Metadata
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Metadata
+Gen Media Version               : 0
+Gen Flags                       : 0 0 0
+Gen Graphics Mode               : ditherCopy
+Gen Op Color                    : 32768 32768 32768
+Gen Balance                     : 0
+Handler Class                   : Data Handler
+Handler Type                    : Alias Data
+Handler Vendor ID               : Apple
+Handler Description             : Core Media Data Handler
+Meta Format                     : mebx
+Sample Time                     : 0 s
+Sample Duration                 : 0.00 s
+Still Image Time                : -1
+Handler Type                    : Metadata Tags
+Content Identifier              : 5BE7857F-9336-4B2B-B88A-043BBF2ABBEC
+GPS Coordinates                 : 37 deg 48' 24.48" S, 144 deg 57' 23.76" E, 38.493 m Above Sea Level
+Make                            : Apple
+Model                           : iPhone 7 Plus
+Software                        : 10.3.1
+Creation Date                   : 2017:04:22 10:14:08+10:00
+Image Size                      : 1440x1080
+Megapixels                      : 1.6
+Avg Bitrate                     : 9.76 Mbps
+GPS Altitude                    : 38.493 m
+GPS Altitude Ref                : Above Sea Level
+GPS Latitude                    : 37 deg 48' 24.48" S
+GPS Longitude                   : 144 deg 57' 23.76" E
+Rotation                        : 0
+GPS Position                    : 37 deg 48' 24.48" S, 144 deg 57' 23.76" E

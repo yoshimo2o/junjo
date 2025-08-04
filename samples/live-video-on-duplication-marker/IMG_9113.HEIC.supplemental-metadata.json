@@ -1,0 +1,33 @@
+{
+  "title": "IMG_9113.HEIC",
+  "description": "",
+  "imageViews": "8",
+  "creationTime": {
+    "timestamp": "1544451970",
+    "formatted": "Dec 10, 2018, 2:26:10 PM UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1543491851",
+    "formatted": "Nov 29, 2018, 11:44:11 AM UTC"
+  },
+  "geoData": {
+    "latitude": 54.685713899999996,
+    "longitude": 25.286974999999998,
+    "altitude": 68.31322123310254,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 54.685713899999996,
+    "longitude": 25.286974999999998,
+    "altitude": 68.31322123310254,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/TestData1234PlaceHolderXYZ998877AABBccDDEEff",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}
