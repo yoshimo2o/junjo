@@ -17,6 +17,42 @@ check_dependencies() {
 }
 
 # ====================================================================================================
+# confirm <message>
+#
+# Prompts the user for confirmation with a yes/no question.
+# Returns 0 (true) if user confirms with 'y' or 'yes', 1 (false) otherwise.
+#
+# Parameters:
+#   message - The confirmation message to display
+#
+# Returns:
+#   0 if user confirms (y/yes), 1 if user declines (n/no) or invalid input
+#
+# Example:
+#   if confirm "Do you want to continue?"; then
+#     echo "User confirmed"
+#   else
+#     echo "User declined"
+#   fi
+# ====================================================================================================
+confirm() {
+  local message="$1"
+  local response
+
+  echo -n "$message [y/N]: "
+  read -r response
+
+  case "$response" in
+    [yY]|[yY][eE][sS])
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+# ====================================================================================================
 # wrap_text <text> <width> [indent]
 #
 # Wraps text at specified character width with optional indentation for continuation lines.
