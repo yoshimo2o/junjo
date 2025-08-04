@@ -265,7 +265,7 @@ analyze_media_file() {
   file_takeout_meta_file_name["$fid"]="$takeout_meta_file_name"
   file_takeout_meta_file_match_strategy["$fid"]="$takeout_meta_file_match_strategy"
 
-  if [[ -n "$takeout_meta_file" ]] then
+  if [[ -n "$takeout_meta_file" ]]; then
     local takeout_meta_photo_taken_time \
           takeout_meta_geo_data \
           takeout_meta_device_type \
