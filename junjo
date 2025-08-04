@@ -10,6 +10,7 @@
 # Options:
 #   -r, --recursive       Recursively scan subdirectories
 #   -v, --verbose         Enable verbose output (show scan & sort logs)
+#   -i, --interactive     Enable interactive mode (default: disabled)
 #   --log-dir=PATH        Directory to store log files (default: current directory)
 #   --output-dir=PATH     Directory to store sorted files (default: ./output)
 #
@@ -23,6 +24,9 @@
 #
 # To analyze a single media file:
 #   junjo /path/to/photo.jpg
+#
+# To run in interactive mode:
+#   junjo -r -v -i /path/to/photos
 #
 # To specify a custom log directory:
 #   junjo -r -v --log-dir="/var/log/junjo" /path/to/photos
@@ -57,6 +61,9 @@ for arg in "$@"; do
       ;;
     -v|--verbose)
       JUNJO_LOG_VERBOSE=1
+      ;;
+    -i|--interactive)
+      JUNJO_INTERACTIVE=1
       ;;
     --log-dir=*)
       JUNJO_LOG_DIR="${arg#*=}"
