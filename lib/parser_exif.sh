@@ -91,21 +91,21 @@ extract_exif_metadata() {
   local -n file_create_date_ref="${15}"
   local -n file_modify_date_ref="${16}"
 
-  local cid \
-        device_make \
-        device_model \
-        lens_make \
-        lens_model \
-        image_width \
-        image_height \
-        image_size \
-        date_time_original \
-        create_date \
-        track_create_date \
-        media_create_date \
-        user_comment \
-        file_create_date \
-        file_modify_date
+  local _cid \
+        _device_make \
+        _device_model \
+        _lens_make \
+        _lens_model \
+        _image_width \
+        _image_height \
+        _image_size \
+        _date_time_original \
+        _create_date \
+        _track_create_date \
+        _media_create_date \
+        _user_comment \
+        _file_create_date \
+        _file_modify_date
 
   extract_exif_to_vars "$media_file" \
     "ContentIdentifier" \
@@ -124,38 +124,38 @@ extract_exif_metadata() {
     "FileCreateDate" \
     "FileModifyDate" \
     -- \
-    cid \
-    device_make \
-    device_model \
-    lens_make \
-    lens_model \
-    image_width \
-    image_height \
-    image_size \
-    date_time_original \
-    create_date \
-    track_create_date \
-    media_create_date \
-    user_comment \
-    file_create_date \
-    file_modify_date \
+    _cid \
+    _device_make \
+    _device_model \
+    _lens_make \
+    _lens_model \
+    _image_width \
+    _image_height \
+    _image_size \
+    _date_time_original \
+    _create_date \
+    _track_create_date \
+    _media_create_date \
+    _user_comment \
+    _file_create_date \
+    _file_modify_date \
 
   # Set return values via nameref
-  cid_ref="$cid"
-  device_make_ref="$device_make"
-  device_model_ref="$device_model"
-  lens_make_ref="$lens_make"
-  lens_model_ref="$lens_model"
-  image_width_ref="$image_width"
-  image_height_ref="$image_height"
-  image_size_ref="$image_size"
-  date_time_original_ref="$date_time_original"
-  create_date_ref="$create_date"
-  track_create_date_ref="$track_create_date"
-  media_create_date_ref="$media_create_date"
-  user_comment_ref="$user_comment"
-  file_create_date_ref="$file_create_date"
-  file_modify_date_ref="$file_modify_date"
+  cid_ref="$_cid"
+  device_make_ref="$_device_make"
+  device_model_ref="$_device_model"
+  lens_make_ref="$_lens_make"
+  lens_model_ref="$_lens_model"
+  image_width_ref="$_image_width"
+  image_height_ref="$_image_height"
+  image_size_ref="$_image_size"
+  date_time_original_ref="$_date_time_original"
+  create_date_ref="$_create_date"
+  track_create_date_ref="$_track_create_date"
+  media_create_date_ref="$_media_create_date"
+  user_comment_ref="$_user_comment"
+  file_create_date_ref="$_file_create_date"
+  file_modify_date_ref="$_file_modify_date"
 }
 
 # ====================================================================================================

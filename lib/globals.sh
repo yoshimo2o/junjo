@@ -1,3 +1,6 @@
+# Global dummy variable for optional nameref parameters
+declare -g ___
+
 # Properties of each file keyed by file id (fid)
 declare -A file_src
 declare -A file_src_dir

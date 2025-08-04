@@ -36,8 +36,8 @@
 locate_takeout_meta_file() {
   local media_file="$1"
   local -n meta_file_ref="$2"
-  local -n meta_file_name_ref="$3"
-  local -n meta_file_match_strategy_ref="$4"
+  local -n meta_file_name_ref="${3:-___}"
+  local -n meta_file_match_strategy_ref="${4:-___}"
 
   local media_file_name="$(basename "$media_file")"
   local media_file_dir="$(dirname "$media_file")"
@@ -62,8 +62,8 @@ locate_takeout_meta_file() {
   if [[ -f "$file" ]]; then
     match_strategy="direct"
     meta_file_ref="$file"
-    meta_file_name_ref="$file_name"
-    meta_file_match_strategy_ref="$match_strategy"
+    [[ "$3" != "" ]] && meta_file_name_ref="$file_name"
+    [[ "$4" != "" ]] && meta_file_match_strategy_ref="$match_strategy"
     return 0
   fi
 
@@ -96,8 +96,8 @@ locate_takeout_meta_file() {
   if [[ -f "$file" ]]; then
     match_strategy="truncation"
     meta_file_ref="$file"
-    meta_file_name_ref="$file_name"
-    meta_file_match_strategy_ref="$match_strategy"
+    [[ "$3" != "" ]] && meta_file_name_ref="$file_name"
+    [[ "$4" != "" ]] && meta_file_match_strategy_ref="$match_strategy"
     return 0
   fi
 
@@ -131,8 +131,8 @@ locate_takeout_meta_file() {
       if [[ -f "$file" ]]; then
         match_strategy="duplication"
         meta_file_ref="$file"
-        meta_file_name_ref="$file_name"
-        meta_file_match_strategy_ref="$match_strategy"
+        [[ "$3" != "" ]] && meta_file_name_ref="$file_name"
+        [[ "$4" != "" ]] && meta_file_match_strategy_ref="$match_strategy"
         return 0
       fi
     fi
@@ -179,10 +179,10 @@ locate_takeout_meta_file() {
 extract_takeout_metadata() {
   local takeout_meta_file="$1"
   local -n photo_taken_time_ref="$2"
-  local -n geo_data_ref="$3"
-  local -n device_type_ref="$4"
-  local -n device_folder_ref="$5"
-  local -n upload_origin_ref="$6"
+  local -n geo_data_ref="${3:-___}"
+  local -n device_type_ref="${4:-___}"
+  local -n device_folder_ref="${5:-___}"
+  local -n upload_origin_ref="${6:-___}"
 
   # Validate input file exists
   if [[ ! -f "$takeout_meta_file" ]]; then
@@ -216,12 +216,12 @@ extract_takeout_metadata() {
   local jq_values
   mapfile -t jq_values <<< "$jq_output"
 
-  # Extract values from array and assign directly to reference variables
+  # Extract values from array and assign to reference variables (only if provided)
   photo_taken_time_ref="${jq_values[0]:-}"
-  geo_data_ref="${jq_values[1]:-}"
-  device_type_ref="${jq_values[2]:-}"
-  device_folder_ref="${jq_values[3]:-}"
-  upload_origin_ref="${jq_values[4]:-}"
+  [[ "$3" != "" ]] && geo_data_ref="${jq_values[1]:-}"
+  [[ "$4" != "" ]] && device_type_ref="${jq_values[2]:-}"
+  [[ "$5" != "" ]] && device_folder_ref="${jq_values[3]:-}"
+  [[ "$6" != "" ]] && upload_origin_ref="${jq_values[4]:-}"
 
   return 0
 }
