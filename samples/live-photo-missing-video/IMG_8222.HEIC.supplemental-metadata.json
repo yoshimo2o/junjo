@@ -1,0 +1,33 @@
+{
+  "title": "IMG_8222.HEIC",
+  "description": "",
+  "imageViews": "5",
+  "creationTime": {
+    "timestamp": "1528012197",
+    "formatted": "Jun 3, 2018, 7:49:57 AM UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1513539576",
+    "formatted": "Dec 17, 2017, 7:39:36 PM UTC"
+  },
+  "geoData": {
+    "latitude": 38.7108,
+    "longitude": -9.1405,
+    "altitude": 78.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 38.7108,
+    "longitude": -9.1405,
+    "altitude": 78.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/TestData1234PlaceHolderXYZ998877AABBccDDEEff",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}
