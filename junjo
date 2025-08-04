@@ -41,6 +41,12 @@ source "$JUNJO_LIB_DIR/globals.sh"
 source "$JUNJO_LIB_DIR/functions.sh"
 source "$JUNJO_LIB_DIR/log.sh"
 source "$JUNJO_LIB_DIR/media_scanner.sh"
+source "$JUNJO_LIB_DIR/parser_file.sh"
+source "$JUNJO_LIB_DIR/parser_takeout.sh"
+source "$JUNJO_LIB_DIR/parser_exif.sh"
+source "$JUNJO_LIB_DIR/parser_timestamp.sh"
+source "$JUNJO_LIB_DIR/parser_device.sh"
+source "$JUNJO_LIB_DIR/parser_software.sh"
 
 # Parse command line arguments
 args=()
@@ -72,6 +78,12 @@ done
 # else default to current directory.
 if [[ ${#args[@]} -gt 0 ]]; then
   media_path="${args[-1]}"
+fi
+
+# If media_path is neither a file nor a directory, print error and exit.
+if [[ ! -d "$media_path" && ! -f "$media_path" ]]; then
+  echo "Error: '$media_path' is neither a valid directory nor a file." >&2
+  exit 1
 fi
 
 # Check for required dependencies.

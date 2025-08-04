@@ -1,6 +1,3 @@
-source "$JUNJO_LIB_DIR/parser_file.sh"
-source "$JUNJO_LIB_DIR/parser_takeout.sh"
-
 # ====================================================================================================
 # get_best_available_timestamp <media_file>
 #                              <&timestamp>

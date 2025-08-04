@@ -1,9 +1,3 @@
-source "$JUNJO_LIB_DIR/parser_file.sh"
-source "$JUNJO_LIB_DIR/parser_takeout.sh"
-source "$JUNJO_LIB_DIR/parser_timestamp.sh"
-source "$JUNJO_LIB_DIR/parser_exif.sh"
-source "$JUNJO_LIB_DIR/parser_device.sh"
-source "$JUNJO_LIB_DIR/parser_software.sh"
 
 # ====================================================================================================
 # analyze_media_file <media_file>
