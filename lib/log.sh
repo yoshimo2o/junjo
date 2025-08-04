@@ -48,9 +48,9 @@
 # ==============================================================================
 
 # Log categories
-readonly MAIN_LOG="main"
-readonly SCAN_LOG="scan"
-readonly SORT_LOG="sort"
+readonly MAIN_LOG="MAIN"
+readonly SCAN_LOG="SCAN"
+readonly SORT_LOG="SORT"
 
 # Log file paths (to be set in init_log)
 export JUNJO_LOG_FILE=""
@@ -97,31 +97,50 @@ log() {
   local message="$1"
   local category="$2"
   local timestamp="$(log_timestamp)"
+  local color_primary
+  local color_secondary
+  local color_reset="\033[0m"
 
-  # Determine the log file based on the category
+  # (Reverted) No static variables for last timestamp/category
+
+  # Determine the log file and color based on the category
   local log_file
   case "$category" in
     "$SCAN_LOG")
       log_file="$JUNJO_SCAN_LOG_FILE"
+      color_primary="\033[1;33m" # yellow
+      color_secondary="\033[0;33m" # light yellow
       ;;
     "$SORT_LOG")
       log_file="$JUNJO_SORT_LOG_FILE"
+      color_primary="\033[1;32m" # green
+      color_secondary="\033[0;32m" # light green
       ;;
     *)
       category="$MAIN_LOG" # Default to main log
       log_file="$JUNJO_LOG_FILE"
+      color_primary="\033[1;34m" # blue
+      color_secondary="\033[0;34m" # light blue
   esac
-
-  local log_message="${timestamp} ${message}"
 
   # Show log message on screen if the category is main
   # or if verbose mode is enabled
   if [[ "$category" == "$MAIN_LOG" || "$JUNJO_LOG_VERBOSE" -eq 1 ]]; then
-    echo "$log_message"
+    # Split message by the first ':' and color the part after it with Bright Black
+    local msg_before_colon msg_after_colon
+    if [[ "$message" == *:* ]]; then
+      msg_before_colon="${message%%:*}:"
+      msg_after_colon="${message#*:}"
+      msg_after_colon="${msg_after_colon# }" # trim leading space
+      local color_bright_black="\033[0;90m"
+      echo -e "${color_primary}${category} ${color_secondary}${timestamp}${color_reset} ${msg_before_colon} ${color_bright_black}${msg_after_colon}${color_reset}"
+    else
+      echo -e "${color_primary}${category} ${color_secondary}${timestamp}${color_reset} ${message}"
+    fi
   fi
 
-  # Append the log message to the appropriate log file
-  echo "$log_message" >> "$log_file"
+  # Append the log message to the appropriate log file (no color)
+  echo "${timestamp} ${category} ${message}" >> "$log_file"
 }
 
 # Log error message with timestamp
