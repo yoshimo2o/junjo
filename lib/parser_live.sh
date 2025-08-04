@@ -47,17 +47,37 @@ process_live_media() {
 # ====================================================================================================
 
 process_live_photos() {
+  local index=1
+  local total=${#live_photo_files[@]}
+  if (( total == 0 )); then
+    log "No live photos found."
+    return
+  fi
+
+  # Show a log informing users that we are processing the X amount of live photos.
+  log "Processing $total live photos."
+
   for fid in "${!live_photo_files[@]}"; do
     local media_file="${file_src[$fid]}"
-    local cid="${file_cid[$fid]}"
+    local cid="${file_exif_cid[$fid]}"
+
+    log "[$(progress "$index" "$total" "/")] Processing live photo: $media_file"
+
+    log_scan_tree_start "File: $media_file"
+      log_scan_tree "FID: $fid"
+      log_scan_tree "CID: $cid"
 
     # If this is the first time we've found a live photo for this CID, store its fid.
     if [[ -z "${live_photo_by_cid[$cid]}" ]]; then
       live_photo_by_cid[$cid]=$fid
+      log_scan_tree_end "Duplicate: No"
     else
       # If we already have a live photo for this CID, add to duplicates.
       add_to_live_photo_duplicates "$cid" "$fid"
+      log_scan_tree_end "Duplicate: Yes"
     fi
+
+    index=$((index + 1))
   done
 }
 
@@ -81,17 +101,37 @@ process_live_photos() {
 # ====================================================================================================
 
 process_live_videos() {
+  local index=1
+  local total=${#live_video_files[@]}
+  if (( total == 0 )); then
+    log "No live videos found."
+    return
+  fi
+
+  # Show a log informing users that we are processing the X amount of live photos.
+  log "Processing $total live videos."
+
   for fid in "${!live_video_files[@]}"; do
     local media_file="${file_src[$fid]}"
-    local cid="${file_cid[$fid]}"
+    local cid="${file_exif_cid[$fid]}"
+
+    log "[$(progress "$index" "$total" "/")] Processing live video: $media_file"
+
+    log_scan_tree_start "File: $media_file"
+      log_scan_tree "FID: $fid"
+      log_scan_tree "CID: $cid"
 
     # If this is the first time we've found a live video for this CID, store its fid.
     if [[ -z "${live_video_by_cid[$cid]}" ]]; then
       live_video_by_cid[$cid]=$fid
+      log_scan_tree_end "Duplicate: No"
     else
       # If we already have a live video for this CID, add to duplicates.
       add_to_live_video_duplicates "$cid" "$fid"
+      log_scan_tree_end "Duplicate: Yes"
     fi
+
+    index=$((index + 1))
   done
 }
 
