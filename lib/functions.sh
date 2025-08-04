@@ -92,3 +92,51 @@ wrap_text() {
 
   echo "$result"
 }
+
+# ====================================================================================================
+# pad <text> <char> <count>
+# Pads <text> on the left with <char> until the total length is <count>.
+# If <text> is longer than <count>, returns <text> unchanged.
+# Example: pad 7 "0" 3 → "007"
+# ====================================================================================================
+pad() {
+  local text="$1"
+  local char="$2"
+  local count="$3"
+  local len=${#text}
+  if (( len >= count )); then
+    printf "%s" "$text"
+    return
+  fi
+  local pad_len=$((count - len))
+  local pad_str=""
+  for ((i=0; i<pad_len; i++)); do
+    pad_str+="$char"
+  done
+  printf "%s%s" "$pad_str" "$text"
+}
+
+# ====================================================================================================
+# progress <current> <total> [type]
+# If type is "/" or omitted, returns "current/total" (no padding)
+# If type is "%", returns percentage with two decimals, e.g. "12.34%"
+# ====================================================================================================
+progress() {
+  local current="$1"
+  local total="$2"
+  local type="${3:-/}"
+  if [[ "$type" == "%" ]]; then
+    if (( total == 0 )); then
+      printf "0.00%%"
+      return
+    fi
+    local percent
+    percent=$(awk "BEGIN { printf \"%.2f\", ($current/$total)*100 }")
+    printf "%s%%" "$percent"
+  else
+    local width=${#total}
+    local padded_current
+    padded_current=$(pad "$current" " " "$width")
+    printf "%s/%s" "$padded_current" "$total"
+  fi
+}
