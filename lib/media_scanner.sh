@@ -357,7 +357,7 @@ analyze_media_file() {
 
   # Analyze file type
   local file_type
-  file_type=$(get_media_file_type "$fid")
+  get_media_file_type "$fid" file_type
 
   # Add files to our lists that is mapped by file type
   case "$file_type" in
