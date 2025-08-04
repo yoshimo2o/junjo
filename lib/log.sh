@@ -178,7 +178,7 @@ log_tree_indentation() {
 
 # Start a tree section and increase indent
 log_tree_start() {
-  log_tree $@
+  log_tree "$@"
   # Increase the indentation level for the next log message
   LOG_TREE_INDENT_LEVEL=$((LOG_TREE_INDENT_LEVEL + 1))
 }
