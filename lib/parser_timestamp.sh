@@ -37,9 +37,9 @@
 
 get_best_available_timestamp() {
   local fid="$1"
-  local -n ts="$2"
-  local -n ts_epoch="$3"
-  local -n ts_source="$4"
+  local -n timestamp_ref="$2"
+  local -n timestamp_epoch_ref="$3"
+  local -n timestamp_source_ref="$4"
 
   local photo_taken_time="${file_takeout_photo_taken_time["$fid"]:-}"
   local datetime_original="${file_exif_date_time_original["$fid"]:-}"
@@ -50,31 +50,31 @@ get_best_available_timestamp() {
   local file_modify_date="${file_modify_date["$fid"]:-}"
 
   if [[ -n "$photo_taken_time" ]]; then
-    ts="$photo_taken_time"
-    ts_source="PhotoTakenTime"
+    timestamp_ref="$photo_taken_time"
+    timestamp_source_ref="PhotoTakenTime"
   elif [[ -n "$datetime_original" ]]; then
-    ts="$datetime_original"
-    ts_source="DateTimeOriginal"
+    timestamp_ref="$datetime_original"
+    timestamp_source_ref="DateTimeOriginal"
   elif [[ -n "$create_date" ]]; then
-    ts="$create_date"
-    ts_source="CreateDate"
+    timestamp_ref="$create_date"
+    timestamp_source_ref="CreateDate"
   elif [[ -n "$track_create_date" ]]; then
-    ts="$track_create_date"
-    ts_source="TrackCreateDate"
+    timestamp_ref="$track_create_date"
+    timestamp_source_ref="TrackCreateDate"
   elif [[ -n "$media_create_date" ]]; then
-    ts="$media_create_date"
-    ts_source="MediaCreateDate"
+    timestamp_ref="$media_create_date"
+    timestamp_source_ref="MediaCreateDate"
   elif [[ -n "$file_create_date" ]]; then
-    ts="$file_create_date"
-    ts_source="FileCreateDate"
+    timestamp_ref="$file_create_date"
+    timestamp_source_ref="FileCreateDate"
   elif [[ -n "$file_modify_date" ]]; then
-    ts="$file_modify_date"
-    ts_source="FileModifyDate"
+    timestamp_ref="$file_modify_date"
+    timestamp_source_ref="FileModifyDate"
   fi
 
   # Normalize the selected timestamp
-  ts=$(normalize_timestamp "$ts")
-  ts_epoch=$(exif_ts_to_epoch_ms "$ts")
+  timestamp_ref=$(normalize_timestamp "$timestamp_ref")
+  timestamp_epoch_ref=$(exif_ts_to_epoch_ms "$timestamp_ref")
 }
 
 # ====================================================================================================
@@ -132,12 +132,24 @@ normalize_timestamp() {
   elif [[ "$clean" =~ ([0-9]{4}:[0-9]{2}:[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}) ]]; then
     printf "%s.000" "${BASH_REMATCH[1]}"
   else
-    echo ""
+    echo -n ""
   fi
 }
 
-# Converts a normalized Exif timestamp (YYYY:MM:DD HH:MM:SS.sss) to epoch milliseconds
-# Usage: ts_epoch_with_ms=$(exif_ts_to_epoch_ms "$ts")
+# ====================================================================================================
+# exif_ts_to_epoch_ms <exif_timestamp>
+#
+# Converts a normalized Exif timestamp ("YYYY:MM:DD HH:MM:SS.sss") to epoch milliseconds.
+#
+# Arguments:
+#   $1: exif_timestamp → Timestamp string in Exif format (with or without milliseconds)
+#
+# Output:
+#   Epoch time in milliseconds (as integer)
+#
+# Example usage:
+#   ts_epoch_with_ms=$(exif_ts_to_epoch_ms "$ts")
+# ====================================================================================================
 exif_ts_to_epoch_ms() {
   local ts="$1"
   local ts_sec_part ts_ms_part ts_epoch_sec
