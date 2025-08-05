@@ -1,6 +1,6 @@
 
 # ====================================================================================================
-# get_media_file_id <media_file>
+# compute_file_id <media_file>
 #
 # Generates a unique file ID for a media file path using Base64 encoding.
 # This provides collision-free IDs suitable for use as associative array keys.
@@ -12,17 +12,17 @@
 #   The Base64-encoded file ID
 #
 # Example usage:
-#   file_id="$(get_media_file_id "/path/to/IMG_1234.jpg")"
+#   file_id="$(compute_file_id "/path/to/IMG_1234.jpg")"
 #   echo "File ID: $file_id"
 # ====================================================================================================
 
-get_media_file_id() {
+compute_file_id() {
   local media_file="$1"
   printf '%s\n' "$(encode_base64url "$media_file")"
 }
 
 # ====================================================================================================
-# get_media_file_path_components <media_file>
+# extract_file_components <media_file>
 #                                <&media_file_dir>
 #                                <&media_file_name>
 #                                <&media_file_stem>
@@ -89,7 +89,7 @@ get_media_file_id() {
 #     "$file_dupe_marker"
 # ====================================================================================================
 
-get_media_file_path_components() {
+extract_file_components() {
   local media_file="$1"
   local -n media_file_dir_ref="$2"
   local -n media_file_name_ref="$3"
@@ -177,7 +177,7 @@ get_media_file_path_components() {
 }
 
 # ====================================================================================================
-# get_media_file_type <fid>
+# identify_file_type <fid>
 #
 # Determines the media file type based on file extension and metadata.
 #
@@ -188,56 +188,47 @@ get_media_file_path_components() {
 #   File type constant corresponding to the detected media type (see $file_types in globals.sh)
 #
 # Example usage:
-#   file_type=$(get_media_file_type "$fid")
+#   file_type=$(identify_file_type "$fid")
 #   echo "File type: $file_type"
 # ====================================================================================================
 
-get_media_file_type() {
+identify_file_type() {
   local fid="$1"
   local -n file_type_ref="$2"
 
   # Get file extension by fid
   local file_ext="${file_src_ext[$fid]}"
   local cid="${file_exif_cid[$fid]:-}"
-  local is_apple="${file_is_apple_media[$fid]:-0}"
+  local is_apple_media="${file_is_apple_media[$fid]:-0}"
 
   # Determine file type based on all the information collected above
   case "${file_ext,,}" in
     .jpg|.jpeg|.heic)
       if [[ -n "$cid" ]]; then
-        file_type_ref=$FILE_TYPE_LIVE_PHOTO
-        return 0
-      elif [[ $is_apple -eq 1 ]]; then
-        file_type_ref=$FILE_TYPE_APPLE_PHOTO
-        return 0
+        file_type_ref="$FILE_TYPE_LIVE_PHOTO"
+      elif [[ "$is_apple_media" -eq 1 ]]; then
+        file_type_ref="$FILE_TYPE_APPLE_PHOTO"
       else
-        file_type_ref=$FILE_TYPE_REGULAR_PHOTO
-        return 0
+        file_type_ref="$FILE_TYPE_REGULAR_PHOTO"
       fi
       ;;
     .mov|.mp4|.mpg|.mpeg|.avi|.3gp|.wmv|.webm)
       if [[ -n "$cid" ]]; then
-        file_type_ref=$FILE_TYPE_LIVE_VIDEO
-        return 0
-      elif [[ $is_apple -eq 1 ]]; then
-        file_type_ref=$FILE_TYPE_APPLE_VIDEO
-        return 0
+        file_type_ref="$FILE_TYPE_LIVE_VIDEO"
+      elif [[ "$is_apple_media" -eq 1 ]]; then
+        file_type_ref="$FILE_TYPE_APPLE_VIDEO"
       else
-        file_type_ref=$FILE_TYPE_REGULAR_VIDEO
-        return 0
+        file_type_ref="$FILE_TYPE_REGULAR_VIDEO"
       fi
       ;;
     .png)
-      file_type_ref=$FILE_TYPE_REGULAR_IMAGE
-      return 0
+      file_type_ref="$FILE_TYPE_REGULAR_IMAGE"
       ;;
     .gif|.webp)
-      file_type_ref=$FILE_TYPE_REGULAR_IMAGE
-      return 0
+      file_type_ref="$FILE_TYPE_REGULAR_IMAGE"
       ;;
     *)
-      file_type_ref=$FILE_TYPE_UNKNOWN
-      return 0
+      file_type_ref="$FILE_TYPE_UNKNOWN"
       # TODO: Handle screenshots
       # TODO: Handle downloaded images
       ;;

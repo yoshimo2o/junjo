@@ -80,7 +80,7 @@ compute_file_destination() {
   # Uppercase everything to ensure files with the same filenames
   # but with different cases are treated as the same
   # e.g. "IMG_1234.jpg" == "IMG_1234.JPG"
-  local did="$(get_media_file_id "${dest^^}")"
+  local did="$(compute_file_id "${dest^^}")"
 
   # If this is the initial file with this destination
   if [[ -z "$file_dest_entries["$did"]" ]]; then
@@ -198,7 +198,7 @@ resolve_destination_naming_conflicts() {
 
       # Get total fids_sorted
       file_dest["$fid"]="$new_dest"
-      new_did="$(get_media_file_id "${new_dest^^}")"
+      new_did="$(compute_file_id "${new_dest^^}")"
 
       local progress_label=$(progress "$index_fids" "$total_fids" "/")
 

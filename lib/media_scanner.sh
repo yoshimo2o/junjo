@@ -228,7 +228,7 @@ analyze_media_files() {
 #
 # Example:
 #   analyze_media_file "/path/to/IMG_1234.jpg"
-#   fid=$(get_media_file_id "/path/to/IMG_1234.jpg")
+#   fid=$(compute_file_id "/path/to/IMG_1234.jpg")
 #   echo "Device: ${file_device_name[$fid]}"
 #   echo "Timestamp: ${file_timestamp[$fid]}"
 #
@@ -241,7 +241,7 @@ analyze_media_file() {
 
   # Generate a unique file ID based on the file path's Base64 encoding
   # This ID is used as the key for all global arrays to store file metadata
-  fid="$(get_media_file_id "$media_file")"
+  fid="$(compute_file_id "$media_file")"
 
   # Analyze file components
   local file_dir \
@@ -252,7 +252,7 @@ analyze_media_file() {
         file_compound_ext \
         file_dupe_marker
 
-  get_media_file_path_components "$media_file" \
+  extract_file_components "$media_file" \
     file_dir \
     file_name \
     file_stem \
@@ -377,9 +377,9 @@ analyze_media_file() {
   file_timestamp_epoch["$fid"]="$timestamp_epoch"
   file_timestamp_source["$fid"]="$timestamp_source"
 
-  # Analyze file type
+  # Identify file type
   local file_type
-  get_media_file_type "$fid" file_type
+  identify_file_type "$fid" file_type
 
   # Add files to our lists that is mapped by file type
   case "$file_type" in
