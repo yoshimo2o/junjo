@@ -1,21 +1,48 @@
+debug_string() {
+  local msg=""
+  if [[ $# -eq 1 ]]; then
+    log_debug "\n$(___string "$1")"
+  else
+    msg="$1"; shift
+    log_debug "${msg}\n$(___string "$@")"
+  fi
+}
+
 debug_array() {
-  local msg="$1"; shift
-  log_debug "${msg}\n$(___array "$@")"
+  local msg=""
+  if [[ $# -eq 1 ]]; then
+    log_debug "\n$(___array "$1")"
+  else
+    msg="$1"; shift
+    log_debug "${msg}\n$(___array "$@")"
+  fi
 }
 
 debug_map() {
-  local msg="$1"; shift
-  log_debug "${msg}\n$(___map "$@")"
+  local msg=""
+  if [[ $# -eq 1 ]]; then
+    log_debug "\n$(___map "$1")"
+  else
+    msg="$1"; shift
+    log_debug "${msg}\n$(___map "$@")"
+  fi
 }
 
 debug_date() {
-  local msg="$1"; shift
-  log_debug "${msg}\n$(___date "$@")"
+  local msg=""
+  if [[ $# -eq 1 ]]; then
+    log_debug "\n$(___date "$1")"
+  else
+    msg="$1"; shift
+    log_debug "${msg}\n$(___date "$@")"
+  fi
 }
 
-debug_string() {
-  local msg="$1"; shift
-  log_debug "${msg}\n$(___string "$@")"
+___string() {
+  # Usage: ___str "string input here"
+  local input="$1"
+  local len=${#input}
+  printf '"%s" (length=%d)' "$input" "$len"
 }
 
 ___array() {
@@ -26,7 +53,7 @@ ___array() {
   for ((i=0; i<${#arr[@]}; i++)); do
     out+="[${i}] => \"${arr[$i]}\"\n"
   done
-  out+="(array length=${#arr[@]})"
+  out+="(length=${#arr[@]})"
   printf "'%s'" "${out%\n}"
 }
 
@@ -70,7 +97,7 @@ ___date() {
     # Seconds epoch
     epoch_ms="$((input * 1000))"
     iso=$(date -u -j -f "%s" "$input" "+%Y-%m-%dT%H:%M:%S.000Z" 2>/dev/null)
-  elif [[ "$input" =~ ^[0-9]{4}:[0-9]{2}:[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?$ ]]; then
+  elif echo "$input" | grep -Eq '^[0-9]{4}:[0-9]{2}:[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?$'; then
     # EXIF format: YYYY:MM:DD HH:MM:SS(.sss)
     local exif_date="${input/:/-}" # replace first : with -
     exif_date="${exif_date/:/-}"   # replace second : with -
@@ -93,12 +120,5 @@ ___date() {
   [[ -z "$iso" ]] && iso="Invalid or unknown format"
   [[ -z "$epoch_ms" ]] && epoch_ms="Invalid or unknown format"
 
-  printf "'[Input] => \"%s\"\n[ISO8601] => \"%s\"\n[Epoch] => \"%s\"'" "$input" "$iso" "$epoch_ms"
-}
-
-___string() {
-  # Usage: ___str "string input here"
-  local input="$1"
-  local len=${#input}
-  printf '"%s" (length=%d)' "$input" "$len"
+  printf "  Input: \"%s\"\nISO8601: \"%s\"\n  Epoch: \"%s\"" "$input" "$iso" "$epoch_ms"
 }
