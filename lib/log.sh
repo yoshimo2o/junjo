@@ -58,6 +58,7 @@ readonly ERROR_LOG="ERROR"
 # Log file paths (to be set in init_log)
 export JUNJO_LOG_FILE=""
 export JUNJO_SCAN_LOG_FILE=""
+export JUNJO_PLAN_LOG_FILE=""
 export JUNJO_SORT_LOG_FILE=""
 
 # Log tree
@@ -68,6 +69,7 @@ init_log() {
   # Set up runtime log file paths
   JUNJO_LOG_FILE="${JUNJO_LOG_DIR%/}/$JUNJO_LOG_FILE_NAME"
   JUNJO_SCAN_LOG_FILE="${JUNJO_LOG_DIR%/}/$JUNJO_SCAN_LOG_FILE_NAME"
+  JUNJO_PLAN_LOG_FILE="${JUNJO_LOG_DIR%/}/$JUNJO_PLAN_LOG_FILE_NAME"
   JUNJO_SORT_LOG_FILE="${JUNJO_LOG_DIR%/}/$JUNJO_SORT_LOG_FILE_NAME"
 
   # Create log directory if it doesn't exist
@@ -86,6 +88,11 @@ init_log() {
 
   > "$JUNJO_SCAN_LOG_FILE" || {
     echo "Error: Failed to initialize log file: $JUNJO_SCAN_LOG_FILE" >&2
+    return 1
+  }
+
+  > "$JUNJO_PLAN_LOG_FILE" || {
+    echo "Error: Failed to initialize log file: $JUNJO_PLAN_LOG_FILE" >&2
     return 1
   }
 
@@ -135,6 +142,12 @@ log() {
       color_secondary="\033[0;35m" # light magenta
       output_to_console=$(( DEBUG ? 1 : 0 ))
       ;;
+    "$ERROR_LOG")
+      log_file="$JUNJO_LOG_FILE"
+      color_primary="\033[1;31m" # red
+      color_secondary="\033[0;31m" # light red
+      output_to_console=$(( DEBUG ? 1 : 0 ))
+      ;;
     *)
       category="$MAIN_LOG" # Default to main log
       log_file="$JUNJO_LOG_FILE"
@@ -178,7 +191,7 @@ log_error() {
 # Log debug only when DEBUG is set
 log_debug() {
   if [[ $DEBUG ]]; then
-    log "$1" "$SCAN_LOG"
+    log "$1" "$DEBUG_LOG"
   fi
 }
 
