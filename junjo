@@ -66,6 +66,9 @@ for arg in "$@"; do
     -i|--interactive)
       JUNJO_INTERACTIVE=1
       ;;
+    --debug)
+      DEBUG=1
+      ;;
     --log-dir=*)
       JUNJO_LOG_DIR="${arg#*=}"
       JUNJO_LOG_DIR="${JUNJO_LOG_DIR}"
