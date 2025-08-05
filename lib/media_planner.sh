@@ -66,6 +66,7 @@ compute_file_destination() {
     dest_compound_ext \
     dest_dupe_marker
 
+  # Add the components to the global array database
   file_dest["$fid"]="$dest"
   file_dest_dir["$fid"]="$dest_dir"
   file_dest_name["$fid"]="$dest_name"
@@ -81,32 +82,33 @@ compute_file_destination() {
   # e.g. "IMG_1234.jpg" == "IMG_1234.JPG"
   local did="$(get_media_file_id "${dest^^}")"
 
-  # If this destination path already has an entry,
-  # mark it has having naming conflict,
-  # to be resolved later.
+  # If this is the initial file with this destination
   if [[ -z "$file_dest_entries["$did"]" ]]; then
 
-    # Add to file dest entries
+    # Add this initial file file destination entries
     file_dest_entries["$did"]="$fid"
+
+    # Mark this intiial file has having no naming conflict
     file_dest_has_naming_conflict["$fid"]=0
   else
-    # If this is the first time a conflict is detected
+    # If this is the first time a naming conflict
+    # for this destination is detected
     if [[ -z "${file_dest_conflicts["$did"]}" ]]; then
 
-      # Get the initial fid
+      # Get the fid of the initial file that has this destination
       initial_fid=${file_dest_entries["$did"]}
 
-      # Add the initial fid to the conflict list
+      # Add the fid of that initial file to the conflict list
       file_dest_conflicts["$did"]="${initial_fid}"
 
       # Mark the initial file as having naming conflict
       file_dest_has_naming_conflict["$fid"]=1
     fi
 
-    # Append the current fid to the conflict list
+    # Append the fid of the current file to the conflict list
     file_dest_conflicts["$did"]+="|${fid}"
 
-    # Mark the current fid as having naming conflict
+    # Mark the current file as having naming conflict
     file_dest_has_naming_conflict["$fid"]=1
   fi
 }
