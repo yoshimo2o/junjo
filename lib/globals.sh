@@ -88,6 +88,12 @@ declare -A file_has_duplicates
 declare -A file_duplicate_score
 declare -A file_is_preferred_duplicate
 
+
+# Naming conflicts
+declare -A file_dest_entry # keyed by did
+declare -A file_dest_has_naming_conflict # keyed by fid
+declare -A file_dest_conflicts # keyed by did, contains array of fids separated by '|'
+
 # Apple-specific properties
 declare -A file_is_apple_media
 
