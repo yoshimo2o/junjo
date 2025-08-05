@@ -36,84 +36,45 @@
 # ====================================================================================================
 
 get_best_available_timestamp() {
-  local media_file="$1"
+  local fid="$1"
   local -n ts="$2"
-  local -n ts_source="$3"
+  local -n ts_epoch="$3"
+  local -n ts_source="$4"
 
-  fid=$(get_media_file_id "$media_file")
+  local photo_taken_time="${file_takeout_photo_taken_time["$fid"]:-}"
+  local datetime_original="${file_exif_date_time_original["$fid"]:-}"
+  local create_date="${file_exif_create_date["$fid"]:-}"
+  local track_create_date="${file_exif_track_create_date["$fid"]:-}"
+  local media_create_date="${file_exif_media_create_date["$fid"]:-}"
+  local file_create_date="${file_create_date["$fid"]:-}"
+  local file_modify_date="${file_modify_date["$fid"]:-}"
 
-  # If fid exists, this function is being called from analyze_media_file.
-  # We should already have the photo taken time cached if the meta file exists.
-  if [[ -n "$fid" && -n "${file_takeout_photo_taken_time[$fid]}" ]]; then
-      ts=$(normalize_timestamp "${file_takeout_photo_taken_time[$fid]}")
-      ts_source="PhotoTakenTime"
-      return 0
-  else
-    # If fid is not available, this function is being called directly.
-    # Try to locate takeout metadata file and extract photo taken time.
-    local takeout_meta_file photo_taken_time
-    if locate_takeout_meta_file "$media_file" takeout_meta_file && \
-       extract_takeout_metadata "$takeout_meta_file" photo_taken_time && \
-       [[ -n "$photo_taken_time" ]]; then
-      ts=$(normalize_timestamp "$photo_taken_time")
-      ts_source="PhotoTakenTime"
-      return 0
-    fi
-  fi
-
-  # Extract timestamps from exif metadata
-  local datetime_original \
-        create_date \
-        track_create_date \
-        media_create_date \
-        file_create_date \
-        file_modify_date
-
-  # If fid exists, use already extracted EXIF data from global arrays
-  if [[ -n "$fid" ]]; then
-    datetime_original="${file_exif_date_time_original[$fid]:-}"
-    create_date="${file_exif_create_date[$fid]:-}"
-    track_create_date="${file_exif_track_create_date[$fid]:-}"
-    media_create_date="${file_exif_media_create_date[$fid]:-}"
-    file_create_date="${file_create_date[$fid]:-}"
-    file_modify_date="${file_modify_date[$fid]:-}"
-  else
-    # Extract from EXIF if fid is not available
-    extract_exif_to_vars "$media_file" \
-      "DateTimeOriginal" \
-      "CreateDate" \
-      "TrackCreateDate" \
-      "MediaCreateDate" \
-      "FileCreateDate" \
-      "FileModifyDate" \
-      -- \
-      datetime_original \
-      create_date \
-      track_create_date \
-      media_create_date \
-      file_create_date \
-      file_modify_date
-  fi
-
-  if [[ -n "$datetime_original" ]]; then
-    ts=$(normalize_timestamp "$datetime_original")
+  if [[ -n "$photo_taken_time" ]]; then
+    ts="$photo_taken_time"
+    ts_source="PhotoTakenTime"
+  elif [[ -n "$datetime_original" ]]; then
+    ts="$datetime_original"
     ts_source="DateTimeOriginal"
   elif [[ -n "$create_date" ]]; then
-    ts=$(normalize_timestamp "$create_date")
+    ts="$create_date"
     ts_source="CreateDate"
   elif [[ -n "$track_create_date" ]]; then
-    ts=$(normalize_timestamp "$track_create_date")
+    ts="$track_create_date"
     ts_source="TrackCreateDate"
   elif [[ -n "$media_create_date" ]]; then
-    ts=$(normalize_timestamp "$media_create_date")
+    ts="$media_create_date"
     ts_source="MediaCreateDate"
   elif [[ -n "$file_create_date" ]]; then
-    ts=$(normalize_timestamp "$file_create_date")
+    ts="$file_create_date"
     ts_source="FileCreateDate"
   elif [[ -n "$file_modify_date" ]]; then
-    ts=$(normalize_timestamp "$file_modify_date")
+    ts="$file_modify_date"
     ts_source="FileModifyDate"
   fi
+
+  # Normalize the selected timestamp
+  ts=$(normalize_timestamp "$ts")
+  ts_epoch=$(exif_ts_to_epoch_ms "$ts")
 }
 
 # ====================================================================================================
@@ -173,4 +134,22 @@ normalize_timestamp() {
   else
     echo ""
   fi
+}
+
+# Converts a normalized Exif timestamp (YYYY:MM:DD HH:MM:SS.sss) to epoch milliseconds
+# Usage: ts_epoch_with_ms=$(exif_ts_to_epoch_ms "$ts")
+exif_ts_to_epoch_ms() {
+  local ts="$1"
+  local ts_sec_part ts_ms_part ts_epoch_sec
+  if [[ "$ts" =~ ^([0-9]{4}:[0-9]{2}:[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})\.([0-9]{1,3})$ ]]; then
+    ts_sec_part="${BASH_REMATCH[1]}"
+    # Efficient right-pad ms to 3 digits
+    ts_ms_part="${BASH_REMATCH[2]}00"
+    ts_ms_part="${ts_ms_part:0:3}"
+  else
+    ts_sec_part="$ts"
+    ts_ms_part="000"
+  fi
+  ts_epoch_sec=$(date -u -d "$ts_sec_part" +%s 2>/dev/null || date -u -j -f "%Y:%m:%d %H:%M:%S" "$ts_sec_part" +%s 2>/dev/null)
+  printf "%d" $((10#$ts_epoch_sec * 1000 + 10#$ts_ms_part))
 }

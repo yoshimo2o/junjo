@@ -365,13 +365,16 @@ analyze_media_file() {
 
   # Analyze timestamps
   local timestamp \
+        timestamp_epoch \
         timestamp_source
 
-  get_best_available_timestamp "$media_file" \
+  get_best_available_timestamp "$fid" \
     timestamp \
+    timestamp_epoch \
     timestamp_source
 
   file_timestamp["$fid"]="$timestamp"
+  file_timestamp_epoch["$fid"]="$timestamp_epoch"
   file_timestamp_source["$fid"]="$timestamp_source"
 
   # Analyze file type
