@@ -27,7 +27,25 @@ create_organizing_plan() {
   fi
 }
 
-precompute_file_destinations() {
+compute_file_destinations() {
+  local index=0
+  local total=${#file_src[@]}
+
+  for fid in "${!file_src[@]}"; do
+    log_plan "[$(progress "$index" "$total" "/")] Computing destination for file: $media_file"
+
+    compute_file_destination "$fid"
+
+    log_plan_tree_start "Computed destination for file: $media_file"
+      log_plan_tree     "Source      : ${file_src[$fid]}"
+      log_plan_tree_end "Destination : ${file_dest[$fid]} $(\
+        [[ ${file_dest_has_naming_conflict[$fid]} -eq 1 ]] \
+          && echo ' (Has Conflict)')"
+    index=$(($index + 1))
+  done
+}
+
+compute_file_destination() {
   local fid="$1"
   local dest_dir \
     dest_name \
@@ -37,7 +55,8 @@ precompute_file_destinations() {
     dest_compound_ext \
     dest_dupe_marker
 
-  compute_file_destination "$fid" \
+  # Compute destination components
+  compute_file_destination_components "$fid" \
     dest \
     dest_dir \
     dest_name \
