@@ -204,7 +204,7 @@ resolve_destination_naming_conflicts() {
     # Create fid_timestamp_pairs for sorting
     local fid_timestamp_pairs=()
     for fid in "${fids[@]}"; do
-      fid_timestamp_pairs+=("${file_timestamp_epoch[$fid]} $fid")
+      fid_timestamp_pairs+=("${file_timestamp_epoch["$fid"]} $fid")
     done
     [[ $DEBUG ]] && debug_array "Pre-sorted timestamp pairs:" "${fid_timestamp_pairs[@]}"
 
@@ -225,33 +225,33 @@ resolve_destination_naming_conflicts() {
     local total_fids=${#fids_sorted[@]};
 
     for ((i=0; i<${#fids_sorted[@]}; i++)); do
-      local fid="${fids_sorted[i]}"
+      local fid="${fids_sorted[$i]}"
 
       # Get the old values
-      local src_dir="${file_src_dir[$fid]}"
-      local src_name="${file_src_name[$fid]}"
-      local dest_compound_ext="${file_dest_compound_ext[$fid]}"
-      local dest_dupe_marker="${file_dest_dupe_marker[$fid]}"
-      local dest_root_stem="${file_dest_root_stem[$fid]}"
-      local dest_stem="${file_dest_stem[$fid]}"
-      local dest_name="${file_dest_name[$fid]}"
-      local dest_dir="${file_dest_dir[$fid]}"
-      local dest="${file_dest[$fid]}"
+      local src_dir="${file_src_dir["$fid"]}"
+      local src_name="${file_src_name["$fid"]}"
+      local dest_compound_ext="${file_dest_compound_ext["$fid"]}"
+      local dest_dupe_marker="${file_dest_dupe_marker["$fid"]}"
+      local dest_root_stem="${file_dest_root_stem["$fid"]}"
+      local dest_stem="${file_dest_stem["$fid"]}"
+      local dest_name="${file_dest_name["$fid"]}"
+      local dest_dir="${file_dest_dir["$fid"]}"
+      local dest="${file_dest["$fid"]}"
 
       if [[ $i -gt 0 ]]; then
 
         # Compute the new values
-        local new_dest_dupe_marker \
-          new_dest_stem \
-          new_dest_name \
+        local new_did \
           new_dest \
-          new_did
+          new_dest_name \
+          new_dest_stem \
+          new_dest_dupe_marker
 
         while :; do
           # Create a new filename with an incremented duplicate marker
-          (( $dupe_marker++ ))
+          (( dupe_marker++ ))
           new_dest_dupe_marker="$dupe_marker"
-          new_dest_stem="${dest_root_stem} ("$new_dest_dupe_marker")"
+          new_dest_stem="${dest_root_stem} (${new_dest_dupe_marker})"
           new_dest_name="${new_dest_stem}${dest_compound_ext}"
           new_dest="${dest_dir}${new_dest_name}"
 
