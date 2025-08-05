@@ -17,6 +17,30 @@ check_dependencies() {
 }
 
 # ====================================================================================================
+# encode_base64url <string>
+#
+# Encodes input as base64url (RFC 4648) for safe use as keys, filenames, etc.
+# Removes padding for compactness.
+# Example: encode_base64url "foo/bar"
+# ====================================================================================================
+encode_base64url() {
+  # Usage: encode_base64url <string>
+  printf '%s' "$1" | base64 | tr '+/' '-_' | tr -d '='
+}
+
+# ====================================================================================================
+# decode_base64url <base64url_string>
+#
+# Decodes a base64url-encoded string (RFC 4648, no padding).
+# Example: decode_base64url "Zm9vLWJhcg"
+# ====================================================================================================
+decode_base64url() {
+  local input="$1"
+  # Add padding if needed
+  local pad=$(( (4 - ${#input} % 4) % 4 ))
+  input="${input}$(printf '=%.0s' $(seq 1 $pad))"
+  echo "$input" | tr '-_' '+/' | base64 -d
+}
 # confirm <message>
 #
 # Prompts the user for confirmation with a yes/no question.
