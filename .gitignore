@@ -1,6 +1,7 @@
 # Log files
 junjo.log
 junjo_scan.log
+junjo_plan.log
 junjo_sort.log
 
 # Output directory
