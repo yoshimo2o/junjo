@@ -99,8 +99,8 @@ compute_file_destination() {
       # Add the initial fid to the conflict list
       file_dest_conflicts["$did"]="${initial_fid}"
 
-      # Mark the initial fid as having naming conflict
-      file_dest_has_naming_conflict["$did"]=1
+      # Mark the initial file as having naming conflict
+      file_dest_has_naming_conflict["$fid"]=1
     fi
 
     # Append the current fid to the conflict list
