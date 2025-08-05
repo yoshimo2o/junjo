@@ -57,7 +57,10 @@ precompute_file_destinations() {
   file_dest_dupe_marker["$fid"]="$dest_dupe_marker"
 
   # Compute did (destination id)
-  local did="$(get_media_file_id "$dest")"
+  # Uppercase everything to ensure files with the same filenames
+  # but with different cases are treated as the same
+  # e.g. "IMG_1234.jpg" == "IMG_1234.JPG"
+  local did="$(get_media_file_id "${dest^^}")"
 
   # If this destination path already has an entry,
   # mark it has having naming conflict,
