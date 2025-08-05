@@ -40,7 +40,7 @@ JUNJO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 JUNJO_LIB_DIR="$JUNJO_DIR/lib"
 
 # Init global variables & functions
-source "$JUNJO_DIR/config.ini"
+source "$JUNJO_LIB_DIR/constants.sh"
 source "$JUNJO_LIB_DIR/globals.sh"
 source "$JUNJO_LIB_DIR/functions.sh"
 source "$JUNJO_LIB_DIR/log.sh"
