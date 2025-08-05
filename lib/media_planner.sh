@@ -1,28 +1,28 @@
 create_organizing_plan() {
-  # Step 1: Pre-compute file destinations
-  log "Pre-computing file destinations."
-  if precompute_file_destinations; then
-    log "Successfully pre-computed file destinations."
+  # Step 1: Compute file destinations
+  log_plan "Computing file destinations."
+  if compute_file_destinations; then
+    log_plan "Successfully computed file destinations."
   else
-    log "Failed to pre-compute file destinations."
+    log_plan_error "Failed to compute file destinations."
     return 1
   fi
 
   # Step 2: Resolve naming conflicts in file destinations
-  log "Resolving naming conflicts in file destinations."
+  log_plan "Resolving naming conflicts in file destinations."
   if resolve_destination_naming_conflicts; then
-    log "Naming conflict resolution completed successfully."
+    log_plan "Naming conflict resolution completed successfully."
   else
-    log "Naming conflict resolution failed."
+    log_plan_error "Naming conflict resolution failed."
     return 1
   fi
 
   # Step 3: Create an action plan to organize the files
-  log "Creating an action plan to organize the files."
+  log_plan "Creating an action plan to organize the files."
   if create_action_plan; then
-    log "Action plan creation completed successfully."
+    log_plan "Action plan creation completed successfully."
   else
-    log "Action plan creation failed."
+    log_plan_error "Action plan creation failed."
     return 1
   fi
 }
