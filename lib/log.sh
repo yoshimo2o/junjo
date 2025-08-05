@@ -101,12 +101,13 @@ init_log() {
 log() {
   local message="$1"
   local category="$2"
+  local -i force_verbose="${3:-0}"
   local timestamp="$(generate_log_timestamp_prefix)"
   local log_file \
     color_primary \
     color_secondary \
-    color_reset="\033[0m" \
-    output_to_console
+    color_reset="\033[0m"
+  local -i output_to_console
 
   # Different log behaviour for differnet log categories
   case "$category" in
@@ -144,7 +145,7 @@ log() {
 
   # Show log message on screen if the category is main
   # or if verbose mode is enabled
-  if [[ $output_to_console ]]; then
+  if (( output_to_console == 1 || force_verbose == 1 )); then
     # Split message by the first ':' and color the part after it with Bright Black
     local msg_before_colon msg_after_colon
     if [[ "$message" == *:* ]]; then
@@ -187,9 +188,7 @@ log_debug() {
 
 # Generate timestamp prefix with milliseconds precision
 generate_log_timestamp_prefix() {
-  # timestamp takes 25 characters
-  local timestamp="[$(date '+%Y-%m-%d %H:%M:%S.+%3N')]"
-  echo "$timestamp"
+  echo "[$(date +"%Y-%m-%d %H:%M:%S.$(printf '%03d' $(( 10#$(date +%N) / 1000000 )) )")]"
 }
 
 generate_log_timestamp_indent() {
@@ -240,6 +239,7 @@ log_tree_last_start() {
   done
 
   # Increase the indentation level for the next log message
+  LOG_TREE_IS_LAST_BRANCH=1
   LOG_TREE_INDENT_LEVEL=$((LOG_TREE_INDENT_LEVEL + 1))
 }
 
@@ -268,6 +268,7 @@ log_tree_end() {
 }
 
 log_tree_stop() {
+  LOG_TREE_IS_LAST_BRANCH=0
   LOG_TREE_INDENT_LEVEL=$(( \
     (LOG_TREE_INDENT_LEVEL - 1) > 0 ? \
     (LOG_TREE_INDENT_LEVEL - 1) : \
@@ -278,6 +279,12 @@ log_tree_stop() {
 log_tree_indentation() {
   local indent=""
   for ((i = 0; i < LOG_TREE_INDENT_LEVEL; i++)); do
+    # If this is the last branch, just space it.
+    if [[ $LOG_TREE_IS_LAST_BRANCH -eq 1 && $i -eq $((LOG_TREE_INDENT_LEVEL - 1)) ]]; then
+      indent+="    "
+      continue;
+    fi
+
     if [[ $i -gt 0 ]]; then
       indent+="│   "
     fi
@@ -321,22 +328,46 @@ log_tree_reset() {
 # --------------------------------------------------------------------------
 
 log_scan() {
-  log "$1" "$SCAN_LOG"
+  log "$1" "$SCAN_LOG" 1
 }
 
 log_scan_tree_start() {
-  log_tree_start "$1" "$SCAN_LOG"
+  log_tree_start "$1" "$SCAN_LOG" 1
 }
 
 log_scan_tree_last_start() {
-  log_tree_last_start "$1" "$SCAN_LOG"
+  log_tree_last_start "$1" "$SCAN_LOG" 1
 }
 
 log_scan_tree() {
-  log_tree "$1" "$SCAN_LOG"
+  log_tree "$1" "$SCAN_LOG" 1
 }
 
 log_scan_tree_end() {
+  if [[ -z "$1" ]]; then
+    log_tree_end "" "$SCAN_LOG" 1
+  else
+    log_tree_end "$1" "$SCAN_LOG" 1
+  fi
+}
+
+log_scan_() {
+  log "$1" "$SCAN_LOG"
+}
+
+log_scan_tree_start_() {
+  log_tree_start "$1" "$SCAN_LOG"
+}
+
+log_scan_tree_last_start_() {
+  log_tree_last_start "$1" "$SCAN_LOG"
+}
+
+log_scan_tree_() {
+  log_tree "$1" "$SCAN_LOG"
+}
+
+log_scan_tree_end_() {
   if [[ -z "$1" ]]; then
     log_tree_end "" "$SCAN_LOG"
   else
@@ -349,22 +380,46 @@ log_scan_tree_end() {
 # --------------------------------------------------------------------------
 
 log_plan() {
-  log "$1" "$PLAN_LOG"
+  log "$1" "$PLAN_LOG" 1
 }
 
 log_plan_tree_start() {
-  log_tree_start "$1" "$PLAN_LOG"
+  log_tree_start "$1" "$PLAN_LOG" 1
 }
 
 log_plan_tree_last_start() {
-  log_tree_last_start "$1" "$PLAN_LOG"
+  log_tree_last_start "$1" "$PLAN_LOG" 1
 }
 
 log_plan_tree() {
-  log_tree "$1" "$PLAN_LOG"
+  log_tree "$1" "$PLAN_LOG" 1
 }
 
 log_plan_tree_end() {
+  if [[ -z "$1" ]]; then
+    log_tree_end "" "$PLAN_LOG" 1
+  else
+    log_tree_end "$1" "$PLAN_LOG" 1
+  fi
+}
+
+log_plan_() {
+  log "$1" "$PLAN_LOG"
+}
+
+log_plan_tree_start_() {
+  log_tree_start "$1" "$PLAN_LOG"
+}
+
+log_plan_tree_last_start_() {
+  log_tree_last_start "$1" "$PLAN_LOG"
+}
+
+log_plan_tree_() {
+  log_tree "$1" "$PLAN_LOG"
+}
+
+log_plan_tree_end_() {
   if [[ -z "$1" ]]; then
     log_tree_end "" "$PLAN_LOG"
   else
@@ -372,27 +427,52 @@ log_plan_tree_end() {
   fi
 }
 
+
 # --------------------------------------------------------------------------
 # Sugar functions for log_sort
 # --------------------------------------------------------------------------
 
 log_sort() {
-  log "$1" "$SORT_LOG"
+  log "$1" "$SORT_LOG" 1
 }
 
 log_sort_tree_start() {
-  log_tree_start "$1" "$SORT_LOG"
+  log_tree_start "$1" "$SORT_LOG" 1
 }
 
 log_sort_tree_last_start() {
-  log_tree_last_start "$1" "$SORT_LOG"
+  log_tree_last_start "$1" "$SORT_LOG" 1
 }
 
 log_sort_tree() {
-  log_tree "$1" "$SORT_LOG"
+  log_tree "$1" "$SORT_LOG" 1
 }
 
 log_sort_tree_end() {
+  if [[ -z "$1" ]]; then
+    log_tree_end "" "$SORT_LOG" 1
+  else
+    log_tree_end "$1" "$SORT_LOG" 1
+  fi
+}
+
+log_sort_() {
+  log "$1" "$SORT_LOG"
+}
+
+log_sort_tree_start_() {
+  log_tree_start "$1" "$SORT_LOG"
+}
+
+log_sort_tree_last_start_() {
+  log_tree_last_start "$1" "$SORT_LOG"
+}
+
+log_sort_tree_() {
+  log_tree "$1" "$SORT_LOG"
+}
+
+log_sort_tree_end_() {
   if [[ -z "$1" ]]; then
     log_tree_end "" "$SORT_LOG"
   else

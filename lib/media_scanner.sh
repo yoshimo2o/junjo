@@ -52,11 +52,11 @@ scan_media_folder() {
   fi
 
   # Inform user we're about to scan the directory
-  log_tree_start "Starting folder scan with parameters:"
-    log_tree "Directory: $(realpath "$JUNJO_SCAN_DIR")"
-    log_tree "Recursive: $([ $JUNJO_SCAN_RECURSIVE -eq 1 ] && echo 'Yes' || echo 'No')"
-    log_tree "Include patterns: ${JUNJO_INCLUDE_FILES[*]}"
-    log_tree_end "Exclude patterns: ${JUNJO_EXCLUDE_FILES[*]}"
+  log_scan_tree_start "Starting folder scan with parameters:"
+    log_scan_tree "Directory: $(realpath "$JUNJO_SCAN_DIR")"
+    log_scan_tree "Recursive: $([ $JUNJO_SCAN_RECURSIVE -eq 1 ] && echo 'Yes' || echo 'No')"
+    log_scan_tree "Include patterns: ${JUNJO_INCLUDE_FILES[*]}"
+    log_scan_tree_end "Exclude patterns: ${JUNJO_EXCLUDE_FILES[*]}"
 
   # Get the list of files to analyze
   mapfile -t files < <(eval "find \"$JUNJO_SCAN_DIR\" $find_depth -type f $include_args $exclude_args")
@@ -68,7 +68,7 @@ scan_media_folder() {
   fi
 
   # Inform user the number of files found
-  log "Found ${#files[@]} files to analyze in '$JUNJO_SCAN_DIR'."
+  log_scan "Found ${#files[@]} files to analyze in '$JUNJO_SCAN_DIR'."
 
   # If interactive mode is enabled, ask users to confirm before proceeding
   if [[ $JUNJO_INTERACTIVE -eq 1 ]]; then
@@ -124,36 +124,36 @@ analyze_media_files() {
   local total=${#media_files[@]}
 
   # Analyze the media files
-  log "Starting analysis of $total files in '$JUNJO_SCAN_DIR'."
+  log_scan "Starting analysis of $total files in '$JUNJO_SCAN_DIR'."
 
   for media_file in "${media_files[@]}"; do
     local fid
-    log "[$(progress "$index" "$total" "/")] Analyzing file: $media_file"
+    log_scan "[$(progress "$index" "$total" "/")] Analyzing file: $media_file"
     analyze_media_file "$media_file" fid
     index=$((index + 1))
   done
 
-  log_tree_start "Analysis complete. Processed $total files."
-    log_tree "Apple Photo: ${#apple_photo_files[@]}"
-    log_tree "Apple Video: ${#apple_video_files[@]}"
-    log_tree "Live Photo: ${#live_photo_files[@]}"
-    log_tree "Live Video: ${#live_video_files[@]}"
-    log_tree "Regular Photo: ${#regular_photo_files[@]}"
-    log_tree "Regular Video: ${#regular_video_files[@]}"
-    log_tree "Regular Image: ${#regular_image_files[@]}"
-    log_tree "Screenshot: ${#screenshot_files[@]}"
-    log_tree "Screen Recording: ${#screen_recording_files[@]}"
-    log_tree_end "Unknown: ${#unknown_files[@]}"
+  log_scan_tree_start "Analysis complete. Processed $total files."
+    log_scan_tree "Apple Photo: ${#apple_photo_files[@]}"
+    log_scan_tree "Apple Video: ${#apple_video_files[@]}"
+    log_scan_tree "Live Photo: ${#live_photo_files[@]}"
+    log_scan_tree "Live Video: ${#live_video_files[@]}"
+    log_scan_tree "Regular Photo: ${#regular_photo_files[@]}"
+    log_scan_tree "Regular Video: ${#regular_video_files[@]}"
+    log_scan_tree "Regular Image: ${#regular_image_files[@]}"
+    log_scan_tree "Screenshot: ${#screenshot_files[@]}"
+    log_scan_tree "Screen Recording: ${#screen_recording_files[@]}"
+    log_scan_tree_end "Unknown: ${#unknown_files[@]}"
 
   # Process live photos and videos
-  log "Starting processing of live photos and videos."
+  log_scan "Starting processing of live photos and videos."
   process_live_media
 
-  log_tree_start "Completed processing of live photos and videos."
-    log_tree "Live Photos with duplicates: ${#live_photo_duplicates[@]}"
-    log_tree "Live Videos with duplicates: ${#live_video_duplicates[@]}"
-    log_tree "Live Photos missing video pair: ${#live_photo_missing_video[@]}"
-    log_tree_end "Live Videos missing photo pair: ${#live_video_missing_photo[@]}"
+  log_scan_tree_start "Completed processing of live photos and videos."
+    log_scan_tree "Live Photos with duplicates: ${#live_photo_duplicates[@]}"
+    log_scan_tree "Live Videos with duplicates: ${#live_video_duplicates[@]}"
+    log_scan_tree "Live Photos missing video pair: ${#live_photo_missing_video[@]}"
+    log_scan_tree_end "Live Videos missing photo pair: ${#live_video_missing_photo[@]}"
 }
 
 # ====================================================================================================
@@ -424,50 +424,50 @@ analyze_media_file() {
   file_software_name["$fid"]="$software_name"
 
   # Log analysis
-  log_scan_tree_start "File: $media_file"
-    log_scan_tree "FID: $fid"
-    log_scan_tree "Type: $file_type (${file_types[$file_type]})"
-    log_scan_tree_start "File Components"
-      log_scan_tree "Directory: $file_dir"
-      log_scan_tree "Name: $file_name"
-      log_scan_tree "Stem: $file_stem"
-      log_scan_tree "Root Stem: $file_root_stem"
-      log_scan_tree "Compound Extension: $file_compound_ext"
-      log_scan_tree "Extension: $file_ext"
-      log_scan_tree "Dupe Marker: $file_dupe_marker"
-      log_scan_tree "Create Date: $file_create_date"
-      log_scan_tree_end "Modify Date: $file_modify_date"
-    log_scan_tree_start "Google Takeout Metadata"
-      log_scan_tree "Metadata File: $takeout_meta_file"
-      log_scan_tree "Metadata File Name: $takeout_meta_file_name"
-      log_scan_tree "Match Strategy: $takeout_meta_file_match_strategy"
-      log_scan_tree "Photo Taken Time: $takeout_meta_photo_taken_time"
-      log_scan_tree "Geo Data: $takeout_meta_geo_data"
-      log_scan_tree "Device Type: $takeout_meta_device_type"
-      log_scan_tree "Device Folder: $takeout_meta_device_folder"
-      log_scan_tree_end "Upload Origin: $takeout_meta_upload_origin"
-    log_scan_tree_start "EXIF Metadata"
-      log_scan_tree "Content Identifier: $cid"
-      log_scan_tree "Device Make: $device_make"
-      log_scan_tree "Device Model: $device_model"
-      log_scan_tree "Lens Make: $lens_make"
-      log_scan_tree "Lens Model: $lens_model"
-      log_scan_tree "Image Width: $image_width"
-      log_scan_tree "Image Height: $image_height"
-      log_scan_tree "Image Size: $image_size"
-      log_scan_tree "Date Time Original: $date_time_original"
-      log_scan_tree "Create Date: $create_date"
-      log_scan_tree "Track Create Date: $track_create_date"
-      log_scan_tree "Media Create Date: $media_create_date"
-      log_scan_tree_end "User Comment: $user_comment"
-    log_scan_tree_start "Device & Software"
-      log_scan_tree "Device Name: $device_name"
-      log_scan_tree "Software Name: $software_name"
-      log_scan_tree_end "Is Apple Media: ${file_is_apple_media[$fid]}"
-    log_scan_tree_last_start "Timestamp"
-      log_scan_tree "Timestamp: $timestamp"
-      log_scan_tree_end "Timestamp Source: $timestamp_source"
-  log_tree_reset
+  log_scan_tree_start_ "File: $media_file"
+    log_scan_tree_ "FID: $fid"
+    log_scan_tree_ "Type: $file_type (${file_types[$file_type]})"
+    log_scan_tree_start_ "File Components"
+      log_scan_tree_ "Directory: $file_dir"
+      log_scan_tree_ "Name: $file_name"
+      log_scan_tree_ "Stem: $file_stem"
+      log_scan_tree_ "Root Stem: $file_root_stem"
+      log_scan_tree_ "Compound Extension: $file_compound_ext"
+      log_scan_tree_ "Extension: $file_ext"
+      log_scan_tree_ "Dupe Marker: $file_dupe_marker"
+      log_scan_tree_ "Create Date: $file_create_date"
+      log_scan_tree_end_ "Modify Date: $file_modify_date"
+    log_scan_tree_start_ "Google Takeout Metadata"
+      log_scan_tree_ "Metadata File: $takeout_meta_file"
+      log_scan_tree_ "Metadata File Name: $takeout_meta_file_name"
+      log_scan_tree_ "Match Strategy: $takeout_meta_file_match_strategy"
+      log_scan_tree_ "Photo Taken Time: $takeout_meta_photo_taken_time"
+      log_scan_tree_ "Geo Data: $(wrap_text "$takeout_meta_geo_data" 60 10)"
+      log_scan_tree_ "Device Type: $takeout_meta_device_type"
+      log_scan_tree_ "Device Folder: $takeout_meta_device_folder"
+      log_scan_tree_end_ "Upload Origin: $takeout_meta_upload_origin"
+    log_scan_tree_start_ "EXIF Metadata"
+      log_scan_tree_ "Content Identifier: $cid"
+      log_scan_tree_ "Device Make: $device_make"
+      log_scan_tree_ "Device Model: $device_model"
+      log_scan_tree_ "Lens Make: $lens_make"
+      log_scan_tree_ "Lens Model: $lens_model"
+      log_scan_tree_ "Image Width: $image_width"
+      log_scan_tree_ "Image Height: $image_height"
+      log_scan_tree_ "Image Size: $image_size"
+      log_scan_tree_ "Date Time Original: $date_time_original"
+      log_scan_tree_ "Create Date: $create_date"
+      log_scan_tree_ "Track Create Date: $track_create_date"
+      log_scan_tree_ "Media Create Date: $media_create_date"
+      log_scan_tree_end_ "User Comment: $user_comment"
+    log_scan_tree_start_ "Device & Software"
+      log_scan_tree_ "Device Name: $device_name"
+      log_scan_tree_ "Software Name: $software_name"
+      log_scan_tree_end_ "Is Apple Media: ${file_is_apple_media[$fid]}"
+    log_scan_tree_last_start_ "Timestamp"
+      log_scan_tree_ "Timestamp: $timestamp"
+      log_scan_tree_end_ "Timestamp Source: $timestamp_source"
+    log_scan_tree_end_
 
   fid_ref="$fid"
   return 0
