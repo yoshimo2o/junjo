@@ -48,9 +48,12 @@
 # ==============================================================================
 
 # Log categories
-readonly MAIN_LOG="MAIN"
-readonly SCAN_LOG="SCAN"
-readonly SORT_LOG="SORT"
+readonly MAIN_LOG=" MAIN"
+readonly SCAN_LOG=" SCAN"
+readonly PLAN_LOG=" PLAN"
+readonly SORT_LOG=" SORT"
+readonly DEBUG_LOG="DEBUG"
+readonly ERROR_LOG="ERROR"
 
 # Log file paths (to be set in init_log)
 export JUNJO_LOG_FILE=""
@@ -91,39 +94,57 @@ init_log() {
     return 1
   }
 }
+# --------------------------------------------------------------------------
+# Logging functions
+# --------------------------------------------------------------------------
 
-# Log with timestamp and category
 log() {
   local message="$1"
   local category="$2"
-  local timestamp="$(log_timestamp)"
-  local color_primary
-  local color_secondary
-  local color_reset="\033[0m"
+  local timestamp="$(generate_log_timestamp_prefix)"
+  local log_file \
+    color_primary \
+    color_secondary \
+    color_reset="\033[0m" \
+    output_to_console
 
-  # Determine the log file and color based on the category
-  local log_file
+  # Different log behaviour for differnet log categories
   case "$category" in
     "$SCAN_LOG")
       log_file="$JUNJO_SCAN_LOG_FILE"
+      color_primary="\033[38;5;208m" # orange
+      color_secondary="\033[38;5;214m" # light orange
+      output_to_console=$(( JUNJO_LOG_VERBOSE == 1 ))
+      ;;
+    "$PLAN_LOG")
+      log_file="$JUNJO_PLAN_LOG_FILE"
       color_primary="\033[1;33m" # yellow
       color_secondary="\033[0;33m" # light yellow
+      output_to_console=$(( JUNJO_LOG_VERBOSE == 1 ))
       ;;
     "$SORT_LOG")
       log_file="$JUNJO_SORT_LOG_FILE"
       color_primary="\033[1;32m" # green
       color_secondary="\033[0;32m" # light green
+      output_to_console=$(( JUNJO_LOG_VERBOSE == 1 ))
+      ;;
+    "$DEBUG_LOG")
+      log_file="$JUNJO_LOG_FILE"
+      color_primary="\033[1;35m" # magenta
+      color_secondary="\033[0;35m" # light magenta
+      output_to_console=$(( DEBUG ? 1 : 0 ))
       ;;
     *)
       category="$MAIN_LOG" # Default to main log
       log_file="$JUNJO_LOG_FILE"
       color_primary="\033[1;34m" # blue
       color_secondary="\033[0;34m" # light blue
+      output_to_console=1
   esac
 
   # Show log message on screen if the category is main
   # or if verbose mode is enabled
-  if [[ "$category" == "$MAIN_LOG" || "$JUNJO_LOG_VERBOSE" -eq 1 ]]; then
+  if [[ $output_to_console ]]; then
     # Split message by the first ':' and color the part after it with Bright Black
     local msg_before_colon msg_after_colon
     if [[ "$message" == *:* ]]; then
@@ -141,57 +162,43 @@ log() {
   echo "${timestamp} ${message}" >> "$log_file"
 }
 
-# Log error message with timestamp
-# Only to the main log.
-log_error() {
-  local message="$1"
-  local timestamp="$(log_timestamp)"
-  local log_message="${timestamp} Error: ${message}"
-
-  # Show error message on screen
-  echo "$log_message" >&2
-
-  # Append the error message to the main log file
-  echo "$log_message" >> "$JUNJO_LOG_FILE"
-}
-
-log_debug() {
-  local message="$1"
-  local timestamp="$(log_timestamp)"
-  local log_message="${timestamp} Debug: ${message}"
-
-  # Show debug message on screen if verbose mode is enabled
-  if [[ "$JUNJO_LOG_VERBOSE" -eq 1 ]]; then
-    echo "$log_message"
-  fi
-
-  # Append the debug message to the main log file
-  echo "$log_message" >> "$JUNJO_LOG_FILE"
-}
-
-# Log without timestamp
+# Log with no extra formatting
 log_raw() {
   echo "$1"
   echo "$1" >> "$JUNJO_LOG_FILE"
 }
 
-# Generate timestamp string
-log_timestamp() {
-  # timestamp takes 17 characters
-  local timestamp="[$(date '+%Y-%m-%d %H:%M:%S')]"
+# Log error also outputs to stderr
+log_error() {
+  log "$1" "$ERROR_LOG"
+  echo "Error: ${$1}" >&2
+}
+
+# Log debug only when DEBUG is set
+log_debug() {
+  if [[ $DEBUG ]]; then
+    log "$1" "$SCAN_LOG"
+  fi
+}
+
+# --------------------------------------------------------------------------
+# Timestamp
+# --------------------------------------------------------------------------
+
+# Generate timestamp prefix with milliseconds precision
+generate_log_timestamp_prefix() {
+  # timestamp takes 25 characters
+  local timestamp="[$(date '+%Y-%m-%d %H:%M:%S.+%3N')]"
   echo "$timestamp"
 }
 
-# Generate tree indentation string
-log_tree_indentation() {
-  local indent=""
-  for ((i = 0; i < LOG_TREE_INDENT_LEVEL; i++)); do
-    if [[ $i -gt 0 ]]; then
-      indent+="│   "
-    fi
-  done
-  echo -n "$indent"
+generate_log_timestamp_indent() {
+  echo "                         "
 }
+
+# --------------------------------------------------------------------------
+# Log tree
+# --------------------------------------------------------------------------
 
 # Start a tree section and increase indent
 log_tree_start() {
@@ -268,27 +275,16 @@ log_tree_stop() {
   ))
 }
 
-# Log tree branch line
-log_tree_branch() {
-  local message="$1"
-  local prefix=""
-  if [[ "$LOG_TREE_INDENT_LEVEL" -gt 0 ]]; then
-    prefix="$(log_tree_indentation)├── "
-  fi
-  log "${prefix}${message}" "${@:2}"
+log_tree_indentation() {
+  local indent=""
+  for ((i = 0; i < LOG_TREE_INDENT_LEVEL; i++)); do
+    if [[ $i -gt 0 ]]; then
+      indent+="│   "
+    fi
+  done
+  echo -n "$indent"
 }
 
-# Log tree branch line
-log_tree_branch_end() {
-  local message="$1"
-  local prefix=""
-  if [[ "$LOG_TREE_INDENT_LEVEL" -gt 0 ]]; then
-    prefix="$(log_tree_indentation)└── "
-  fi
-  log "${prefix}${message}" "${@:2}"
-}
-
-# Log tree continuation line
 log_tree_newline() {
   local message="$1"
   local prefix=""
@@ -298,60 +294,108 @@ log_tree_newline() {
   log "${prefix}${message}" "${@:2}"
 }
 
-# Reset tree indentation to zero
+log_tree_branch() {
+  local message="$1"
+  local prefix=""
+  if [[ "$LOG_TREE_INDENT_LEVEL" -gt 0 ]]; then
+    prefix="$(log_tree_indentation)├── "
+  fi
+  log "${prefix}${message}" "${@:2}"
+}
+
+log_tree_branch_end() {
+  local message="$1"
+  local prefix=""
+  if [[ "$LOG_TREE_INDENT_LEVEL" -gt 0 ]]; then
+    prefix="$(log_tree_indentation)└── "
+  fi
+  log "${prefix}${message}" "${@:2}"
+}
+
 log_tree_reset() {
   LOG_TREE_INDENT_LEVEL=0
 }
 
-# Sugar functions for category-specific logging
+# --------------------------------------------------------------------------
+# Sugar functions for log_scan
+# --------------------------------------------------------------------------
+
 log_scan() {
-  log "$@" "$SCAN_LOG"
+  log "$1" "$SCAN_LOG"
 }
 
 log_scan_tree_start() {
-  log_tree_start "$@" "$SCAN_LOG"
-}
-
-log_scan_tree() {
-  log_tree "$@" "$SCAN_LOG"
-}
-
-log_scan_tree_newline() {
-  log_tree_newline "$@" "$SCAN_LOG"
+  log_tree_start "$1" "$SCAN_LOG"
 }
 
 log_scan_tree_last_start() {
-  log_tree_last_start "$@" "$SCAN_LOG"
+  log_tree_last_start "$1" "$SCAN_LOG"
+}
+
+log_scan_tree() {
+  log_tree "$1" "$SCAN_LOG"
 }
 
 log_scan_tree_end() {
   if [[ -z "$1" ]]; then
     log_tree_end "" "$SCAN_LOG"
-    return 0
+  else
+    log_tree_end "$1" "$SCAN_LOG"
   fi
-  log_tree_end "$@" "$SCAN_LOG"
 }
 
+# --------------------------------------------------------------------------
+# Sugar functions for log_plan
+# --------------------------------------------------------------------------
+
+log_plan() {
+  log "$1" "$PLAN_LOG"
+}
+
+log_plan_tree_start() {
+  log_tree_start "$1" "$PLAN_LOG"
+}
+
+log_plan_tree_last_start() {
+  log_tree_last_start "$1" "$PLAN_LOG"
+}
+
+log_plan_tree() {
+  log_tree "$1" "$PLAN_LOG"
+}
+
+log_plan_tree_end() {
+  if [[ -z "$1" ]]; then
+    log_tree_end "" "$PLAN_LOG"
+  else
+    log_tree_end "$1" "$PLAN_LOG"
+  fi
+}
+
+# --------------------------------------------------------------------------
+# Sugar functions for log_sort
+# --------------------------------------------------------------------------
+
 log_sort() {
-  log "$@" "$SORT_LOG"
+  log "$1" "$SORT_LOG"
 }
 
 log_sort_tree_start() {
-  log_tree_start "$@" "$SORT_LOG"
-}
-
-log_sort_tree() {
-  log_tree "$@" "$SORT_LOG"
-}
-
-log_sort_tree_newline() {
-  log_tree_newline "$@" "$SORT_LOG"
+  log_tree_start "$1" "$SORT_LOG"
 }
 
 log_sort_tree_last_start() {
-  log_tree_last_start "$@" "$SORT_LOG"
+  log_tree_last_start "$1" "$SORT_LOG"
+}
+
+log_sort_tree() {
+  log_tree "$1" "$SORT_LOG"
 }
 
 log_sort_tree_end() {
-  log_tree_end "$@" "$SORT_LOG"
+  if [[ -z "$1" ]]; then
+    log_tree_end "" "$SORT_LOG"
+  else
+    log_tree_end "$1" "$SORT_LOG"
+  fi
 }
