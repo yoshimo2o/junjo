@@ -47,7 +47,8 @@ compute_file_destinations() {
 
 compute_file_destination() {
   local fid="$1"
-  local dest_dir \
+  local dest \
+    dest_dir \
     dest_name \
     dest_stem \
     dest_root_stem \
@@ -55,9 +56,14 @@ compute_file_destination() {
     dest_compound_ext \
     dest_dupe_marker
 
-  # Compute destination components
-  compute_file_destination_components "$fid" \
-    dest \
+  # Compute destination directory
+  dest_dir=$(compute_destination_directory "$fid")
+
+  # Compute destination file
+  dest="${dest_dir}${file_src_root_stem[$fid]}${file_src_compound_ext[$fid]}"
+
+  # Extract destination file components
+  extract_file_components "$dest" \
     dest_dir \
     dest_name \
     dest_stem \
@@ -83,7 +89,7 @@ compute_file_destination() {
   local did="$(compute_file_id "${dest^^}")"
 
   # If this is the initial file with this destination
-  if [[ -z "$file_dest_entries["$did"]" ]]; then
+  if [[ -z "${file_dest_entries["$did"]}" ]]; then
 
     # Add this initial file file destination entries
     file_dest_entries["$did"]="$fid"
@@ -99,7 +105,7 @@ compute_file_destination() {
       initial_fid=${file_dest_entries["$did"]}
 
       # Add the fid of that initial file to the conflict list
-      file_dest_conflicts["$did"]="${initial_fid}"
+      file_dest_conflicts["$did"]="$initial_fid"
 
       # Mark the initial file as having naming conflict
       file_dest_has_naming_conflict["$fid"]=1
@@ -111,6 +117,74 @@ compute_file_destination() {
     # Mark the current file as having naming conflict
     file_dest_has_naming_conflict["$fid"]=1
   fi
+
+  # Verbose log the file destination details
+  log_plan_tree_start_ "Computed destination for file: ${media_file}"
+    log_plan_tree_     "Source Folder      : ${file_src_dir["$fid"]}"
+    log_plan_tree_     "Source Filename    : ${file_src_name["$fid"]}"
+    log_plan_tree_     "Destination Folder : ${dest_dir}"
+    log_plan_tree_     "Destination Name   : ${dest_name}"
+    log_plan_tree_end_ "Has Conflict       : ${file_dest_has_naming_conflict["$fid"]}"
+}
+
+# Computes the destination directory based on the configured structure
+# The computed path comes with trailing slash.
+compute_destination_directory() {
+  local fid="$1"
+  local dest_dir=""
+  local timestamp_epoch="${file_timestamp_epoch["$fid"]}"
+
+  # Compute the destination directory based on the configured structure
+  for structure in "${JUNJO_OUTPUT_DIR_STRUCTURE[@]}"; do
+    case "$structure" in
+      "$GROUP_BY_DEVICE")
+          # See `get_friendly_device_name()` for details on device name construction.
+          #   e.g. Exact Model   : "iPhone 7 Plus/", "Samsung SM-F926B/", "Sony XQ-DQ54/", etc.
+          #        Device Type   : "iPhone/", "iPad/", "Android Phone/", "Android Tablet/"
+          #        Upload Origin : "Mobile/", "Desktop/", "Web/"
+          #        Unknown       : "Unknown/"
+          local device_name="${file_device_name["$fid"]}"
+          dest_dir+="${device_name}/"
+        ;;
+      "$GROUP_BY_SOFTWARE")
+          # See `get_most_likely_software_name()` for details on software name construction.
+          #   e.g. App Folder        : "WhatsApp Images/", "Photoshop Express/"
+          #        Known Patterns    : "WhatsApp/", "Facebook/",
+          #        Observed Patterns : "WhatsApp (Possibly)/", "Telegram (Possibly)/", "Downloads/"
+          #        Other Categories  : "Screenshots/", "Screen Recordings/"
+          local device_folder="${file_device_folder["$fid"]}"
+          if [[ -n "${device_folder}" ]]; then
+            dest_dir+="${device_folder}/"
+          fi
+        ;;
+      "$GROUP_BY_YEAR")
+        # YYYY, e.g. "2025/"
+        local year="$(date_fmt "$timestamp_epoch" +%Y)"
+        dest_dir+="${year}/"
+        ;;
+      "$GROUP_BY_MONTH")
+        # MM, e.g. "12/"
+        local month="$(date_fmt "$timestamp_epoch" +%m)"
+        dest_dir+="${month}/"
+        ;;
+      "$GROUP_BY_DAY")
+        # DD, e.g. "31/"
+        local day="$(date_fmt "$timestamp_epoch" +%d)"
+        dest_dir+="${day}/"
+        ;;
+      "$GROUP_BY_YEAR_MONTH")
+        # YYYY-MM, e.g. "2025-12/"
+        local year_month="$(date_fmt "$timestamp_epoch" +%Y-%m)"
+        dest_dir+="${year_month}/"
+        ;;
+      "$GROUP_BY_YEAR_MONTH_DAY")
+        # YYYY-MM-DD, e.g. "2025-12-31/"
+        local year_month_day="$(date_fmt "$timestamp_epoch" +%Y-%m-%d)"
+        dest_dir+="${year_month_day}/"
+    esac
+  done
+
+  printf '%s' "$dest_dir"
 }
 
 resolve_destination_naming_conflicts() {
