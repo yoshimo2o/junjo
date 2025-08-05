@@ -44,6 +44,7 @@ source "$JUNJO_DIR/config.ini"
 source "$JUNJO_LIB_DIR/globals.sh"
 source "$JUNJO_LIB_DIR/functions.sh"
 source "$JUNJO_LIB_DIR/log.sh"
+source "$JUNJO_LIB_DIR/controller.sh"
 source "$JUNJO_LIB_DIR/media_scanner.sh"
 source "$JUNJO_LIB_DIR/parser_file.sh"
 source "$JUNJO_LIB_DIR/parser_takeout.sh"
@@ -130,7 +131,7 @@ if [[ -d "$media_path" ]]; then
   log_raw "  tail -f $JUNJO_SORT_LOG_FILE"
   log_raw ""
 
-  scan_media_folder "$media_path"
+  junjo_start
 fi
 
 # If media_path is a file, analyze it.
