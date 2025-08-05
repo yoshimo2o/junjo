@@ -164,3 +164,14 @@ progress() {
     printf "%s/%s" "$padded_current" "$total"
   fi
 }
+
+# Portable date formatting function for macOS and Linux
+if [[ "$(uname)" == "Darwin" ]]; then
+  date_fmt() {
+    date -r "$1" "$2"
+  }
+else
+  date_fmt() {
+    date -d @"$1" "$2"
+  }
+fi
