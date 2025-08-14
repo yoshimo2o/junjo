@@ -197,9 +197,9 @@ identify_file_type() {
   local -n file_type_ref="$2"
 
   # Get file extension by fid
-  local file_ext="${file_src_ext[$fid]}"
-  local cid="${file_exif_cid[$fid]:-}"
-  local is_apple_media="${file_is_apple_media[$fid]:-0}"
+  local file_ext="${file_src_ext["$fid"]}"
+  local cid="${file_exif_cid["$fid"]:-}"
+  local is_apple_media="${file_is_apple_media["$fid"]:-0}"
 
   # Determine file type based on all the information collected above
   case "${file_ext,,}" in

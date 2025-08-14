@@ -29,7 +29,7 @@
 get_most_likely_software_name() {
 
   local fid="$1"
-  local device_folder="${file_device_folder[$fid]:-}"
+  local device_folder="${file_device_folder["$fid"]:-}"
 
   # If device folder exists, use it.
   # e.g. Android Phone/WhatsApp Images/IMG-20151025-WA0014.jpg
@@ -65,7 +65,7 @@ get_most_likely_software_name() {
     return 0
   fi
 
-  local is_apple_media="${file_is_apple_media[$fid]:-0}"
+  local is_apple_media="${file_is_apple_media["$fid"]:-0}"
 
   # If the filename looks like a UUID with dashes
   # it is very likely WhatsApp media files on iOS devices.
