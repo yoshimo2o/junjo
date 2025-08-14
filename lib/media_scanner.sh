@@ -472,6 +472,7 @@ analyze_media_file() {
       log_scan_tree_end_ "Is Apple Media: ${file_is_apple_media[$fid]}"
     log_scan_tree_last_start_ "Timestamp"
       log_scan_tree_ "Timestamp: $timestamp"
+      log_scan_tree_ "Timestamp Epoch: $timestamp_epoch"
       log_scan_tree_end_ "Timestamp Source: $timestamp_source"
     log_scan_tree_end_
 

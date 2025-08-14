@@ -52,6 +52,7 @@ declare -A file_exif_user_comment
 
 # Other file properties
 declare -A file_timestamp
+declare -A file_timestamp_epoch
 declare -A file_timestamp_source
 
 # Device & software
