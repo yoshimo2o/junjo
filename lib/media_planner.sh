@@ -180,31 +180,31 @@ compute_destination_directory() {
         ;;
       "$GROUP_BY_YEAR")
         # YYYY, e.g. "2025/"
-        local year="$(date_fmt "$timestamp_epoch" +%Y)"
+        local year="$(epoch_ms_date_fmt "$timestamp_epoch" +%Y)"
         # debug_string "compute_destination_directory()->year" "$year"
         dest_dir_ref+="${year}/"
         ;;
       "$GROUP_BY_MONTH")
         # MM, e.g. "12/"
-        local month="$(date_fmt "$timestamp_epoch" +%m)"
+        local month="$(epoch_ms_date_fmt "$timestamp_epoch" +%m)"
         # debug_string "compute_destination_directory()->month" "$month"
         dest_dir_ref+="${month}/"
         ;;
       "$GROUP_BY_DAY")
         # DD, e.g. "31/"
-        local day="$(date_fmt "$timestamp_epoch" +%d)"
+        local day="$(epoch_ms_date_fmt "$timestamp_epoch" +%d)"
         # debug_string "compute_destination_directory()->day" "$day"
         dest_dir_ref+="${day}/"
         ;;
       "$GROUP_BY_YEAR_MONTH")
         # YYYY-MM, e.g. "2025-12/"
-        local year_month="$(date_fmt "$timestamp_epoch" +%Y-%m)"
+        local year_month="$(epoch_ms_date_fmt "$timestamp_epoch" +%Y-%m)"
         # debug_string "compute_destination_directory()->year_month" "$year_month"
         dest_dir_ref+="${year_month}/"
         ;;
       "$GROUP_BY_YEAR_MONTH_DAY")
         # YYYY-MM-DD, e.g. "2025-12-31/"
-        local year_month_day="$(date_fmt "$timestamp_epoch" +%Y-%m-%d)"
+        local year_month_day="$(epoch_ms_date_fmt "$timestamp_epoch" +%Y-%m-%d)"
         # debug_string "compute_destination_directory()->year_month_day" "$year_month_day"
         dest_dir_ref+="${year_month_day}/"
         ;;

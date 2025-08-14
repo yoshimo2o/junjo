@@ -167,11 +167,19 @@ progress() {
 
 # Portable date formatting function for macOS and Linux
 if [[ "$(uname)" == "Darwin" ]]; then
-  date_fmt() {
-    date -r "$1" "$2"
+  epoch_ms_date_fmt() {
+    # Accepts epoch in milliseconds, converts to seconds
+    local epoch_ms="$1"
+    local fmt="$2"
+    local epoch_s=$((epoch_ms / 1000))
+    date -r "$epoch_s" "$fmt"
   }
 else
-  date_fmt() {
-    date -d @"$1" "$2"
+  epoch_ms_date_fmt() {
+    # Accepts epoch in milliseconds, converts to seconds
+    local epoch_ms="$1"
+    local fmt="$2"
+    local epoch_s=$((epoch_ms / 1000))
+    date -d @"$epoch_s" "$fmt"
   }
 fi
