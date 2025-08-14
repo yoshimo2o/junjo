@@ -54,7 +54,7 @@ ___array() {
     out+="[${i}] => \"${arr[$i]}\"\n"
   done
   out+="(length=${#arr[@]})"
-  printf "'%s'" "${out%\n}"
+  printf "%s" "${out%\n}"
 }
 
 ___map() {
@@ -79,7 +79,7 @@ ___map() {
     out+="[${keys[$i]}] => \"${vals[$i]}\"\n"
   done
   out+="(length=${#keys[@]})"
-  printf "'%s'" "${out%\n}"
+  printf "%s" "${out%\n}"
 }
 
 ___date() {
