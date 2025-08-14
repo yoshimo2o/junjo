@@ -131,10 +131,14 @@ compute_file_destination() {
 # The computed path comes with trailing slash.
 compute_destination_directory() {
   local fid="$1"
-  local dest_dir=""
+  local -n dest_dir_ref="$2"
   local timestamp_epoch="${file_timestamp_epoch["$fid"]}"
+  # debug_string "compute_destination_directory()->fid" "$fid"
+  # debug_string "compute_destination_directory()->dest_dir_ref" "$dest_dir_ref"
+  # debug_string "compute_destination_directory()->timestamp_epoch" "$timestamp_epoch"
 
   # Compute the destination directory based on the configured structure
+  dest_dir_ref=""
   for structure in "${JUNJO_OUTPUT_DIR_STRUCTURE[@]}"; do
     case "$structure" in
       "$GROUP_BY_DEVICE")
@@ -144,7 +148,9 @@ compute_destination_directory() {
           #        Upload Origin : "Mobile/", "Desktop/", "Web/"
           #        Unknown       : "Unknown/"
           local device_name="${file_device_name["$fid"]}"
-          dest_dir+="${device_name}/"
+          # debug_string "compute_destination_directory()->device_name" "$device_name"
+
+          dest_dir_ref+="${device_name}/"
         ;;
       "$GROUP_BY_SOFTWARE")
           # See `get_most_likely_software_name()` for details on software name construction.
@@ -152,39 +158,45 @@ compute_destination_directory() {
           #        Known Patterns    : "WhatsApp/", "Facebook/",
           #        Observed Patterns : "WhatsApp (Possibly)/", "Telegram (Possibly)/", "Downloads/"
           #        Other Categories  : "Screenshots/", "Screen Recordings/"
-          local device_folder="${file_device_folder["$fid"]}"
-          if [[ -n "${device_folder}" ]]; then
-            dest_dir+="${device_folder}/"
+          local software_name="${file_software_name["$fid"]}"
+          # debug_string "compute_destination_directory()->software_name" "$software_name"
+
+          if [[ -n "$software_name" ]]; then
+            dest_dir_ref+="${software_name}/"
           fi
         ;;
       "$GROUP_BY_YEAR")
         # YYYY, e.g. "2025/"
         local year="$(date_fmt "$timestamp_epoch" +%Y)"
-        dest_dir+="${year}/"
+        # debug_string "compute_destination_directory()->year" "$year"
+        dest_dir_ref+="${year}/"
         ;;
       "$GROUP_BY_MONTH")
         # MM, e.g. "12/"
         local month="$(date_fmt "$timestamp_epoch" +%m)"
-        dest_dir+="${month}/"
+        # debug_string "compute_destination_directory()->month" "$month"
+        dest_dir_ref+="${month}/"
         ;;
       "$GROUP_BY_DAY")
         # DD, e.g. "31/"
         local day="$(date_fmt "$timestamp_epoch" +%d)"
-        dest_dir+="${day}/"
+        # debug_string "compute_destination_directory()->day" "$day"
+        dest_dir_ref+="${day}/"
         ;;
       "$GROUP_BY_YEAR_MONTH")
         # YYYY-MM, e.g. "2025-12/"
         local year_month="$(date_fmt "$timestamp_epoch" +%Y-%m)"
-        dest_dir+="${year_month}/"
+        # debug_string "compute_destination_directory()->year_month" "$year_month"
+        dest_dir_ref+="${year_month}/"
         ;;
       "$GROUP_BY_YEAR_MONTH_DAY")
         # YYYY-MM-DD, e.g. "2025-12-31/"
         local year_month_day="$(date_fmt "$timestamp_epoch" +%Y-%m-%d)"
-        dest_dir+="${year_month_day}/"
+        # debug_string "compute_destination_directory()->year_month_day" "$year_month_day"
+        dest_dir_ref+="${year_month_day}/"
+        ;;
     esac
   done
-
-  printf '%s' "$dest_dir"
 }
 
 resolve_destination_naming_conflicts() {
