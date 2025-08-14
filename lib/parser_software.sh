@@ -38,7 +38,15 @@ get_most_likely_software_name() {
     return 0
   fi
 
-  local file_root_stem="${file_src_root_stem[$fid]}"
+  # If Creator Tool exif metadata exists, use it.
+  # e.g. iPhone/Facebook/8BDF8051-2110-4653-8029-70A465C05DE9.jpg
+  local creator_tool="${file_exif_creator_tool["$fid"]:-}"
+  if [[ -n "$creator_tool" ]]; then
+    echo "$creator_tool"
+    return 0
+  fi
+
+  local file_root_stem="${file_src_root_stem["$fid"]}"
 
   # If the filename looks like a WhatsApp image or video.
   # e.g. Android Phone/WhatsApp/IMG-20151025-WA0014.jpg
