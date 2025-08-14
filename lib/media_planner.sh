@@ -306,7 +306,7 @@ resolve_destination_naming_conflicts() {
           # Create a new filename with an incremented duplicate marker
           (( dupe_marker++ ))
           new_dest_dupe_marker="$dupe_marker"
-          new_dest_stem="${dest_root_stem} (${new_dest_dupe_marker})"
+          new_dest_stem="${dest_root_stem}(${new_dest_dupe_marker})"
           new_dest_name="${new_dest_stem}${dest_compound_ext}"
           new_dest="${dest_dir}${new_dest_name}"
           new_did="$(compute_file_id "${new_dest^^}")"
