@@ -1,27 +1,27 @@
-# File type constants
-readonly FILE_TYPE_APPLE_PHOTO="AP"
-readonly FILE_TYPE_APPLE_VIDEO="AV"
-readonly FILE_TYPE_LIVE_PHOTO="LP"
-readonly FILE_TYPE_LIVE_VIDEO="LV"
-readonly FILE_TYPE_REGULAR_PHOTO="RP"
-readonly FILE_TYPE_REGULAR_VIDEO="RV"
-readonly FILE_TYPE_REGULAR_IMAGE="RI"
-readonly FILE_TYPE_SCREENSHOT="SS"
-readonly FILE_TYPE_SCREEN_RECORDING="SR"
-readonly FILE_TYPE_UNKNOWN="?"
+# Media type constants
+readonly MEDIA_TYPE_APPLE_PHOTO="AP"
+readonly MEDIA_TYPE_APPLE_VIDEO="AV"
+readonly MEDIA_TYPE_LIVE_PHOTO="LP"
+readonly MEDIA_TYPE_LIVE_VIDEO="LV"
+readonly MEDIA_TYPE_REGULAR_PHOTO="RP"
+readonly MEDIA_TYPE_REGULAR_VIDEO="RV"
+readonly MEDIA_TYPE_REGULAR_IMAGE="RI"
+readonly MEDIA_TYPE_SCREENSHOT="SS"
+readonly MEDIA_TYPE_SCREEN_RECORDING="SR"
+readonly MEDIA_TYPE_UNKNOWN="?"
 
-# File types enumerations
-declare -A file_types=(
-  ["$FILE_TYPE_APPLE_PHOTO"]="Apple Photo"
-  ["$FILE_TYPE_APPLE_VIDEO"]="Apple Video"
-  ["$FILE_TYPE_LIVE_PHOTO"]="Apple Live Photo"
-  ["$FILE_TYPE_LIVE_VIDEO"]="Apple Live Video"
-  ["$FILE_TYPE_REGULAR_PHOTO"]="Regular Photo"
-  ["$FILE_TYPE_REGULAR_VIDEO"]="Regular Video"
-  ["$FILE_TYPE_REGULAR_IMAGE"]="Regular Image"
-  ["$FILE_TYPE_SCREENSHOT"]="Screenshot"
-  ["$FILE_TYPE_SCREEN_RECORDING"]="Screen Recording"
-  ["$FILE_TYPE_UNKNOWN"]="Unknown"
+# Media types enumerations
+declare -A media_types=(
+  ["$MEDIA_TYPE_APPLE_PHOTO"]="Apple Photo"
+  ["$MEDIA_TYPE_APPLE_VIDEO"]="Apple Video"
+  ["$MEDIA_TYPE_LIVE_PHOTO"]="Apple Live Photo"
+  ["$MEDIA_TYPE_LIVE_VIDEO"]="Apple Live Video"
+  ["$MEDIA_TYPE_REGULAR_PHOTO"]="Regular Photo"
+  ["$MEDIA_TYPE_REGULAR_VIDEO"]="Regular Video"
+  ["$MEDIA_TYPE_REGULAR_IMAGE"]="Regular Image"
+  ["$MEDIA_TYPE_SCREENSHOT"]="Screenshot"
+  ["$MEDIA_TYPE_SCREEN_RECORDING"]="Screen Recording"
+  ["$MEDIA_TYPE_UNKNOWN"]="Unknown"
 )
 
 # Directory grouping

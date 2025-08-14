@@ -182,24 +182,23 @@ extract_file_components() {
 }
 
 # ====================================================================================================
-# identify_file_type <fid>
+# identify_media_type <fid> <&media_type>
 #
-# Determines the media file type based on file extension and metadata.
+# Determines the media type based on file extension and metadata.
 #
 # Parameters:
-#   1. fid → File ID to analyze (must exist in global arrays)
-#
-# Return:
-#   File type constant corresponding to the detected media type (see $file_types in globals.sh)
+#   1. fid        → File ID to analyze
+#   2. media_type → Media type variable to populate
 #
 # Example usage:
-#   file_type=$(identify_file_type "$fid")
-#   echo "File type: $file_type"
+#   local media_type
+#   identify_media_type "$fid" media_type
+#   echo "Media type: $media_type"
 # ====================================================================================================
 
-identify_file_type() {
+identify_media_type() {
   local fid="$1"
-  local -n file_type_ref="$2"
+  local -n media_type_ref="$2"
 
   # Get file extension by fid
   local file_ext="${file_src_ext["$fid"]}"
@@ -210,30 +209,30 @@ identify_file_type() {
   case "${file_ext,,}" in
     .jpg|.jpeg|.heic)
       if [[ -n "$cid" ]]; then
-        file_type_ref="$FILE_TYPE_LIVE_PHOTO"
+        media_type_ref="$MEDIA_TYPE_LIVE_PHOTO"
       elif [[ "$is_apple_media" -eq 1 ]]; then
-        file_type_ref="$FILE_TYPE_APPLE_PHOTO"
+        media_type_ref="$MEDIA_TYPE_APPLE_PHOTO"
       else
-        file_type_ref="$FILE_TYPE_REGULAR_PHOTO"
+        media_type_ref="$MEDIA_TYPE_REGULAR_PHOTO"
       fi
       ;;
     .mov|.mp4|.mpg|.mpeg|.avi|.3gp|.wmv|.webm)
       if [[ -n "$cid" ]]; then
-        file_type_ref="$FILE_TYPE_LIVE_VIDEO"
+        media_type_ref="$MEDIA_TYPE_LIVE_VIDEO"
       elif [[ "$is_apple_media" -eq 1 ]]; then
-        file_type_ref="$FILE_TYPE_APPLE_VIDEO"
+        media_type_ref="$MEDIA_TYPE_APPLE_VIDEO"
       else
-        file_type_ref="$FILE_TYPE_REGULAR_VIDEO"
+        media_type_ref="$MEDIA_TYPE_REGULAR_VIDEO"
       fi
       ;;
     .png)
-      file_type_ref="$FILE_TYPE_REGULAR_IMAGE"
+      media_type_ref="$MEDIA_TYPE_REGULAR_IMAGE"
       ;;
     .gif|.webp)
-      file_type_ref="$FILE_TYPE_REGULAR_IMAGE"
+      media_type_ref="$MEDIA_TYPE_REGULAR_IMAGE"
       ;;
     *)
-      file_type_ref="$FILE_TYPE_UNKNOWN"
+      media_type_ref="$MEDIA_TYPE_UNKNOWN"
       # TODO: Handle screenshots
       # TODO: Handle downloaded images
       ;;

@@ -383,40 +383,41 @@ analyze_media_file() {
   file_timestamp_epoch["$fid"]="$timestamp_epoch"
   file_timestamp_source["$fid"]="$timestamp_source"
 
-  # Identify file type
-  local file_type
-  identify_file_type "$fid" file_type
+  # Identify media type
+  local media_type
+  identify_media_type "$fid" media_type
+  file_media_type["$fid"]="$media_type"
 
-  # Add files to our lists that is mapped by file type
-  case "$file_type" in
-    "$FILE_TYPE_LIVE_PHOTO")
+  # Add files to our lists that is mapped by media type
+  case "$media_type" in
+    "$MEDIA_TYPE_LIVE_PHOTO")
       live_photo_files["$fid"]="$media_file"
       ;;
-    "$FILE_TYPE_LIVE_VIDEO")
+    "$MEDIA_TYPE_LIVE_VIDEO")
       live_video_files["$fid"]="$media_file"
       ;;
-    "$FILE_TYPE_APPLE_PHOTO")
+    "$MEDIA_TYPE_APPLE_PHOTO")
       apple_photo_files["$fid"]="$media_file"
       ;;
-    "$FILE_TYPE_APPLE_VIDEO")
+    "$MEDIA_TYPE_APPLE_VIDEO")
       apple_video_files["$fid"]="$media_file"
       ;;
-    "$FILE_TYPE_REGULAR_PHOTO")
+    "$MEDIA_TYPE_REGULAR_PHOTO")
       regular_photo_files["$fid"]="$media_file"
       ;;
-    "$FILE_TYPE_REGULAR_VIDEO")
+    "$MEDIA_TYPE_REGULAR_VIDEO")
       regular_video_files["$fid"]="$media_file"
       ;;
-    "$FILE_TYPE_REGULAR_IMAGE")
+    "$MEDIA_TYPE_REGULAR_IMAGE")
       regular_image_files["$fid"]="$media_file"
       ;;
-    "$FILE_TYPE_SCREENSHOT")
+    "$MEDIA_TYPE_SCREENSHOT")
       screenshot_files["$fid"]="$media_file"
       ;;
-    "$FILE_TYPE_SCREEN_RECORDING")
+    "$MEDIA_TYPE_SCREEN_RECORDING")
       screen_recording_files["$fid"]="$media_file"
       ;;
-    "$FILE_TYPE_UNKNOWN")
+    "$MEDIA_TYPE_UNKNOWN")
       unknown_files["$fid"]="$media_file"
       ;;
   esac
@@ -432,7 +433,7 @@ analyze_media_file() {
   # Log analysis
   log_scan_tree_start_ "File: $media_file"
     log_scan_tree_ "FID: $fid"
-    log_scan_tree_ "Type: $file_type (${file_types[$file_type]})"
+    log_scan_tree_ "Media Type: $media_type (${media_types[$media_type]})"
     log_scan_tree_start_ "File Components"
       log_scan_tree_ "Directory: $file_dir"
       log_scan_tree_ "Name: $file_name"

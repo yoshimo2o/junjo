@@ -22,7 +22,7 @@ declare -A file_dest_compound_ext
 declare -A file_dest_dupe_marker
 declare -A file_dest_create_date
 declare -A file_dest_modify_date
-declare -A file_type
+declare -A file_media_type
 
 # Takeout metadata keyed by file id (fid)
 declare -A file_takeout_meta_file
