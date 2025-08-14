@@ -361,10 +361,13 @@ analyze_media_file() {
   # Also determine if this is an Apple media file
   file_is_apple_media["$fid"]=$(
     [[ "$device_make" == *"Apple"* ]] || [[ "$lens_make" == *"Apple"* ]] || \
-    [[ "$device_model" == "iPhone"* || "$device_model" == "iPad"* || "$device_model" == "iOS"* ]] || \
-    [[ "$lens_model" == "iPhone"* || "$lens_model" == "iPad"* || "$lens_model" == "iOS"* ]] \
+    [[ "$device_model" == *"iPhone"* || "$device_model" == *"iPad"* || "$device_model" == *"iOS"* ]] || \
+    [[ "$lens_model" == *"iPhone"* || "$lens_model" == *"iPad"* || "$lens_model" == *"iOS"* ]] || \
+    [[ "$takeout_meta_device_type" == *"IOS"* ]] \
     && echo "1" || echo "0"
   )
+
+  # debug_string "analyze_media_file()->file_is_apple_media" "${file_is_apple_media[$fid]}"
 
   # Analyze timestamps
   local timestamp \
