@@ -318,6 +318,7 @@ analyze_media_file() {
         create_date \
         track_create_date \
         media_create_date \
+        creator_tool \
         user_comment \
         file_create_date \
         file_modify_date
@@ -335,6 +336,7 @@ analyze_media_file() {
     create_date \
     track_create_date \
     media_create_date \
+    creator_tool \
     user_comment \
     file_create_date \
     file_modify_date
@@ -351,6 +353,7 @@ analyze_media_file() {
   file_exif_create_date["$fid"]="$create_date"
   file_exif_track_create_date["$fid"]="$track_create_date"
   file_exif_media_create_date["$fid"]="$media_create_date"
+  file_exif_creator_tool["$fid"]="$creator_tool"
   file_exif_user_comment["$fid"]="$user_comment"
   file_src_create_date["$fid"]="$file_create_date"
   file_src_modify_date["$fid"]="$file_modify_date"

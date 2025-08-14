@@ -47,6 +47,7 @@ declare -A file_exif_date_time_original
 declare -A file_exif_create_date
 declare -A file_exif_track_create_date
 declare -A file_exif_media_create_date
+declare -A file_exif_creator_tool
 declare -A file_exif_user_comment
 
 # Other file properties

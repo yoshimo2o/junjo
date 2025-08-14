@@ -12,6 +12,7 @@
 #                       <&create_date> \
 #                       <&track_create_date> \
 #                       <&media_create_date> \
+#                       <&creator_tool> \
 #                       <&user_comment> \
 #                       <&file_create_date> \
 #                       <&file_modify_date>
@@ -52,6 +53,7 @@
 #         create_date \
 #         track_create_date \
 #         media_create_date \
+#         creator_tool \
 #         user_comment \
 #         file_create_date \
 #         file_modify_date
@@ -68,6 +70,7 @@
 #     create_date \
 #     track_create_date \
 #     media_create_date \
+#     creator_tool \
 #     user_comment \
 #     file_create_date \
 #     file_modify_date
@@ -87,9 +90,10 @@ extract_exif_metadata() {
   local -n create_date_ref="${11}"
   local -n track_create_date_ref="${12}"
   local -n media_create_date_ref="${13}"
-  local -n user_comment_ref="${14}"
-  local -n file_create_date_ref="${15}"
-  local -n file_modify_date_ref="${16}"
+  local -n creator_tool_ref="${14}"
+  local -n user_comment_ref="${15}"
+  local -n file_create_date_ref="${16}"
+  local -n file_modify_date_ref="${17}"
 
   local _cid \
         _device_make \
@@ -103,6 +107,7 @@ extract_exif_metadata() {
         _create_date \
         _track_create_date \
         _media_create_date \
+        _creator_tool \
         _user_comment \
         _file_create_date \
         _file_modify_date
@@ -120,6 +125,7 @@ extract_exif_metadata() {
     "CreateDate" \
     "TrackCreateDate" \
     "MediaCreateDate" \
+    "CreatorTool" \
     "UserComment" \
     "FileCreateDate" \
     "FileModifyDate" \
@@ -136,6 +142,7 @@ extract_exif_metadata() {
     _create_date \
     _track_create_date \
     _media_create_date \
+    _creator_tool \
     _user_comment \
     _file_create_date \
     _file_modify_date \
@@ -153,6 +160,7 @@ extract_exif_metadata() {
   create_date_ref="$_create_date"
   track_create_date_ref="$_track_create_date"
   media_create_date_ref="$_media_create_date"
+  creator_tool_ref="$_creator_tool"
   user_comment_ref="$_user_comment"
   file_create_date_ref="$_file_create_date"
   file_modify_date_ref="$_file_modify_date"
