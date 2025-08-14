@@ -39,7 +39,7 @@ compute_file_destinations() {
 
     log_plan_tree_end "Destination: ${file_dest[$fid]} $(\
       [[ ${file_dest_has_naming_conflict[$fid]} -eq 1 ]] \
-        && echo ' (Has Conflict)')"
+        && echo '(Has Conflict)')"
 
     index=$(($index + 1))
   done
@@ -82,10 +82,9 @@ compute_file_destination() {
   file_dest_compound_ext["$fid"]="$dest_compound_ext"
   file_dest_dupe_marker["$fid"]="$dest_dupe_marker"
 
-  # Compute did (destination id)
-  # Uppercase everything to ensure files with the same filenames
-  # but with different cases are treated as the same
-  # e.g. "IMG_1234.jpg" == "IMG_1234.JPG"
+  # Compute destination id (did)
+  # Assume case-insensitive file system by uppercasing everything.
+  # e.g. "foo/bar/IMG_1234.jpg" == "FOO/BAR/IMG_1234.JPG"
   local did="$(compute_file_id "${dest^^}")"
 
   # debug_string "compute_file_destination()->fid" "$fid"
@@ -113,7 +112,6 @@ compute_file_destination() {
 
       # Get the fid of the initial file that has this destination
       initial_fid="${file_dest_entries["$did"]}"
-      # debug_string "initial_fid" "$initial_fid"
 
       # Add the fid of that initial file to the conflict list
       file_dest_conflicts["$did"]="$initial_fid"
@@ -272,10 +270,9 @@ resolve_destination_naming_conflicts() {
     # debug_array "Sorted fids:" "${fids_sorted[@]}"
 
     # Add duplicate marker to the rest of the fids.
-    # Starts with 0 because it will be incremented to 1 before use.
     local dupe_marker=0
 
-    # We're starting with the second fid on the list,
+    # Counters use for reporting progress
     local index_fids=1;
     local total_fids=${#fids_sorted[@]};
 
@@ -283,6 +280,7 @@ resolve_destination_naming_conflicts() {
       local fid="${fids_sorted[$i]}"
 
       # Get the old values
+      local media_type="${file_media_type["$fid"]}"
       local src_dir="${file_src_dir["$fid"]}"
       local src_name="${file_src_name["$fid"]}"
       local dest_compound_ext="${file_dest_compound_ext["$fid"]}"
@@ -293,56 +291,224 @@ resolve_destination_naming_conflicts() {
       local dest_dir="${file_dest_dir["$fid"]}"
       local dest="${file_dest["$fid"]}"
 
-      if [[ $i -gt 0 ]]; then
+      # Verbose log the resolution of the naming conflict
+      local progress_label=$(progress "$index_fids" "$total_fids" "/")
+      log_plan_tree_start_ "Conflict details ${progress_label}:"
 
-        # Compute the new values
-        local new_did \
-          new_dest \
-          new_dest_name \
-          new_dest_stem \
-          new_dest_dupe_marker
-
-        while :; do
-          # Create a new filename with an incremented duplicate marker
-          (( dupe_marker++ ))
-          new_dest_dupe_marker="$dupe_marker"
-          new_dest_stem="${dest_root_stem}(${new_dest_dupe_marker})"
-          new_dest_name="${new_dest_stem}${dest_compound_ext}"
-          new_dest="${dest_dir}${new_dest_name}"
-          new_did="$(compute_file_id "${new_dest^^}")"
-
-          # If the filename does not have any conflicts, use it.
-          if [[ -z "${file_dest_entries["$new_did"]}" ]]; then
-            break
-          fi
-        done
-
-        # Set the new values
-        file_dest_dupe_marker["$fid"]="$i"
-        file_dest_stem["$fid"]="$new_dest_stem"
-        file_dest_name["$fid"]="$new_dest_name"
-        file_dest_entries["$new_did"]="$fid"
+      # If the conflict has already been handled, skip it.
+      # This can happen if the file was already processed in a previous run,
+      # e.g. when handling the live video counterpart of a live photo.
+      if [[ -n "${file_dest_conflict_handled["$fid"]}" ]]; then
+        log_plan_tree_end_ "File ID ${fid} has already been handled. Skipping."
+        break
       fi
 
-      # Mark file has no longer in conflict
-      file_dest_has_naming_conflict["$fid"]=0
+      # Compute the new values
+      local new_did \
+        new_dest \
+        new_dest_name \
+        new_dest_stem \
+        new_dest_dupe_marker
 
-      # Get total fids_sorted
-      file_dest["$fid"]="${new_dest:-$dest}"
+      while :; do
+        if [[ $dupe_marker -eq 0 ]]; then
+          # No duplicate marker needed for the earliest file
+          new_dest_dupe_marker=""
+          new_dest_stem="${dest_root_stem}"
+        else
+          # Create a new filename with an incremented duplicate marker
+          new_dest_dupe_marker="${dupe_marker}"
+          new_dest_stem="${dest_root_stem}(${new_dest_dupe_marker})"
+        fi
 
-      local progress_label=$(progress "$index_fids" "$total_fids" "/")
+        # debug_string "resolve_destination_naming_conflict()->new_dest_dupe_marker" "${new_dest_dupe_marker}"
+        # debug_string "resolve_destination_naming_conflict()->new_dest_stem" "${new_dest_stem}"
 
-      # Verbose log the resolution of the naming conflict
-      log_plan_tree_start_ "Conflict details ${progress_label}:"
-        log_plan_tree_     "Source Folder      : ${src_dir}"
-        log_plan_tree_     "Source Filename    : ${src_name}"
-        log_plan_tree_     "Destination Folder : ${dest_dir}"
-        log_plan_tree_     "Conflict Filename  : ${dest_name}"
-        log_plan_tree_end_ "Resolved Filename  : ${new_dest_name:-$dest_name}"
+        # Compute the rest of the properties
+        new_dest_name="${new_dest_stem}${dest_compound_ext}"
+        new_dest="${dest_dir}${new_dest_name}"
+        new_did="$(compute_file_id "${new_dest^^}")"
+
+        # Set the earliest file found to the file_dest_entries
+        if [[ -z ${new_dest_dupe_marker} ]]; then
+          file_dest_entries["$new_did"]="$fid"
+        fi
+
+        case "$media_type" in
+          # Special handling for live photos
+          # Live video needs to share the same stem as live photo
+          "$MEDIA_TYPE_LIVE_PHOTO")
+            # Get live video properties
+            local cid="${file_exif_cid["$fid"]}"
+            local live_video_fid="${live_video_by_cid["$cid"]}"
+            local live_video_compound_ext="${file_dest_compound_ext["$live_video_fid"]}"
+
+            # If the current dupe marker could not be used for the live video counterpart,
+            # we need to find an alternative dupe marker that will work.
+            while :; do
+              # Check if using the new dest stem is going to create a conflict
+              local live_video_new_dupe_marker="${new_dest_dupe_marker}"
+              local live_video_new_dest_stem="${new_dest_stem}"
+              local live_video_new_dest_name="${live_video_new_dest_stem}${live_video_compound_ext}"
+              local live_video_new_dest="${dest_dir}${live_video_new_dest_name}"
+              local live_video_new_did="$(compute_file_id "${live_video_new_dest^^}")"
+
+              # If live video filename does not have any conflicts, use it.
+              if [[ -z "${file_dest_entries["$new_did"]}" ]] && \
+                 [[ -z "${file_dest_entries["$live_video_new_did"]}" ]]; then
+
+                # Set new dest values for live video
+                file_dest_dupe_marker["$fid"]="$new_dest_dupe_marker"
+                file_dest_stem["$fid"]="$new_dest_stem"
+                file_dest_name["$fid"]="$new_dest_name"
+                file_dest["$fid"]="${new_dest}"
+
+                # Mark file as no longer having naming conflict
+                file_dest_conflict_handled["$fid"]=1
+
+                # Add to file_dest_entries
+                file_dest_entries["$new_did"]="$fid"
+
+                # Set new dest values for live video
+                file_dest_dupe_marker["$live_video_fid"]="${live_video_new_dupe_marker}"
+                file_dest_stem["$live_video_fid"]="${live_video_new_dest_stem}"
+                file_dest_name["$live_video_fid"]="${live_video_new_dest_name}"
+                file_dest["$live_video_fid"]="${live_video_new_dest}"
+
+                # Mark live video file as no longer having naming conflict
+                file_dest_conflict_handled["$live_video_fid"]=1
+
+                # Add live video to file_dest_entries
+                file_dest_entries["$live_video_new_did"]="$live_video_fid"
+                break
+
+              else
+                # Else, increment the dupe marker and try again.
+                new_dest_dupe_marker=$(( ${new_dest_dupe_marker:-1} + 1 ))
+                new_dest_stem="${dest_root_stem}(${new_dest_dupe_marker})"
+                new_dest_name="${new_dest_stem}${dest_compound_ext}"
+                new_dest="${dest_dir}${new_dest_name}"
+                new_did="$(compute_file_id "${new_dest^^}")"
+              fi
+            done
+
+            # Conflict resolved
+            (( dupe_marker++ ))
+            break
+            ;;
+
+          # Special handling for live videos
+          # Live photo needs to share the same stem as live video
+          "$MEDIA_TYPE_LIVE_VIDEO")
+            # Get live photo properties
+            local cid="${file_exif_cid["$fid"]}"
+            local live_photo_fid="${live_photo_by_cid["$cid"]}"
+            local live_photo_compound_ext="${file_dest_compound_ext["$live_photo_fid"]}"
+
+            log_plan_tree_start_ "Handling live photo pair ${live_photo_fid}"
+
+            # If the current dupe marker could not be used for the live video counterpart,
+            # we need to find an alternative dupe marker that will work.
+            while :; do
+              # Check if using the new dest stem is going to create a conflict
+              local live_photo_new_dupe_marker="${new_dest_dupe_marker}"
+              local live_photo_new_dest_stem="${new_dest_stem}"
+              local live_photo_new_dest_name="${live_photo_new_dest_stem}${live_photo_compound_ext}"
+              local live_photo_new_dest="${dest_dir}${live_photo_new_dest_name}"
+              local live_photo_new_did="$(compute_file_id "${live_photo_new_dest^^}")"
+
+              # debug_string "resolve_destination_naming_conflict()->live_photo_new_dupe_marker" "${live_photo_new_dupe_marker}"
+              # debug_string "resolve_destination_naming_conflict()->live_photo_new_dest_stem" "${live_photo_new_dest_stem}"
+              # debug_string "resolve_destination_naming_conflict()->live_photo_new_dest_name" "${live_photo_new_dest_name}"
+              # debug_string "resolve_destination_naming_conflict()->live_photo_new_dest" "${live_photo_new_dest}"
+              # debug_string "resolve_destination_naming_conflict()->live_photo_new_did" "${live_photo_new_did}"
+
+              # If live video filename does not have any conflicts, use it.
+              if { [[ -z "${file_dest_entries["$new_did"]}" ]] || \
+                   [[ "${file_dest_entries["$new_did"]}" == "$fid" ]] } && \
+                 { [[ -z "${file_dest_entries["$live_photo_new_did"]}" ]] || \
+                   [[ "${file_dest_entries["$live_photo_new_did"]}" == "$live_photo_fid" ]] }; then
+
+                # Set new dest values for live video
+                file_dest_dupe_marker["$fid"]="$new_dest_dupe_marker"
+                file_dest_stem["$fid"]="$new_dest_stem"
+                file_dest_name["$fid"]="$new_dest_name"
+                file_dest["$fid"]="${new_dest}"
+
+                # Mark file as no longer having naming conflict
+                file_dest_conflict_handled["$fid"]=1
+
+                # Add to file_dest_entries
+                file_dest_entries["$new_did"]="$fid"
+
+                # Set new dest values for live photo
+                file_dest_dupe_marker["$live_photo_fid"]="${live_photo_new_dupe_marker}"
+                file_dest_stem["$live_photo_fid"]="${live_photo_new_dest_stem}"
+                file_dest_name["$live_photo_fid"]="${live_photo_new_dest_name}"
+                file_dest["$live_photo_fid"]="${live_photo_new_dest}"
+
+                # Mark live photo file as no longer having naming conflict
+                file_dest_conflict_handled["$live_photo_fid"]=1
+
+                # Add live photo to file_dest_entries
+                file_dest_entries["$live_photo_new_did"]="$live_photo_fid"
+
+                log_plan_tree_end_ "Handled live photo pair ${live_photo_fid}"
+                break
+              else
+                # Else, increment the dupe marker and try again.
+                if [[ -z ${new_dest_dupe_marker} ]]; then
+                  new_dest_dupe_marker=1
+                else
+                  new_dest_dupe_marker=$(( ${new_dest_dupe_marker} + 1 ))
+                fi
+                new_dest_stem="${dest_root_stem}(${new_dest_dupe_marker})"
+                new_dest_name="${new_dest_stem}${dest_compound_ext}"
+                new_dest="${dest_dir}${new_dest_name}"
+                new_did="$(compute_file_id "${new_dest^^}")"
+              fi
+            done
+
+            # Conflict resolved
+            (( dupe_marker++ ))
+            break
+            ;;
+
+          # Handling for other media types
+          *)
+            # If the filename does not have any conflicts, use it.
+            if [[ -z "${file_dest_entries["$new_did"]}" ]] || \
+               [[ "${file_dest_entries["$new_did"]}" == "$fid" ]]; then
+
+              # Set new dest values
+              file_dest_dupe_marker["$fid"]="$new_dest_dupe_marker"
+              file_dest_stem["$fid"]="$new_dest_stem"
+              file_dest_name["$fid"]="$new_dest_name"
+              file_dest["$fid"]="${new_dest}"
+
+              # Mark file as no longer having naming conflict
+              file_dest_conflict_handled["$fid"]=1
+
+              # Add to file_dest_entries
+              file_dest_entries["$new_did"]="$fid"
+              break
+            else
+              (( dupe_marker++ ))
+            fi
+            ;;
+        esac
+      done
+
+
+        log_plan_tree_     "Source Folder        : ${src_dir}"
+        log_plan_tree_     "Source Filename      : ${src_name}"
+        log_plan_tree_     "Destination Folder   : ${dest_dir}"
+        log_plan_tree_     "Destination Filename : ${dest_name} (Conflicted) => ${new_dest_name} (Resolved)"
+        log_plan_tree_end_ "Timestamp            : ${file_timestamp["$fid"]} (${file_timestamp_epoch["$fid"]})"
 
       # If this is not the last file in the conflict list,
       # use log_plan_tree, else use log_plan_tree_end
-      local message="Conflict resolution ${progress_label}: ${dest_name} => ${new_dest_name:-$dest_name}"
+      local message="Conflict resolution ${progress_label}: ${dest_name} => ${new_dest_name}"
       if [[ $i -lt $(( ${total_fids} - 1 )) ]]; then
         log_plan_tree "$message"
       else

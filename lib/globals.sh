@@ -68,6 +68,7 @@ declare -A file_is_preferred_duplicate
 declare -A file_dest_has_naming_conflict # key: fid, val: 0|1
 declare -A file_dest_entries             # key: did, val: fid
 declare -A file_dest_conflicts           # key: did, val: fids (delimited by '|')
+declare -A file_dest_conflict_handled    # key: fid, val: 0|1
 
 # Apple-specific properties
 declare -A file_is_apple_media
