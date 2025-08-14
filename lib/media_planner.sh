@@ -89,6 +89,17 @@ compute_file_destination() {
   # e.g. "IMG_1234.jpg" == "IMG_1234.JPG"
   local did="$(compute_file_id "${dest^^}")"
 
+  # debug_string "compute_file_destination()->fid" "$fid"
+  # debug_string "compute_file_destination()->fid" "$did"
+  # debug_string "compute_file_destination()->dest" "$dest"
+  # debug_string "compute_file_destination()->dest_dir" "$dest_dir"
+  # debug_string "compute_file_destination()->dest_name" "$dest_name"
+  # debug_string "compute_file_destination()->dest_stem" "$dest_stem"
+  # debug_string "compute_file_destination()->dest_root_stem" "$dest_root_stem"
+  # debug_string "compute_file_destination()->dest_ext" "$dest_ext"
+  # debug_string "compute_file_destination()->dest_compound_ext" "$dest_compound_ext"
+  # debug_string "compute_file_destination()->dest_dupe_marker" "$dest_dupe_marker"
+
   # If this is the initial file with this destination
   if [[ -z "${file_dest_entries["$did"]}" ]]; then
 
@@ -120,11 +131,12 @@ compute_file_destination() {
   fi
 
   # Verbose log the file destination details
-  log_plan_tree_start_ "Computed destination for file: ${media_file}"
+  log_plan_tree_start_ "Computed destination for file: ${file_src["$fid"]}"
+    log_plan_tree_     "Destination File ID: ${did}"
     log_plan_tree_     "Source Folder      : ${file_src_dir["$fid"]}"
     log_plan_tree_     "Source Filename    : ${file_src_name["$fid"]}"
-    log_plan_tree_     "Destination Folder : ${dest_dir}"
-    log_plan_tree_     "Destination Name   : ${dest_name}"
+    log_plan_tree_     "Destination Folder : ${file_dest_dir["$fid"]}"
+    log_plan_tree_     "Destination Name   : ${file_dest_name["$fid"]}"
     log_plan_tree_end_ "Has Conflict       : ${file_dest_has_naming_conflict["$fid"]}"
 }
 
@@ -237,8 +249,7 @@ resolve_destination_naming_conflicts() {
     local fids=(${file_dest_conflicts["$did"]//|/ })
 
     # Log the current progress
-    local file_dest="${file_dest[${fids[0]}]}"
-    log_plan_tree_start "[$(progress "$index" "$total" "/")] Resolving naming conflicts for destination: ${file_dest}"
+    log_plan_tree_start "[$(progress "$index" "$total" "/")] Resolving naming conflicts for destination: ${file_dest["$did"]}"
 
     # Create fid_timestamp_pairs for sorting
     local fid_timestamp_pairs=()
