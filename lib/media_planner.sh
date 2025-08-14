@@ -161,7 +161,6 @@ compute_destination_directory() {
           #        Unknown       : "Unknown/"
           local device_name="${file_device_name["$fid"]}"
           # debug_string "compute_destination_directory()->device_name" "$device_name"
-
           dest_dir_ref+="${device_name}/"
         ;;
       "$GROUP_BY_SOFTWARE")
@@ -172,7 +171,6 @@ compute_destination_directory() {
           #        Other Categories  : "Screenshots/", "Screen Recordings/"
           local software_name="${file_software_name["$fid"]}"
           # debug_string "compute_destination_directory()->software_name" "$software_name"
-
           if [[ -n "$software_name" ]]; then
             dest_dir_ref+="${software_name}/"
           fi
@@ -241,6 +239,8 @@ resolve_destination_naming_conflicts() {
   local index=0
   local total=${#file_dest_conflicts[@]}
 
+  # debug_map "resolve_destination_naming_conflicts()->file_dest_conflicts" ${!file_dest_conflicts[@]} -- ${file_dest_conflicts[@]}
+
   # Loop through all destination conflicts
   for did in "${!file_dest_conflicts[@]}"; do
 
@@ -255,7 +255,7 @@ resolve_destination_naming_conflicts() {
     for fid in "${fids[@]}"; do
       fid_timestamp_pairs+=("${file_timestamp_epoch["$fid"]} $fid")
     done
-    [[ $DEBUG ]] && debug_array "Pre-sorted timestamp pairs:" "${fid_timestamp_pairs[@]}"
+    # debug_array "Pre-sorted timestamp pairs:" "${fid_timestamp_pairs[@]}"
 
     # Sort fids by their timestamp (earliest to latest)
     local fids_sorted=($( \
@@ -263,7 +263,7 @@ resolve_destination_naming_conflicts() {
         | sort -n \
         | awk '{print $2}' \
     ))
-    [[ $DEBUG ]] && debug_array "Sorted fids:" "${fids_sorted[@]}"
+    # debug_array "Sorted fids:" "${fids_sorted[@]}"
 
     # Add duplicate marker to the rest of the fids.
     # Starts with 0 because it will be incremented to 1 before use.
