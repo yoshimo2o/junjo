@@ -25,7 +25,13 @@ check_dependencies() {
 # ====================================================================================================
 encode_base64url() {
   # Usage: encode_base64url <string>
-  printf '%s' "$1" | base64 | tr '+/' '-_' | tr -d '='
+  if [[ "$(uname)" == "Darwin" ]]; then
+    # macOS: use 'tr' with bracket expressions
+    printf '%s' "$1" | base64 | tr '[+/]' '[-_]'
+  else
+    # Linux: use 'tr' with literal characters
+    printf '%s' "$1" | base64 | tr '+/' '-_'
+  fi | tr -d '='
 }
 
 # ====================================================================================================
@@ -39,8 +45,15 @@ decode_base64url() {
   # Add padding if needed
   local pad=$(( (4 - ${#input} % 4) % 4 ))
   input="${input}$(printf '=%.0s' $(seq 1 $pad))"
-  echo "$input" | tr '-_' '+/' | base64 -d
+  if [[ "$(uname)" == "Darwin" ]]; then
+    # macOS: use 'tr' with bracket expressions
+    echo "$input" | tr '[-_]' '[+/]' | base64 -d
+  else
+    # Linux: use 'tr' with literal characters
+    echo "$input" | tr '-_' '+/' | base64 -d
+  fi
 }
+
 # confirm <message>
 #
 # Prompts the user for confirmation with a yes/no question.
