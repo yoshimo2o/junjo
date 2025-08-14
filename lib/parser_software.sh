@@ -67,10 +67,10 @@ get_most_likely_software_name() {
 
   local is_apple_media="${file_is_apple_media["$fid"]:-0}"
 
-  # If the filename looks like a UUID with dashes
+  # If the filename looks like lowercased UUID with dashes
   # it is very likely WhatsApp media files on iOS devices.
   # e.g. iPhone/WhatsApp (Possibly)/1A2B3C4D-5E6F-7A8B-9C0D-1E2F3A4B5C6D.jpg
-  if [[ $is_apple_media -eq 1 && "$file_root_stem" =~ ^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$ ]]; then
+  if [[ $is_apple_media -eq 1 && "$file_root_stem" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]]; then
       echo "WhatsApp (Possibly)"
       return 0
   fi
