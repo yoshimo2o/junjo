@@ -161,7 +161,7 @@ log() {
   if (( output_to_console == 1 || force_verbose == 1 )); then
     # Split message by the first ':' and color the part after it with Bright Black
     local msg_before_colon msg_after_colon
-    if [[ "$message" == *:* ]]; then
+    if [[ "$message" == *:* && "$category" != "$DEBUG_LOG" ]]; then
       msg_before_colon="${message%%:*}:"
       msg_after_colon="${message#*:}"
       msg_after_colon="${msg_after_colon# }" # trim leading space
