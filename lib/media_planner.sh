@@ -58,7 +58,7 @@ compute_file_destination() {
     dest_dupe_marker
 
   # Compute destination directory
-  dest_dir=$(compute_destination_directory "$fid")
+  compute_destination_directory "$fid" dest_dir
 
   # Compute destination file
   dest="${dest_dir}${file_src_root_stem[$fid]}${file_src_compound_ext[$fid]}"
