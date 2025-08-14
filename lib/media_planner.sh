@@ -33,15 +33,14 @@ compute_file_destinations() {
   # debug_map "compute_file_destinations()->file_src" ${!file_src[@]} -- ${file_src[@]}
 
   for fid in "${!file_src[@]}"; do
-    log_plan "[$(progress "$index" "$total" "/")] Computing destination for file: ${file_src["$fid"]}"
+    log_plan_tree_start "[$(progress "$index" "$total" "/")] Computing destination for file: ${file_src["$fid"]}"
 
     compute_file_destination "$fid"
 
-    log_plan_tree_start "Computed destination for file: $media_file"
-      log_plan_tree     "Source      : ${file_src[$fid]}"
-      log_plan_tree_end "Destination : ${file_dest[$fid]} $(\
-        [[ ${file_dest_has_naming_conflict[$fid]} -eq 1 ]] \
-          && echo ' (Has Conflict)')"
+    log_plan_tree_end "Destination: ${file_dest[$fid]} $(\
+      [[ ${file_dest_has_naming_conflict[$fid]} -eq 1 ]] \
+        && echo ' (Has Conflict)')"
+
     index=$(($index + 1))
   done
 }
@@ -131,13 +130,13 @@ compute_file_destination() {
   fi
 
   # Verbose log the file destination details
-  log_plan_tree_start_ "Computed destination for file: ${file_src["$fid"]}"
-    log_plan_tree_     "Destination File ID: ${did}"
-    log_plan_tree_     "Source Folder      : ${file_src_dir["$fid"]}"
-    log_plan_tree_     "Source Filename    : ${file_src_name["$fid"]}"
-    log_plan_tree_     "Destination Folder : ${file_dest_dir["$fid"]}"
-    log_plan_tree_     "Destination Name   : ${file_dest_name["$fid"]}"
-    log_plan_tree_end_ "Has Conflict       : ${file_dest_has_naming_conflict["$fid"]}"
+  log_plan_tree_ "Source File ID      : ${fid}"
+  log_plan_tree_ "Source Folder       : ${file_src_dir["$fid"]}"
+  log_plan_tree_ "Source Filename     : ${file_src_name["$fid"]}"
+  log_plan_tree_ "Destination File ID : ${did}"
+  log_plan_tree_ "Destination Folder  : ${file_dest_dir["$fid"]}"
+  log_plan_tree_ "Destination Name    : ${file_dest_name["$fid"]}"
+  log_plan_tree_ "Has Conflict        : ${file_dest_has_naming_conflict["$fid"]}"
 }
 
 # Computes the destination directory based on the configured structure
