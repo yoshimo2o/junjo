@@ -242,7 +242,7 @@ compute_destination_directory() {
 }
 
 resolve_destination_naming_conflicts() {
-  local index=0
+  local index=1
   local total=${#file_dest_conflicts[@]}
 
   # debug_map "resolve_destination_naming_conflicts()->file_dest_conflicts" ${!file_dest_conflicts[@]} -- ${file_dest_conflicts[@]}
@@ -254,7 +254,7 @@ resolve_destination_naming_conflicts() {
     local fids=(${file_dest_conflicts["$did"]//|/ })
 
     # Log the current progress
-    log_plan_tree_start "[$(progress "$index" "$total" "/")] Resolving naming conflicts for destination: ${file_dest["$did"]}"
+    log_plan_tree_start "[$(progress "$index" "$total" "/")] Resolving naming conflicts for destination: $(parse_file_id "$did")"
 
     # Create fid_timestamp_pairs for sorting
     local fid_timestamp_pairs=()
@@ -309,6 +309,7 @@ resolve_destination_naming_conflicts() {
           new_dest_stem="${dest_root_stem} (${new_dest_dupe_marker})"
           new_dest_name="${new_dest_stem}${dest_compound_ext}"
           new_dest="${dest_dir}${new_dest_name}"
+          new_did="$(compute_file_id "${new_dest^^}")"
 
           # If the filename does not have any conflicts, use it.
           if [[ -z "${file_dest_entries["$new_did"]}" ]]; then
@@ -320,14 +321,14 @@ resolve_destination_naming_conflicts() {
         file_dest_dupe_marker["$fid"]="$i"
         file_dest_stem["$fid"]="$new_dest_stem"
         file_dest_name["$fid"]="$new_dest_name"
+        file_dest_entries["$new_did"]="$fid"
       fi
 
       # Mark file has no longer in conflict
       file_dest_has_naming_conflict["$fid"]=0
 
       # Get total fids_sorted
-      file_dest["$fid"]="$new_dest"
-      new_did="$(compute_file_id "${new_dest^^}")"
+      file_dest["$fid"]="${new_dest:-$dest}"
 
       local progress_label=$(progress "$index_fids" "$total_fids" "/")
 
@@ -337,11 +338,11 @@ resolve_destination_naming_conflicts() {
         log_plan_tree_     "Source Filename    : ${src_name}"
         log_plan_tree_     "Destination Folder : ${dest_dir}"
         log_plan_tree_     "Conflict Filename  : ${dest_name}"
-        log_plan_tree_end_ "Resolved Filename  : ${new_dest_name}"
+        log_plan_tree_end_ "Resolved Filename  : ${new_dest_name:-$dest_name}"
 
       # If this is not the last file in the conflict list,
       # use log_plan_tree, else use log_plan_tree_end
-      local message="Conflict resolution ${progress_label}: ${dest_name} => ${new_dest_name}"
+      local message="Conflict resolution ${progress_label}: ${dest_name} => ${new_dest_name:-$dest_name}"
       if [[ $i -lt $(( ${total_fids} - 1 )) ]]; then
         log_plan_tree "$message"
       else
