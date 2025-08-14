@@ -205,6 +205,12 @@ compute_destination_directory() {
         # debug_string "compute_destination_directory()->year_month_day" "$year_month_day"
         dest_dir_ref+="${year_month_day}/"
         ;;
+      "$GROUP_BY_DUPLICATES")
+          # If fid is marked as duplicate and not preferred, append folder (single if)
+          if [[ "${file_has_duplicates[$fid]}" -eq 1 && "${file_is_preferred_duplicate[$fid]}" != 1 ]]; then
+            dest_dir_ref+="Duplicates/"
+          fi
+        ;;
       "$GROUP_BY_LIVE_PHOTO_MISSING_VIDEO_PAIR")
           # Ignore if there is a software name
           # This is for situations where live photos are sent
