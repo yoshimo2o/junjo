@@ -75,10 +75,10 @@ get_most_likely_software_name() {
       return 0
   fi
 
-  # If the filename looks like a UUID without dashes
+  # If the filename looks like lowercased UUID without dashes
   # it is very likely Telegram media files on iOS devices.
-  # e.g. iPhone/Telegram (Possibly)/1A2B3C4D5E6F7A8B9C0D1E2F3A4B5C6D.jpg
-  if [[ $is_apple_media -eq 1 && "$file_root_stem" =~ ^[0-9A-F]{32}$ ]]; then
+  # e.g. iPhone/Telegram (Possibly)/d98bb755ab6296163d9df3094ae41d73.jpg
+  if [[ $is_apple_media -eq 1 && "$file_root_stem" =~ ^[0-9a-f]{32}$ ]]; then
       echo "Telegram (Possibly)"
       return 0
   fi
