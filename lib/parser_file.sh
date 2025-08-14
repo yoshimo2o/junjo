@@ -18,7 +18,12 @@
 
 compute_file_id() {
   local media_file="$1"
-  printf '%s\n' "$(encode_base64url "$media_file")"
+  printf '%s' "$(encode_base64url "$media_file")"
+}
+
+parse_file_id() {
+  local media_file="$1"
+  printf '%s' "$(decode_base64url "$media_file")"
 }
 
 # ====================================================================================================
