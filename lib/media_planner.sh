@@ -195,6 +195,32 @@ compute_destination_directory() {
         # debug_string "compute_destination_directory()->year_month_day" "$year_month_day"
         dest_dir_ref+="${year_month_day}/"
         ;;
+      "$GROUP_BY_LIVE_PHOTO_MISSING_VIDEO_PAIR")
+          # Ignore if there is a software name
+          # This is for situations where live photos are sent
+          # through primarily messaging apps.
+          local software_name="${file_software_name["$fid"]}"
+          if [[ -n "$software_name" ]]; then
+            return
+          fi
+
+          # If fid is in live_photo_missing_video[cid], append folder
+          local cid="${file_exif_cid["$fid"]}"
+          if [[ -n "$cid" \
+                && -n "${live_photo_missing_video[$cid]+set}" \
+                && "${live_photo_missing_video[$cid]}" -eq 1 ]]; then
+            dest_dir_ref+="Live Photo Missing Video Pair/"
+          fi
+        ;;
+      "$GROUP_BY_LIVE_VIDEO_MISSING_PHOTO_PAIR")
+          # If fid is in live_video_missing_photo[cid], append folder
+          local cid="${file_exif_cid["$fid"]}"
+          if [[ -n "$cid" \
+                && -n "${live_video_missing_photo[$cid]+set}" \
+                && "${live_video_missing_photo[$cid]}" -eq 1 ]]; then
+            dest_dir_ref+="Live Video Missing Photo Pair/"
+          fi
+        ;;
     esac
   done
 }

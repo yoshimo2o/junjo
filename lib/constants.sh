@@ -32,6 +32,8 @@ readonly GROUP_BY_MONTH="month"
 readonly GROUP_BY_DAY="day"
 readonly GROUP_BY_YEAR_MONTH="year_month"
 readonly GROUP_BY_YEAR_MONTH_DAY="year_month_day"
+readonly GROUP_BY_LIVE_PHOTO_MISSING_VIDEO_PAIR="live_photo_missing_video_pair"
+readonly GROUP_BY_LIVE_VIDEO_MISSING_PHOTO_PAIR="live_video_missing_photo_pair"
 
 # Actions
 readonly ACTION_COPY_FILE="copy"
