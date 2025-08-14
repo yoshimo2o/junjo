@@ -28,11 +28,12 @@ create_organizing_plan() {
 }
 
 compute_file_destinations() {
-  local index=0
+  local index=1
   local total=${#file_src[@]}
+  # debug_map "compute_file_destinations()->file_src" ${!file_src[@]} -- ${file_src[@]}
 
   for fid in "${!file_src[@]}"; do
-    log_plan "[$(progress "$index" "$total" "/")] Computing destination for file: $media_file"
+    log_plan "[$(progress "$index" "$total" "/")] Computing destination for file: ${file_src["$fid"]}"
 
     compute_file_destination "$fid"
 
