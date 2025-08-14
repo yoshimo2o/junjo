@@ -109,18 +109,18 @@ compute_file_destination() {
     # Mark this intiial file has having no naming conflict
     file_dest_has_naming_conflict["$fid"]=0
   else
-    # If this is the first time a naming conflict
-    # for this destination is detected
+    # If this is the first time a naming conflict has been detected
     if [[ -z "${file_dest_conflicts["$did"]}" ]]; then
 
       # Get the fid of the initial file that has this destination
-      initial_fid=${file_dest_entries["$did"]}
+      initial_fid="${file_dest_entries["$did"]}"
+      # debug_string "initial_fid" "$initial_fid"
 
       # Add the fid of that initial file to the conflict list
       file_dest_conflicts["$did"]="$initial_fid"
 
       # Mark the initial file as having naming conflict
-      file_dest_has_naming_conflict["$fid"]=1
+      file_dest_has_naming_conflict["$initial_fid"]=1
     fi
 
     # Append the fid of the current file to the conflict list
