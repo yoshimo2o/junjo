@@ -33,16 +33,15 @@ compute_file_destinations() {
   # debug_map "compute_file_destinations()->file_src" ${!file_src[@]} -- ${file_src[@]}
 
   for fid in "${!file_src[@]}"; do
-    log_plan_tree_start "File $(progress "$index" "$total" "/")"
+    log_plan_tree_start "[$(progress "$index" "$total" "/")] Computing destination: ${file_src["$fid"]}"
 
     compute_file_destination "$fid"
-
-    log_plan_tree     "Source:      ${file_src["$fid"]}"
-    log_plan_tree_end "Destination: ${file_dest[$fid]} $(\
+    log_plan_tree     "Folder:   ${file_dest_dir[$fid]}"
+    log_plan_tree_end "Filename: ${file_dest_name[$fid]} $(\
       [[ ${file_dest_has_naming_conflict[$fid]} -eq 1 ]] \
         && echo '(Has Conflict)')"
 
-    index=$(($index + 1))
+    (( index++ ))
   done
 }
 
@@ -266,7 +265,7 @@ resolve_destination_naming_conflicts() {
     local fids=(${file_dest_conflicts["$did"]//|/ })
 
     # Log the current progress
-    log_plan_tree_start "Conflict Group $(progress "$index_groups" "$total_groups" "/"): \"$(parse_file_id "$did")\""
+    log_plan_tree_start "[$(progress "$index_groups" "$total_groups" "/")] Resolving conflict group: \"$(parse_file_id "$did")\""
     log_plan_tree "Folder: ${file_dest_dir["${fids[0]}"]}"
 
     # Create fid_timestamp_pairs for sorting
@@ -481,7 +480,7 @@ __log_conflict_groups() {
 
   for did in "${!file_dest_conflicts[@]}"; do
     local count=$(IFS='|' read -ra arr <<< "${file_dest_conflicts["$did"]}"; echo "${#arr[@]}")
-    local message="Conflict Group $(progress "$index" "$total" "/"): \"$(parse_file_id "$did")\" ($count conflicts)"
+    local message="[$(progress "$index" "$total" "/")] Conflict Group: \"$(parse_file_id "$did")\" ($count conflicts)"
 
     if [[ $index -lt $total ]]; then
       log_plan_tree "${message}"
@@ -497,12 +496,12 @@ __log_sorted_conflict_files() {
   local i
   local total=${#fids_sorted[@]}
 
-  log_plan_tree_start "Sorting conflicted files by timestamp:"
+  log_plan_tree_start "List of conflicted files (sorted by timestamp):"
 
   for (( i=0; i<total; i++ )); do
     local fid="${fids_sorted[$i]}"
     local src="${file_src["$fid"]}"
-    local message="Conflict File $(progress "$((i+1))" "$total" "/"): ${file_timestamp_epoch["$fid"]} ${src}"
+    local message="[$(progress "$((i+1))" "$total" "/")] File: ${file_timestamp_epoch["$fid"]} ${src}"
 
     if (( i < total - 1 )); then
       log_plan_tree "${message}"
@@ -515,13 +514,12 @@ __log_sorted_conflict_files() {
 # Subroutine of resolve_destination_naming_conflicts()
 __log_conflict_resolution() {
   local include_live_pair_summary="$1"
-  local progress_label=$(progress "$index_files" "$total_files" "/")
 
   local resolution
   if [[ ${dest_name} == ${new_dest_name} ]]; then
     resolution="Retained"
   else
-    resolution="Resolved"
+    resolution="Renamed"
   fi
 
   local log_plan_tree_xor="log_plan_tree_last"
@@ -529,26 +527,25 @@ __log_conflict_resolution() {
     log_plan_tree_xor="log_plan_tree_start"
   fi
 
-  log_plan_tree_start "Conflict File ${progress_label}: ${src}"
-  log_plan_tree         "Timestamp : ${file_timestamp["$fid"]} (${file_timestamp_epoch["$fid"]})"
-  log_plan_tree         "Filename  : ${dest_name} (Conflicted) => ${new_dest_name} (Resolved)"
-    $log_plan_tree_xor  "Filename Resolution"
+  log_plan_tree_start "[$(progress "$index_files" "$total_files" "/")] Resolving conflict file: ${src}"
+  log_plan_tree         "Timestamp: ${file_timestamp["$fid"]} (${file_timestamp_epoch["$fid"]})"
+  $log_plan_tree_xor    "Filename Resolution"
     log_plan_tree         "Original: ${src_name}"
-    log_plan_tree         "Wanted:   ${dest_name} (${total_files} conflicts)"
-    log_plan_tree_end     "Final:    ${new_dest_name} (${resolution})"
+    log_plan_tree         "Intended: ${dest_name} (Conflicts with $((total_files - 1)) other file(s))"
+    log_plan_tree_end     "Resolved: ${new_dest_name} (${resolution})"
 
   if [[ $include_live_pair_summary -eq 1 ]]; then
     local live_pair_resolution
     if [[ ${live_pair_dest_name} == ${live_pair_new_dest_name} ]]; then
       live_pair_resolution="Retained"
     else
-      live_pair_resolution="Updated"
+      live_pair_resolution="Renamed to match live pair"
     fi
 
     log_plan_tree          "Live Pair Source: ${live_pair_src}"
     log_plan_tree_last     "Live Pair Filename Resolution"
       log_plan_tree          "Original: ${live_pair_dest_name}"
-      log_plan_tree_end      "Final:    ${live_pair_new_dest_name} (${live_pair_resolution})"
+      log_plan_tree_end      "Resolved: ${live_pair_new_dest_name} (${live_pair_resolution})"
   fi
   log_plan_tree_end
 }
