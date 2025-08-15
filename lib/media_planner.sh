@@ -2,9 +2,9 @@ create_organizing_plan() {
   # Step 1: Compute file destinations
   log_plan "Computing file destinations."
   if compute_file_destinations; then
-    log_plan "Successfully computed file destinations."
+    log_plan "Successfully computed all file destinations."
   else
-    log_plan_error "Failed to compute file destinations."
+    log_plan_error "Failed to compute all file destinations."
     return 1
   fi
 
@@ -33,10 +33,11 @@ compute_file_destinations() {
   # debug_map "compute_file_destinations()->file_src" ${!file_src[@]} -- ${file_src[@]}
 
   for fid in "${!file_src[@]}"; do
-    log_plan_tree_start "[$(progress "$index" "$total" "/")] Computing destination for file: ${file_src["$fid"]}"
+    log_plan_tree_start "File $(progress "$index" "$total" "/")"
 
     compute_file_destination "$fid"
 
+    log_plan_tree     "Source:      ${file_src["$fid"]}"
     log_plan_tree_end "Destination: ${file_dest[$fid]} $(\
       [[ ${file_dest_has_naming_conflict[$fid]} -eq 1 ]] \
         && echo '(Has Conflict)')"
@@ -153,20 +154,20 @@ compute_destination_directory() {
     case "$structure" in
       "$GROUP_BY_DEVICE")
           # See `get_friendly_device_name()` for details on device name construction.
-          #   e.g. Exact Model   : "iPhone 7 Plus/", "Samsung SM-F926B/", "Sony XQ-DQ54/", etc.
-          #        Device Type   : "iPhone/", "iPad/", "Android Phone/", "Android Tablet/"
-          #        Upload Origin : "Mobile/", "Desktop/", "Web/"
-          #        Unknown       : "Unknown/"
+          #   e.g. 1. Exact Model   : "iPhone 7 Plus/", "Samsung SM-F926B/", "Sony XQ-DQ54/", etc.
+          #        2. Device Type   : "iPhone/", "iPad/", "Android Phone/", "Android Tablet/"
+          #        3. Upload Origin : "Mobile/", "Desktop/", "Web/"
+          #        4. Unknown       : "Unknown/"
           local device_name="${file_device_name["$fid"]}"
           # debug_string "compute_destination_directory()->device_name" "$device_name"
           dest_dir_ref+="${device_name}/"
         ;;
       "$GROUP_BY_SOFTWARE")
           # See `get_most_likely_software_name()` for details on software name construction.
-          #   e.g. App Folder        : "WhatsApp Images/", "Photoshop Express/"
-          #        Known Patterns    : "WhatsApp/", "Facebook/",
-          #        Observed Patterns : "WhatsApp (Possibly)/", "Telegram (Possibly)/", "Downloads/"
-          #        Other Categories  : "Screenshots/", "Screen Recordings/"
+          #   e.g. 1. App Folder       : "WhatsApp Images/", "Photoshop Express/"
+          #        2. Known Patterns   : "WhatsApp/", "Facebook/",
+          #        3. Guessed Patterns : "Telegram (Possibly)/", "Downloads (Possibly)/"
+          #        4. Other Categories : "Screenshots/", "Screen Recordings/"
           local software_name="${file_software_name["$fid"]}"
           # debug_string "compute_destination_directory()->software_name" "$software_name"
           if [[ -n "$software_name" ]]; then
@@ -204,7 +205,8 @@ compute_destination_directory() {
         dest_dir_ref+="${year_month_day}/"
         ;;
       "$GROUP_BY_DUPLICATES")
-          # If fid is marked as duplicate and not preferred, append folder (single if)
+          # TODO: Include the preferred duplicate's filename in the folder.
+          # If fid is marked as duplicate and not preferred, append folder
           if [[ "${file_has_duplicates[$fid]}" -eq 1 && "${file_is_preferred_duplicate[$fid]}" != 1 ]]; then
             dest_dir_ref+="Duplicates/"
           fi
