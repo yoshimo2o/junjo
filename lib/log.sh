@@ -400,6 +400,10 @@ log_plan_tree_start() {
   log_tree_start "$1" "$PLAN_LOG" 1
 }
 
+log_plan_tree_last() {
+  log_tree_last_start "$1" "$PLAN_LOG" 1
+}
+
 log_plan_tree_last_start() {
   log_tree_last_start "$1" "$PLAN_LOG" 1
 }
@@ -422,6 +426,10 @@ log_plan_() {
 
 log_plan_tree_start_() {
   log_tree_start "$1" "$PLAN_LOG"
+}
+
+log_plan_tree_last_() {
+  log_tree_last_start "$1" "$PLAN_LOG"
 }
 
 log_plan_tree_last_start_() {
