@@ -136,7 +136,7 @@ extract_file_components() {
   # Get file stem, extension, and compound extension
   local media_file_name_uc="${media_file_name^^}"
 
-  for ext in "${KNOWN_COMPOUND_EXTS[@]}"; do
+  for ext in "${JUNJO_KNOWN_COMPOUND_EXTS[@]}"; do
     if [[ "$media_file_name_uc" == *"${ext^^}" ]]; then
       local suffix_len=${#ext}
       media_file_compound_ext="${media_file_name: -$suffix_len}" # preserve original case
