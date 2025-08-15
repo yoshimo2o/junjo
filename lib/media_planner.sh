@@ -437,5 +437,55 @@ __log_conflict_resolution() {
 }
 
 create_action_plan() {
-  # TODO: Implement logic to create an action plan
+  local index=1
+  local total=${#file_src[@]}
+
+  for fid in "${!file_src[@]}"; do
+    local src=${file_src[$fid]};
+    log_plan_tree_start "[$(progress "$index" "$total" "/")] Creating plan for: ${src}"
+
+    local dest="${file_dest[$fid]}"
+
+    if add_copy_file_action "$fid" "$dest"; then
+      log_plan_tree_start "Copy file"
+        log_plan_tree     "From: ${src}"
+        log_plan_tree_end "  To: ${dest}"
+    fi
+
+    if add_move_file_action "$fid" "$dest"; then
+      log_plan_tree_start "Move file"
+        log_plan_tree     "From: ${src}"
+        log_plan_tree_end "  To: ${dest}"
+    fi
+
+    # TODO: Set timestamp to EXIF.
+    if add_set_timestamp_to_exif_action "$fid" "$dest"; then
+      log_plan_tree_start "Set timestamp in exif"
+        log_plan_tree     "From: "
+        log_plan_tree_end "  To: "
+    fi
+
+    # TODO: Set geodata to EXIF.
+    if add_set_geodata_to_exif_action "$fid" "$dest"; then
+      log_plan_tree_start "Set geodata in exif"
+        log_plan_tree     "From: "
+        log_plan_tree_end "  To: "
+    fi
+
+    if add_set_file_create_time_action "$fid"; then
+      log_plan_tree_start "Set file creation time"
+        log_plan_tree     "From: ${file_src_create_date[$fid]}"
+        log_plan_tree_end "  To: ${file_dest_create_date[$fid]} (Source: ${file_timestamp_source[$fid]})"
+    fi
+
+    if add_set_file_modify_time_action "$fid"; then
+      log_plan_tree_start "Set file modification time"
+        log_plan_tree     "From: ${file_src_modify_date[$fid]}"
+        log_plan_tree_end "  To: ${file_dest_modify_date[$fid]} (Source: ${file_timestamp_source[$fid]})"
+    fi
+
+    log_plan_tree_end
+
+    (( index++ ))
+  done
 }

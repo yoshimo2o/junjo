@@ -89,3 +89,8 @@ declare -A live_photo_missing_video
 declare -A live_video_missing_photo
 declare -A live_photo_duplicates
 declare -A live_video_duplicates
+
+# Plan actions and parameters
+declare -A plans_by_fid
+declare -a plans_fid
+declare -a plans_action
