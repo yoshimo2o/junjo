@@ -64,6 +64,22 @@ export JUNJO_SORT_LOG_FILE=""
 # Log tree
 declare -i LOG_TREE_INDENT_LEVEL=0
 
+# Log colors
+readonly COLOR_ORANGE="\033[38;5;208m"
+readonly COLOR_LIGHT_ORANGE="\033[38;5;214m"
+readonly COLOR_YELLOW="\033[1;33m"
+readonly COLOR_LIGHT_YELLOW="\033[0;33m"
+readonly COLOR_GREEN="\033[1;32m"
+readonly COLOR_LIGHT_GREEN="\033[0;32m"
+readonly COLOR_MAGENTA= "\033[1;35m"
+readonly COLOR_LIGHT_MAGENTA="\033[0;35m"
+readonly COLOR_RED="\033[1;31m"
+readonly COLOR_LIGHT_RED="\033[0;31m"
+readonly COLOR_BLUE="\033[1;34m"
+readonly COLOR_LIGHT_BLUE="\033[0;34m"
+readonly COLOR_BRIGHT_BLACK="\033[0;90m"
+readonly COLOR_RESET="\033[0m"
+
 # Initialize logging system
 init_log() {
   # Set up runtime log file paths
@@ -101,6 +117,7 @@ init_log() {
     return 1
   }
 }
+
 # --------------------------------------------------------------------------
 # Logging functions
 # --------------------------------------------------------------------------
@@ -112,73 +129,93 @@ log() {
   local timestamp="$(generate_log_timestamp_prefix)"
   local log_file \
     color_primary \
-    color_secondary \
-    color_reset="\033[0m"
+    color_secondary
   local -i output_to_console
+  local -i format_message=1
 
   # Different log behaviour for differnet log categories
   case "$category" in
     "$SCAN_LOG")
       log_file="$JUNJO_SCAN_LOG_FILE"
-      color_primary="\033[38;5;208m" # orange
-      color_secondary="\033[38;5;214m" # light orange
+      color_primary="$COLOR_ORANGE"
+      color_secondary="$COLOR_LIGHT_ORANGE"
       output_to_console=$(( JUNJO_LOG_VERBOSE == 1 ))
       ;;
     "$PLAN_LOG")
       log_file="$JUNJO_PLAN_LOG_FILE"
-      color_primary="\033[1;33m" # yellow
-      color_secondary="\033[0;33m" # light yellow
+      color_primary="$COLOR_YELLOW"
+      color_secondary="$COLOR_LIGHT_YELLOW"
       output_to_console=$(( JUNJO_LOG_VERBOSE == 1 ))
       ;;
     "$SORT_LOG")
       log_file="$JUNJO_SORT_LOG_FILE"
-      color_primary="\033[1;32m" # green
-      color_secondary="\033[0;32m" # light green
+      color_primary="$COLOR_GREEN"
+      color_secondary="$COLOR_LIGHT_GREEN"
       output_to_console=$(( JUNJO_LOG_VERBOSE == 1 ))
       ;;
     "$DEBUG_LOG")
       log_file="$JUNJO_LOG_FILE"
-      color_primary="\033[1;35m" # magenta
-      color_secondary="\033[0;35m" # light magenta
+      color_primary="$COLOR_MAGENTA"
+      color_secondary="$COLOR_LIGHT_MAGENTA"
       output_to_console=$(( DEBUG ? 1 : 0 ))
+      format_message=0
       ;;
     "$ERROR_LOG")
       log_file="$JUNJO_LOG_FILE"
-      color_primary="\033[1;31m" # red
-      color_secondary="\033[0;31m" # light red
+      color_primary="$COLOR_RED"
+      color_secondary="$COLOR_LIGHT_RED"
       output_to_console=$(( DEBUG ? 1 : 0 ))
       ;;
     *)
       category="$MAIN_LOG" # Default to main log
       log_file="$JUNJO_LOG_FILE"
-      color_primary="\033[1;34m" # blue
-      color_secondary="\033[0;34m" # light blue
+      color_primary="$COLOR_BLUE"
+      color_secondary="$COLOR_LIGHT_BLUE"
       output_to_console=1
   esac
+
+  # Format message
+  local formatted_message=${message}
+  if [[ $format_message -eq 1 ]]; then
+    formatted_message=$(color_by_colon "${msg}")
+  fi
 
   # Show log message on screen if the category is main
   # or if verbose mode is enabled
   if (( output_to_console == 1 || force_verbose == 1 )); then
-    # Split message by the first ':' and color the part after it with Bright Black
-    local msg_before_colon msg_after_colon
-    if [[ "$message" == *:* && "$category" != "$DEBUG_LOG" ]]; then
-      msg_before_colon="${message%%:*}:"
-      msg_after_colon="${message#*:}"
-      msg_after_colon="${msg_after_colon# }" # trim leading space
-      local color_bright_black="\033[0;90m"
-      echo -e "${color_primary}${category} ${color_secondary}${timestamp}${color_reset} ${msg_before_colon} ${color_bright_black}${msg_after_colon}${color_reset}"
-    else
-      echo -e "${color_primary}${category} ${color_secondary}${timestamp}${color_reset} ${message}"
-    fi
+    echo -e "${color_primary}${category} ${color_secondary}${timestamp}${COLOR_RESET} ${formatted_message}"
   fi
 
   # Append the log message to the appropriate log file (no color)
-  echo "${timestamp} ${message}" >> "$log_file"
+  if [[ $JUNJO_LOG_WRITE_COLORED_LOGS -eq 1 ]]; then
+    echo -e "${color_secondary}${timestamp}${COLOR_RESET} ${formatted_message}" >> "$log_file"
+  else
+    echo "${timestamp} ${message}" >> "$log_file"
+  fi
+}
+
+color_by_colon() {
+  local msg="$1"
+  local msg_before_colon
+  local msg_after_colon
+
+  if [[ "$message" == *:* ]]; then
+    msg_before_colon="${message%%:*}:"
+    msg_after_colon="${message#*:}"
+    msg_after_colon="${msg_after_colon# }" # trim leading space
+
+    # Split message by the first ':' and color the part after it with Bright Black
+    printf '%s' "${msg_before_colon} ${COLOR_BRIGHT_BLACK}${msg_after_colon}${COLOR_RESET}"
+  else
+    # If no colon, return the message as is
+    printf '%s' "$message"
+  fi
 }
 
 # Log with no extra formatting
 log_raw() {
-  echo "$1"
+  local message="$1"
+  echo -e "$(color_by_colon "${message}")"
   echo "$1" >> "$JUNJO_LOG_FILE"
 }
 
