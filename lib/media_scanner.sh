@@ -466,6 +466,7 @@ analyze_media_file() {
       log_scan_tree_ "Create Date: $create_date"
       log_scan_tree_ "Track Create Date: $track_create_date"
       log_scan_tree_ "Media Create Date: $media_create_date"
+      log_scan_tree_ "Creator Tool: $creator_tool"
       log_scan_tree_end_ "User Comment: $user_comment"
     log_scan_tree_start_ "Device & Software"
       log_scan_tree_ "Device Name: $device_name"
