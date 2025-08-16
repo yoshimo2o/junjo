@@ -446,27 +446,27 @@ create_action_plan() {
 
     local dest="${file_dest[$fid]}"
 
-    if add_copy_file_action "$fid" "$dest"; then
+    if add_copy_file_action "$fid"; then
       log_plan_tree_start "Copy file"
         log_plan_tree     "From: ${src}"
         log_plan_tree_end "  To: ${dest}"
     fi
 
-    if add_move_file_action "$fid" "$dest"; then
+    if add_move_file_action "$fid"; then
       log_plan_tree_start "Move file"
         log_plan_tree     "From: ${src}"
         log_plan_tree_end "  To: ${dest}"
     fi
 
     # TODO: Set timestamp to EXIF.
-    if add_set_timestamp_to_exif_action "$fid" "$dest"; then
+    if add_set_timestamp_to_exif_action "$fid"; then
       log_plan_tree_start "Set timestamp in exif"
         log_plan_tree     "From: "
         log_plan_tree_end "  To: "
     fi
 
     # TODO: Set geodata to EXIF.
-    if add_set_geodata_to_exif_action "$fid" "$dest"; then
+    if add_set_geodata_to_exif_action "$fid"; then
       log_plan_tree_start "Set geodata in exif"
         log_plan_tree     "From: "
         log_plan_tree_end "  To: "
