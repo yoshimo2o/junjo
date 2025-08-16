@@ -76,6 +76,21 @@ confirm() {
     esac
   done
 }
+
+# ====================================================================================================
+# press_any_key
+# Shows 'Press any key to continue...' and waits for a single keypress.
+# ====================================================================================================
+press_any_key() {
+  if [[ $JUNJO_INTERACTIVE -ne 1 ]]; then
+    return 0
+  fi
+  echo -n "Press any key to continue... "
+  # Reads one character, no Enter required
+  read -n 1 -s
+  echo
+}
+
 }
 
 # ====================================================================================================
