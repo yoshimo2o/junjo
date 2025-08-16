@@ -123,10 +123,13 @@ if [[ -d "$media_path" ]]; then
   JUNJO_SCAN_DIR="$media_path"
 
   # Print initial log message
-  log_raw ""
-  log_raw "$COLOR_LIGHT_ORANGE"
-  log_raw "░░█ █░█ █▄░█ ░░█ █▀█ "
-  log_raw "█▄█ █▄█ █░▀█ █▄█ █▄█ "
+  log_raw "$COLOR_BRIGHT_BLUE"
+  log_raw '888 8888 8888 888 8e  888  e88 88e '
+  log_raw '888 8888 8888 888 88b 888 d888 888b'
+  log_raw '888 Y888 888P 888 888 888 Y888 888P'
+  log_raw '888  "88 88"  888 888 888  "88 88" '
+  log_raw '88P                   88P          '
+  log_raw '8"                    8"           '
   log_raw "$COLOR_RESET"
 
   show_log_monitoring_tips
