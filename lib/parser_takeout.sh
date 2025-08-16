@@ -17,16 +17,15 @@
 #   3. &meta_file_name           → Reference to variable for JSON file name
 #   4. &meta_file_match_strategy → Reference to variable for match strategy
 #
-# Returns:
-#   0 if a match is found, 1 if no match found
-#
 # Example usage:
 #   local takeout_meta_file takeout_meta_file_name takeout_meta_file_match_strategy
 #
-#   if locate_takeout_meta_file "$media_file" \
-#        takeout_meta_file \
-#        takeout_meta_file_name \
-#        takeout_meta_file_match_strategy; then
+#   locate_takeout_meta_file "$media_file" \
+#     takeout_meta_file \
+#     takeout_meta_file_name \
+#     takeout_meta_file_match_strategy
+#
+#   if [[ -n $takeout_meta_file ]]; then
 #     echo "Found: $takeout_meta_file using $takeout_meta_file_match_strategy strategy"
 #   else
 #     echo "No Google Takeout metadata file found for $media_file"
@@ -36,8 +35,8 @@
 locate_takeout_meta_file() {
   local media_file="$1"
   local -n meta_file_ref="$2"
-  local -n meta_file_name_ref="${3:-___}"
-  local -n meta_file_match_strategy_ref="${4:-___}"
+  local -n meta_file_name_ref="$3"
+  local -n meta_file_match_strategy_ref="$4"
 
   local media_file_name="$(basename "$media_file")"
   local media_file_dir="$(dirname "$media_file")"
@@ -62,8 +61,8 @@ locate_takeout_meta_file() {
   if [[ -f "$file" ]]; then
     match_strategy="direct"
     meta_file_ref="$file"
-    [[ "$3" != "" ]] && meta_file_name_ref="$file_name"
-    [[ "$4" != "" ]] && meta_file_match_strategy_ref="$match_strategy"
+    meta_file_name_ref="$file_name"
+    meta_file_match_strategy_ref="$match_strategy"
     return 0
   fi
 
@@ -96,8 +95,8 @@ locate_takeout_meta_file() {
   if [[ -f "$file" ]]; then
     match_strategy="truncation"
     meta_file_ref="$file"
-    [[ "$3" != "" ]] && meta_file_name_ref="$file_name"
-    [[ "$4" != "" ]] && meta_file_match_strategy_ref="$match_strategy"
+    meta_file_name_ref="$file_name"
+    meta_file_match_strategy_ref="$match_strategy"
     return 0
   fi
 
@@ -131,14 +130,11 @@ locate_takeout_meta_file() {
       if [[ -f "$file" ]]; then
         match_strategy="duplication"
         meta_file_ref="$file"
-        [[ "$3" != "" ]] && meta_file_name_ref="$file_name"
-        [[ "$4" != "" ]] && meta_file_match_strategy_ref="$match_strategy"
-        return 0
+        meta_file_name_ref="$file_name"
+        meta_file_match_strategy_ref="$match_strategy"
       fi
     fi
   fi
-
-  return 1
 }
 
 # ====================================================================================================
