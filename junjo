@@ -138,16 +138,6 @@ if [[ -d "$media_path" ]]; then
   log_raw "└── Recursive scan: $([[ $JUNJO_SCAN_RECURSIVE -eq 1 ]] && echo 'Yes' || echo 'No')"
   log_raw "Output directory: $JUNJO_OUTPUT_DIR"
   log_raw ""
-  log_raw "If you are running without verbose (-v) flag,"
-  log_raw "you can still monitor the logs in detail using:"
-  log_raw "  Scan log: less -R +F $JUNJO_SCAN_LOG_FILE"
-  log_raw "  Plan log: less -R +F $JUNJO_PLAN_LOG_FILE"
-  log_raw "  Sort log: less -R +F $JUNJO_SORT_LOG_FILE"
-  log_raw ""
-  log_raw "When using \"less -R +F\", log starts streaming with colors:"
-  log_raw "  Press CTRL-C: Pause streaming to scroll up/down, search, etc."
-  log_raw "  Press SHIFT-F: Resume streaming."
-  log_raw ""
 
   junjo_start
 fi

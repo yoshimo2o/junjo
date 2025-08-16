@@ -135,4 +135,26 @@ check_dependencies() {
     exit 1
   fi
 }
+
+show_log_monitoring_tips() {
+  draw_box \
+    "" \
+    "If you are running Junjo without verbose (-v) output," \
+    "you can still view the logs in verbose detail using:" \
+    "  Scan log: less -R +F $JUNJO_SCAN_LOG_FILE" \
+    "  Plan log: less -R +F $JUNJO_PLAN_LOG_FILE" \
+    "  Sort log: less -R +F $JUNJO_SORT_LOG_FILE" \
+    "" \
+    "Here are some tips on how to navigate the logs with \"less -R +F\":" \
+    "  Ctrl-C : pause log streaming" \
+    "  Shift-F: resume log streaming" \
+    "  /      : search forward, e.g. /IMG_9224.JPG" \
+    "  ?      : search backward, e.g. ?IMG_9224.JPG" \
+    "  &      : display only lines that match, e.g. & IMG_9224.JPG" \
+    "  &!     : display lines that do not match, e.g. & IMG_9224.JPG" \
+    "  n/N    : next/previous match" \
+    "  g/G    : top/end of file" \
+    ""
+
+  press_any_key
 }
