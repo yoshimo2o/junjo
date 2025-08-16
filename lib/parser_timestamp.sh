@@ -1,6 +1,7 @@
 # ====================================================================================================
 # get_best_available_timestamp <media_file>
 #                              <&timestamp>
+#                              <&timestamp_epoch>
 #                              <&timestamp_source>
 #
 # Extracts the best available timestamp from a media file
@@ -17,22 +18,21 @@
 #
 # Arguments:
 #   $1: media_file         → Path to the media file
-#   $2: timestamp          → Variable to store the normalized timestamp
-#   $3: timestamp_source   → Variable to store the timestamp source field name
+#   $2: timestamp          → Variable to store the EXIF timestamp
+#   $3: timestamp_epoch    → Variable to store the Epoch timestamp (ms)
+#   $4: timestamp_source   → Variable to store the timestamp source field name
 #
 # Output values:
-#   - timestamp: Normalized to "YYYY:MM:DD HH:MM:SS.sss" format
-#     - UNIX epochs converted from seconds to Exif timestamp format (UTC)
-#     - Milliseconds padded with .000 if missing
-#     - Timezone info (Z or +08:00) stripped (if taken from MediaCreateDate)
-#   - timestamp_source: The Exif field name used (e.g. PhotoTakenTime, DateTimeOriginal, etc.)
+#   - timestamp: EXIF timestamp in "YYYY:MM:DD HH:MM:SS.sss" format
+#   - timestamp_epoch: Epoch timestamp in milliseconds
+#   - timestamp_source: The EXIF field name used (e.g. PhotoTakenTime, DateTimeOriginal, etc.)
 #
 # Example usage:
-#   local timestamp timestamp_source
-#
-#   get_best_available_timestamp "IMG_4999.HEIC.MOV" \
-#     timestamp \
-#     timestamp_source
+#   local ts ts_epoch ts_source
+#   get_best_available_timestamp "IMG_4999.HEIC.MOV" ts ts_epoch ts_source
+#   echo "EXIF timestamp: $ts"
+#   echo "Epoch timestamp: $ts_epoch"
+#   echo "Source: $ts_source"
 # ====================================================================================================
 
 get_best_available_timestamp() {
@@ -73,89 +73,110 @@ get_best_available_timestamp() {
   fi
 
   # Normalize the selected timestamp
-  timestamp_ref=$(normalize_timestamp "$timestamp_ref")
+  timestamp_ref=$(to_exif_ts "$timestamp_ref")
   timestamp_epoch_ref=$(exif_ts_to_epoch_ms "$timestamp_ref")
 }
 
 # ====================================================================================================
-# normalize_timestamp <raw_timestamp>
+# to_exif_ts <raw_timestamp>
 #
-# Normalizes a timestamp string to Exif timestamp format with consistent millisecond precision.
+# Converts a timestamp string to EXIF timestamp format with consistent millisecond precision.
+# If a timezone is present, adjusts the time to UTC before formatting.
 #
 # Transformation rules:
-#   - UNIX epoch (10+ digits) → "YYYY:MM:DD HH:MM:SS.000" (UTC conversion)
-#   - Exif timestamp format   → Ensures ".sss" milliseconds are present
-#   - Timezone removal        → Strips "Z" suffix and "+/-HH:MM" offsets
-#   - Invalid input           → Returns empty string
+#   - Epoch timestamp (10+ digits) → "YYYY:MM:DD HH:MM:SS.000" (UTC conversion)
+#   - EXIF timestamp format        → Ensures ".sss" milliseconds are present
+#   - Timezone present             → Converts to UTC before formatting
+#   - Timezone removal             → Strips "Z" suffix and "+/-HH:MM" offsets
+#   - Invalid input                → Returns empty string
 #
 # Arguments:
-#   $1: raw_timestamp → Raw timestamp string to normalize
+#   $1: raw_timestamp → Timestamp string to convert
 #
 # Output:
-#   Normalized timestamp in "YYYY:MM:DD HH:MM:SS.sss" format, or empty string if invalid
+#   EXIF timestamp in "YYYY:MM:DD HH:MM:SS.sss" format, or empty string if invalid
 #
 # Example transformations:
-#   - UNIX epoch:
+#   - Epoch timestamp:
 #       1504360420                  → "2017:09:02 07:13:40.000"
-#   - Exif timestamp with timezone:
+#   - EXIF timestamp with timezone:
 #       "2017:09:02 07:13:40Z"      → "2017:09:02 07:13:40.000"
-#   - Exif timestamp with offset:
-#       "2017:09:02 07:13:40+08:00" → "2017:09:02 07:13:40.000"
-#   - Already normalized:
+#       "2017:09:02 07:13:40+08:00" → "2017:09:01 23:13:40.000"   # UTC adjusted
+#       "2017:09:02 07:13:40-05:00" → "2017:09:02 12:13:40.000"   # UTC adjusted
+#   - Already EXIF timestamp:
 #       "2017:09:02 07:13:40.123"   → "2017:09:02 07:13:40.123"
 #
-# Usage:
-#   normalized=$(normalize_timestamp "$raw_timestamp")
+# Example usage:
+#   ts_exif=$(to_exif_ts "1504360420")
+#   echo "EXIF timestamp: $ts_exif"   # returns: 2017:09:02 07:13:40.000
+#   ts_exif=$(to_exif_ts "2017:09:02 07:13:40+08:00")
+#   echo "EXIF timestamp: $ts_exif"   # returns: 2017:09:01 23:13:40.000
+#   ts_exif=$(to_exif_ts "2017:09:02 07:13:40.123")
+#   echo "EXIF timestamp: $ts_exif"   # returns: 2017:09:02 07:13:40.123
 # ====================================================================================================
-
-normalize_timestamp() {
+to_exif_ts() {
   local raw="$1"
   local clean
 
-  # If it's a Unix timestamp (all digits, 10+ chars), convert to Exif timestamp format
+  # If it's an Epoch timestamp (all digits, 10+ chars), convert to EXIF timestamp format
   if [[ "$raw" =~ ^[0-9]{10,}$ ]]; then
-    # Use date to convert to UTC, then format as YYYY:MM:DD HH:MM:SS.000
-    if date -u -r "$raw" "+%Y:%m:%d %H:%M:%S.000" &>/dev/null; then
-      date -u -r "$raw" "+%Y:%m:%d %H:%M:%S.000"
+    # Use gdate to convert to UTC, then format as YYYY:MM:DD HH:MM:SS.000
+    if gdate -u -d "@$raw" "+%Y:%m:%d %H:%M:%S.000" &>/dev/null; then
+      gdate -u -d "@$raw" "+%Y:%m:%d %H:%M:%S.000"
     else
-      # BSD/macOS fallback
-      date -u -jf %s "$raw" "+%Y:%m:%d %H:%M:%S.000" 2>/dev/null
+      printf ""
     fi
     return
   fi
 
-  clean="${raw%%[+-]??:??}" # strip timezone like +08:00
-  clean="${clean%Z}"        # strip trailing Z
+  # If timestamp has timezone info, use gdate to convert to UTC
+  if [[ "$raw" =~ ^([0-9]{4}:[0-9]{2}:[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?)(Z|[+-][0-9]{2}:[0-9]{2})$ ]]; then
+    local ts_part="${BASH_REMATCH[1]}"
+    local tz_part="${BASH_REMATCH[3]}"
+    # Replace ':' with '-' in date for GNU date compatibility
+    local ts_for_date="${ts_part/:/-}"
+    ts_for_date="${ts_for_date/:/-}"
+    ts_for_date="${ts_for_date/ /T}"
+    # Use gdate to convert to UTC
+    local utc_ts
+    utc_ts=$(gdate -u -d "${ts_for_date}${tz_part}" "+%Y:%m:%d %H:%M:%S" 2>/dev/null)
+    if [[ -n "$utc_ts" ]]; then
+      ts_part="$utc_ts"
+    fi
+    clean="$ts_part"
+  else
+    clean="${raw%%[+-]??:??}" # strip timezone like +08:00
+    clean="${clean%Z}"        # strip trailing Z
+  fi
 
   if [[ "$clean" =~ ([0-9]{4}:[0-9]{2}:[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})\.([0-9]+) ]]; then
     printf "%s.%03d" "${BASH_REMATCH[1]}" "${BASH_REMATCH[2]:0:3}"
   elif [[ "$clean" =~ ([0-9]{4}:[0-9]{2}:[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}) ]]; then
     printf "%s.000" "${BASH_REMATCH[1]}"
   else
-    echo -n ""
+    printf ""
   fi
 }
 
 # ====================================================================================================
 # exif_ts_to_epoch_ms <exif_timestamp>
 #
-# Converts a normalized Exif timestamp ("YYYY:MM:DD HH:MM:SS.sss") to epoch milliseconds.
+# Converts EXIF timestamp ("YYYY:MM:DD HH:MM:SS.sss") to Epoch timestamp in milliseconds.
 #
 # Arguments:
-#   $1: exif_timestamp → Timestamp string in Exif format (with or without milliseconds)
+#   $1: exif_timestamp → Timestamp string in EXIF format (with or without milliseconds)
 #
 # Output:
-#   Epoch time in milliseconds (as integer)
+#   Epoch timestamp in milliseconds (as integer)
 #
 # Example usage:
-#   ts_epoch_with_ms=$(exif_ts_to_epoch_ms "$ts")
+#   epoch_ms=$(exif_ts_to_epoch_ms "$exif_ts")
 # ====================================================================================================
 exif_ts_to_epoch_ms() {
   local ts="$1"
   local ts_sec_part ts_ms_part ts_epoch_sec
   if [[ "$ts" =~ ^([0-9]{4}:[0-9]{2}:[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})\.([0-9]{1,3})$ ]]; then
     ts_sec_part="${BASH_REMATCH[1]}"
-    # Efficient right-pad ms to 3 digits
     ts_ms_part="${BASH_REMATCH[2]}00"
     ts_ms_part="${ts_ms_part:0:3}"
   else
