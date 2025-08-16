@@ -5,12 +5,14 @@
 # and it will organize them for you. Also works with Google Takeout.
 #
 # Usage:
-#  junjo [OPTIONS] [FOLDER|FILE]
+#  junjo [OPTIONS] [FOLDER]
 #
 # Options:
 #   -r[=0|1], --recursive[=0|1]     Recursively scan subdirectories (default: 1)
 #   -v[=0|1], --verbose[=0|1]       Enable verbose output (default: 1)
 #   -i[=0|1], --interactive[=0|1]   Enable interactive mode (default: 1)
+#   --log-dir=PATH                  Directory to store log files (default: current directory)
+#   --output-dir=PATH               Directory to store sorted files (default: ./output)
 #
 # Arguments:
 #   FOLDER            Folder to scan (default: current directory)
@@ -62,8 +64,14 @@ for arg in "$@"; do
     -r|--recursive)
       JUNJO_SCAN_RECURSIVE=1
       ;;
+    -r=*|--recursive=*)
+      JUNJO_SCAN_RECURSIVE="${arg#*=}"
+      ;;
     -v|--verbose)
       JUNJO_LOG_VERBOSE=1
+      ;;
+    -v=*|--verbose=*)
+      JUNJO_LOG_VERBOSE="${arg#*=}"
       ;;
     -i|--interactive)
       JUNJO_INTERACTIVE=1
@@ -94,9 +102,9 @@ if [[ ${#args[@]} -gt 0 ]]; then
   media_path="${args[-1]}"
 fi
 
-# If media_path is neither a file nor a directory, print error and exit.
-if [[ ! -d "$media_path" && ! -f "$media_path" ]]; then
-  echo "Error: '$media_path' is neither a valid directory nor a file." >&2
+# If media_path is not a directory, print error and exit.
+if [[ ! -d "$media_path" ]]; then
+  echo "Error: Source folder '$media_path' does not exist." >&2
   exit 1
 fi
 
