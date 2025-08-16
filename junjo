@@ -104,7 +104,7 @@ if [[ ${#args[@]} -gt 0 ]]; then
 fi
 
 # If media_path is not a directory, print error and exit.
-if [[ ! -d "$media_path" ]]; then
+if [[ -d "$media_path" ]]; then
   JUNJO_SCAN_DIR="$media_path"
 else
   echo "Error: Source folder '$media_path' does not exist." >&2
