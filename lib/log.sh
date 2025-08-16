@@ -64,22 +64,6 @@ export JUNJO_SORT_LOG_FILE=""
 # Log tree
 declare -i LOG_TREE_INDENT_LEVEL=0
 
-# Log colors
-readonly COLOR_ORANGE="\033[38;5;208m"
-readonly COLOR_LIGHT_ORANGE="\033[38;5;214m"
-readonly COLOR_YELLOW="\033[1;33m"
-readonly COLOR_LIGHT_YELLOW="\033[0;33m"
-readonly COLOR_GREEN="\033[1;32m"
-readonly COLOR_LIGHT_GREEN="\033[0;32m"
-readonly COLOR_MAGENTA="\033[1;35m"
-readonly COLOR_LIGHT_MAGENTA="\033[0;35m"
-readonly COLOR_RED="\033[1;31m"
-readonly COLOR_LIGHT_RED="\033[0;31m"
-readonly COLOR_BLUE="\033[1;34m"
-readonly COLOR_LIGHT_BLUE="\033[0;34m"
-readonly COLOR_BRIGHT_BLACK="\033[0;90m"
-readonly COLOR_RESET="\033[0m"
-
 # Initialize logging system
 init_log() {
   # Set up runtime log file paths
@@ -137,34 +121,34 @@ log() {
   case "$category" in
     "$SCAN_LOG")
       log_file="$JUNJO_SCAN_LOG_FILE"
-      color_primary="$COLOR_ORANGE"
-      color_secondary="$COLOR_LIGHT_ORANGE"
+      color_primary="$COLOR_BOLD_BLUE"
+      color_secondary="$COLOR_BRIGHT_BLUE"
       output_to_console=$(( JUNJO_LOG_VERBOSE == 1 ))
       ;;
     "$PLAN_LOG")
       log_file="$JUNJO_PLAN_LOG_FILE"
-      color_primary="$COLOR_YELLOW"
-      color_secondary="$COLOR_LIGHT_YELLOW"
+      color_primary="$COLOR_BOLD_YELLOW"
+      color_secondary="$COLOR_BRIGHT_YELLOW"
       output_to_console=$(( JUNJO_LOG_VERBOSE == 1 ))
       ;;
     "$SORT_LOG")
       log_file="$JUNJO_SORT_LOG_FILE"
-      color_primary="$COLOR_GREEN"
-      color_secondary="$COLOR_LIGHT_GREEN"
+      color_primary="$COLOR_BOLD_GREEN"
+      color_secondary="$COLOR_BRIGHT_GREEN"
       output_to_console=$(( JUNJO_LOG_VERBOSE == 1 ))
       ;;
     "$DEBUG_LOG")
       log_file="$JUNJO_LOG_FILE"
-      color_primary="$COLOR_MAGENTA"
-      color_secondary="$COLOR_LIGHT_MAGENTA"
+      color_primary="$COLOR_BOLD_MAGENTA"
+      color_secondary="$COLOR_BRIGHT_MAGENTA"
       output_to_console=$(( DEBUG ? 1 : 0 ))
       format_message=0
       ;;
     "$ERROR_LOG")
       log_file="$JUNJO_LOG_FILE"
-      color_primary="$COLOR_RED"
-      color_secondary="$COLOR_LIGHT_RED"
       output_to_console=$(( DEBUG ? 1 : 0 ))
+      color_primary="$COLOR_BOLD_RED"
+      color_secondary="$COLOR_BRIGHT_RED"
       ;;
     *)
       category="$MAIN_LOG" # Default to main log
