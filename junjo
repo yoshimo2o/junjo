@@ -8,11 +8,9 @@
 #  junjo [OPTIONS] [FOLDER|FILE]
 #
 # Options:
-#   -r, --recursive       Recursively scan subdirectories
-#   -v, --verbose         Enable verbose output (show scan & sort logs)
-#   -i, --interactive     Enable interactive mode (default: disabled)
-#   --log-dir=PATH        Directory to store log files (default: current directory)
-#   --output-dir=PATH     Directory to store sorted files (default: ./output)
+#   -r[=0|1], --recursive[=0|1]     Recursively scan subdirectories (default: 1)
+#   -v[=0|1], --verbose[=0|1]       Enable verbose output (default: 1)
+#   -i[=0|1], --interactive[=0|1]   Enable interactive mode (default: 1)
 #
 # Arguments:
 #   FOLDER            Folder to scan (default: current directory)
@@ -69,6 +67,9 @@ for arg in "$@"; do
       ;;
     -i|--interactive)
       JUNJO_INTERACTIVE=1
+      ;;
+    -i=*|--interactive=*)
+      JUNJO_INTERACTIVE="${arg#*=}"
       ;;
     --debug)
       DEBUG=1
