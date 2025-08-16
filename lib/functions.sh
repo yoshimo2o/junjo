@@ -249,21 +249,24 @@ progress() {
   fi
 }
 
-# Portable date formatting function for macOS and Linux
-if [[ "$(uname)" == "Darwin" ]]; then
-  epoch_ms_date_fmt() {
-    # Accepts epoch in milliseconds, converts to seconds
-    local epoch_ms="$1"
-    local fmt="$2"
-    local epoch_s=$((epoch_ms / 1000))
+# ====================================================================================================
+# epoch_ms_date_fmt <epoch_ms> <format>
+# Converts epoch in milliseconds to formatted date string (cross-platform).
+# Parameters:
+#   epoch_ms - Epoch time in milliseconds
+#   format   - Date format string for 'date' command
+# Returns:
+#   Formatted date string
+# Example:
+#   epoch_ms_date_fmt 1692182400000 "%Y-%m-%d %H:%M:%S"
+# ====================================================================================================
+epoch_ms_date_fmt() {
+  local epoch_ms="$1"
+  local fmt="$2"
+  local epoch_s=$((epoch_ms / 1000))
+  if [[ "$(uname)" == "Darwin" ]]; then
     date -r "$epoch_s" "$fmt"
-  }
-else
-  epoch_ms_date_fmt() {
-    # Accepts epoch in milliseconds, converts to seconds
-    local epoch_ms="$1"
-    local fmt="$2"
-    local epoch_s=$((epoch_ms / 1000))
+  else
     date -d @"$epoch_s" "$fmt"
-  }
-fi
+  fi
+}
