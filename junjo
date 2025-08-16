@@ -120,6 +120,8 @@ init_log || exit 1
 # If media_path is a folder, scan it.
 if [[ -d "$media_path" ]]; then
 
+  clear
+
   JUNJO_SCAN_DIR="$media_path"
 
   # Print initial log message
