@@ -16,7 +16,6 @@
 #
 # Arguments:
 #   FOLDER            Folder to scan (default: current directory)
-#   FILE              File to analyze
 #
 # Usage Examples:
 # To scan and organize a folder:
