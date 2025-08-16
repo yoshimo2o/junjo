@@ -1,13 +1,42 @@
 junjo_start() {
 
-  # Step 1: Scan media folder
-  scan_media_folder
+  # Step 1: Get list of files to analyze
+  local files
+  create_file_list files
 
-  # Step 2: Create a plan to organize the media files
+  # If no files found, exit early
+  if [[ ${#files[@]} -eq 0 ]]; then
+    log_abort "No files matching filters found in '$JUNJO_SCAN_DIR'."
+    exit 0
+  fi
+
+  if ! confirm_box \
+    "" \
+    "We are about to analyze ${#files[@]} files found" \
+    "in the directory '$JUNJO_SCAN_DIR'." \
+    "" \
+    "This may take some time depending on the number" \
+    "of files and their sizes." \
+    "" \
+    "If you are running Junjo without verbose (-v) output," \
+    "you can still view the scan log in verbose detail using:" \
+    "  Scan log: less -R +F $JUNJO_SCAN_LOG_FILE" \
+    "" \
+    "Proceed with analyzing ${#files[@]} files?" \
+  ; then
+    log_abort "User opted not proceed with analyzing files."
+    exit 0
+  fi
+
+  # Step 2: Analyze the files
+  analyze_media_files "${files[@]}"
+
+  # Step 3: Create a plan to organize the media files
   create_organizing_plan
 
-  # Step 3: Sort media files
-  # sort_media_files
+  # Step 4: Sort media files
+  sort_media_files
+}
 
 check_dependencies() {
   # Check for required dependencies and report all missing at once

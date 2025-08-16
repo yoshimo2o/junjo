@@ -1,9 +1,9 @@
 # ====================================================================================================
-# scan_media_folder
+# create_file_list
 #
-# Scans a directory for media files based on configuration settings and initiates analysis.
+# Scans a directory for media files based on configuration settings.
 # This function handles file discovery using configurable include/exclude patterns and
-# depth settings, then passes discovered files to the analysis pipeline.
+# depth settings.
 #
 # Configuration Variables Used:
 #   - JUNJO_SCAN_DIR           → Directory to scan for media files
@@ -16,12 +16,13 @@
 #   2. Build include/exclude arguments from pattern arrays
 #   3. Execute find command to locate matching files
 #   4. Log scan parameters and file count
-#   5. Exit early if no files found, otherwise start analysis
 #
 # Returns:
 #   0 on success, exits with 0 if no files found
 # ====================================================================================================
-scan_media_folder() {
+create_file_list() {
+  local file_list
+  local -n file_list_ref="$1"
 
   # Set find depth option based on recursive flag
   if [[ $JUNJO_SCAN_RECURSIVE -eq 1 ]]; then
@@ -59,28 +60,13 @@ scan_media_folder() {
     log_scan_tree_end "Exclude patterns: ${JUNJO_EXCLUDE_FILES[*]}"
 
   # Get the list of files to analyze
-  mapfile -t files < <(eval "find \"$JUNJO_SCAN_DIR\" $find_depth -type f $include_args $exclude_args")
-
-  # If no files found, exit early
-  if [[ ${#files[@]} -eq 0 ]]; then
-    log_error "No scannable files found in '$JUNJO_SCAN_DIR'."
-    exit 0
-  fi
+  mapfile -t file_list < <(eval "find \"$JUNJO_SCAN_DIR\" $find_depth -type f $include_args $exclude_args")
 
   # Inform user the number of files found
-  log_scan "Found ${#files[@]} files to analyze in '$JUNJO_SCAN_DIR'."
+  log_scan "Found ${#file_list[@]} files to analyze in '$JUNJO_SCAN_DIR'."
 
-  # If interactive mode is enabled, ask users to confirm before proceeding
-  if [[ $JUNJO_INTERACTIVE -eq 1 ]]; then
-    log_raw ""
-    if ! confirm "Do you want to analyze these files?"; then
-      exit 0
-    fi
-    log_raw ""
-  fi
-
-  # Analyze the files
-  analyze_media_files "${files[@]}"
+  # Return found files
+  file_list_ref=("${file_list[@]}")
 }
 
 # ====================================================================================================
