@@ -136,6 +136,48 @@ check_dependencies() {
   fi
 }
 
+init_output_dir() {
+  # If output directory is not empty,
+  # ask user whether to overwrite the directory.
+  # Existing files in the directory will be overwritten.
+  if [[ -d "$JUNJO_OUTPUT_DIR" && "$(ls -A "$JUNJO_OUTPUT_DIR")" ]]; then
+    log_raw "It appears that the output directory '$JUNJO_OUTPUT_DIR' is not empty."
+    log_raw "If a file being copied or moved has the same name as one already in the directory, the existing file will be replaced."
+
+    if ! confirm "Would you like to proceed?"; then
+      log_abort "User opted not to proceed."
+      exit 1
+    fi
+  fi
+
+  # If output directory exists,
+  # check if output directory is writable.
+  if [[ -d "$JUNJO_OUTPUT_DIR" ]]; then
+    if [[ ! -w "$JUNJO_OUTPUT_DIR" ]]; then
+      log_error "Output directory '$JUNJO_OUTPUT_DIR' is not writable."
+      exit 1
+    fi
+  fi
+
+  # If output directory is not created,
+  # ask user whether to create it.
+  if [[ ! -d "$JUNJO_OUTPUT_DIR" ]]; then
+
+    if ! confirm_box \
+     "Output directory '$JUNJO_OUTPUT_DIR' does not exist. " \
+     "Create output directory now?"; then
+      log_abort "User opted not to create output directory."
+      exit 1
+    fi
+
+    # Create the output directory with error handling
+    mkdir -p "$JUNJO_OUTPUT_DIR" || {
+      log_error "Failed to create output directory '$JUNJO_OUTPUT_DIR'."
+      exit 1
+    }
+  fi
+}
+
 show_log_monitoring_tips() {
   draw_box \
     "" \

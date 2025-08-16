@@ -148,5 +148,7 @@ if [[ -d "$media_path" ]]; then
   log_raw "Output directory: $JUNJO_OUTPUT_DIR"
   log_raw ""
 
+  init_output_dir
+
   junjo_start
 fi
