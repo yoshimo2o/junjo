@@ -164,8 +164,8 @@ log() {
 
   # Format message
   local formatted_message=${message}
-  if [[ $format_message -eq 1 ]]; then
-    formatted_message=$(color_by_colon "${msg}")
+  if (( format_message == 1 )); then
+    formatted_message=$(color_by_colon "${message}")
   fi
 
   # Show log message on screen if the category is main
@@ -180,7 +180,7 @@ log() {
   fi
 
   # Append the log message to the appropriate log file (no color)
-  if [[ $JUNJO_LOG_WRITE_COLORED_LOGS -eq 1 ]]; then
+  if (( $JUNJO_LOG_WRITE_COLORED_LOGS == 1 )); then
     echo -e "${color_secondary}${timestamp}${COLOR_RESET} ${formatted_message}" >> "$log_file"
   else
     echo "${timestamp} ${message}" >> "$log_file"
@@ -192,16 +192,16 @@ color_by_colon() {
   local msg_before_colon
   local msg_after_colon
 
-  if [[ "$message" == *:* ]]; then
-    msg_before_colon="${message%%:*}:"
-    msg_after_colon="${message#*:}"
-    msg_after_colon="${msg_after_colon# }" # trim leading space
+  if [[ "$msg" == *:* ]]; then
+    msg_before_colon="${msg%%:*}:"
+    msg_after_colon="${msg#*:}"
+    # msg_after_colon="${msg_after_colon# }" # trim leading space
 
     # Split message by the first ':' and color the part after it with Bright Black
-    printf '%s' "${msg_before_colon} ${COLOR_BRIGHT_BLACK}${msg_after_colon}${COLOR_RESET}"
+    printf '%s' "${msg_before_colon}${COLOR_BRIGHT_BLACK}${msg_after_colon}${COLOR_RESET}"
   else
     # If no colon, return the message as is
-    printf '%s' "$message"
+    printf '%s' "$msg"
   fi
 }
 
