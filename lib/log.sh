@@ -235,11 +235,13 @@ log_debug() {
 
 # Generate timestamp prefix with milliseconds precision
 generate_log_timestamp_prefix() {
-  echo "[$(date +"%Y-%m-%d %H:%M:%S.$(printf '%03d' $(( 10#$(date +%N) / 1000000 )) )")]"
+  echo "[$(date +"%H:%M:%S.$(printf '%03d' $(( 10#$(date +%N) / 1000000 )) )")]"
+  # echo "[$(date +"%Y-%m-%d %H:%M:%S.$(printf '%03d' $(( 10#$(date +%N) / 1000000 )) )")]"
 }
 
 generate_log_timestamp_indent() {
-  echo "                         "
+  echo "              "
+  # echo "                         "
 }
 
 # --------------------------------------------------------------------------
