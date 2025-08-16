@@ -4,6 +4,7 @@ export JUNJO_LIB_DIR="$JUNJO_DIR/lib"
 
 # Load the library functions
 source "$JUNJO_LIB_DIR/constants.sh"
+source "$JUNJO_LIB_DIR/colors.sh"
 source "$JUNJO_LIB_DIR/globals.sh"
 source "$JUNJO_LIB_DIR/functions.sh"
 source "$JUNJO_LIB_DIR/log.sh"
