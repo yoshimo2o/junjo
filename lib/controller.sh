@@ -12,15 +12,15 @@ junjo_start() {
 
   if ! confirm_box \
     "" \
-    "We are about to analyze ${#files[@]} files found" \
-    "in the directory '$JUNJO_SCAN_DIR'." \
+    "We are about to analyze ${#files[@]} files found in the directory:" \
+    "  ${COLOR_BRIGHT_BLACK}${JUNJO_SCAN_DIR}${COLOR_RESET}" \
     "" \
-    "This may take some time depending on the number" \
-    "of files and their sizes." \
+    "This may take some time depending on the number of files" \
+    "and their file sizes." \
     "" \
     "If you are running Junjo without verbose (-v) output," \
     "you can still view the scan log in verbose detail using:" \
-    "  Scan log: less -R +F $JUNJO_SCAN_LOG_FILE" \
+    "  ${COLOR_BRIGHT_BLACK}less -R +F ${JUNJO_SCAN_LOG_FILE}${COLOR_RESET}" \
     "" \
     "Proceed with analyzing ${#files[@]} files?" \
   ; then
