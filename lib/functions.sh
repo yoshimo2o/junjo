@@ -129,12 +129,14 @@ draw_box() {
     colored_line=$(color_by_colon "$line")
     local plain_line
     plain_line=$(strip_ansi "$line")
-    # pad plain_line to maxlen, then replace with colored_line
+    # Print left border and left padding
     printf "│%*s" $padding ""
+    # Print colored line using echo -ne, then pad to maxlen
     echo -ne "$colored_line"
-    local pad_len=$((maxlen - ${#plain_line} + padding))
+    local pad_len=$((maxlen - ${#plain_line}))
     printf "%*s" $pad_len ""
-    printf "│\n"
+    # Print right padding and right border
+    printf "%*s│\n" $padding ""
   done
 
   # bottom border
