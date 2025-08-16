@@ -91,6 +91,73 @@ press_any_key() {
   echo
 }
 
+# ====================================================================================================
+# strip_ansi <text>
+# Removes ANSI escape color codes from the input text for accurate width calculations.
+# Example: strip_ansi $colored_text
+# ====================================================================================================
+strip_ansi() {
+  echo -n "$1" | sed -E 's/\x1B\[[0-9;]*[mK]//g'
+}
+
+## ====================================================================================================
+# draw_box <lines...>
+# Draws a Unicode box around the provided lines, with optional color codes.
+# Handles color codes for alignment by stripping them for width calculation.
+# Example: draw_box "Line 1" "Line 2" "Line 3"
+# ====================================================================================================
+draw_box() {
+  local lines=("$@")
+  local maxlen=0
+  local padding=2   # spaces on each side
+
+  # find the longest line (without color codes)
+  for line in "${lines[@]}"; do
+    local plain_line
+    plain_line=$(strip_ansi "$line")
+    (( ${#plain_line} > maxlen )) && maxlen=${#plain_line}
+  done
+
+  local width=$((maxlen + padding * 2))
+
+  # top border
+  printf "┌"; printf '─%.0s' $(seq 1 $width); echo "┐"
+
+  # content
+  for line in "${lines[@]}"; do
+    local colored_line
+    colored_line=$(color_by_colon "$line")
+    local plain_line
+    plain_line=$(strip_ansi "$line")
+    # pad plain_line to maxlen, then replace with colored_line
+    printf "│%*s" $padding ""
+    echo -ne "$colored_line"
+    local pad_len=$((maxlen - ${#plain_line} + padding))
+    printf "%*s" $pad_len ""
+    printf "│\n"
+  done
+
+  # bottom border
+  printf "└"; printf '─%.0s' $(seq 1 $width); echo "┘"
+}
+
+
+# ====================================================================================================
+# confirm_box <lines...>
+# Shows a box with all lines except the last, then prompts for confirmation with the last line.
+# Returns 0 if confirmed, 1 otherwise.
+# ====================================================================================================
+confirm_box() {
+  local lines=("$@")
+  local n=${#lines[@]}
+  if (( n < 2 )); then
+    echo "confirm_box requires at least two arguments: box lines and a prompt." >&2
+    return 1
+  fi
+  local box_lines=("${lines[@]:0:n-1}")
+  local prompt="${lines[n-1]}"
+  draw_box "${box_lines[@]}"
+  confirm "$prompt"
 }
 
 # ====================================================================================================
