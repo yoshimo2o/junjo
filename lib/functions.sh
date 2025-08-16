@@ -91,6 +91,15 @@ press_any_key() {
   echo
 }
 
+yes_or_no() {
+  local test="$1"
+  if [[ $test -eq 1 || $test == "true" || $test == "yes" ]]; then
+    echo "Yes"
+  else
+    echo "No"
+  fi
+}
+
 # ====================================================================================================
 # strip_ansi <text>
 # Removes ANSI escape color codes from the input text for accurate width calculations.
