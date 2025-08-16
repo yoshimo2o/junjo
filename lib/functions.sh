@@ -58,17 +58,24 @@ confirm() {
   local message="$1"
   local response
 
-  echo -n "$message [y/N]: "
-  read -r response
+  if [[ $JUNJO_INTERACTIVE -ne 1 ]]; then
+    return 0
+  fi
 
-  case "$response" in
-    [yY]|[yY][eE][sS])
-      return 0
-      ;;
-    *)
-      return 1
-      ;;
-  esac
+  while true; do
+    echo -n "$message [y/n]: "
+    read -r response
+    case "$response" in
+      [yY])
+        echo
+        return 0
+        ;;
+      [nN])
+        return 1
+        ;;
+    esac
+  done
+}
 }
 
 # ====================================================================================================
