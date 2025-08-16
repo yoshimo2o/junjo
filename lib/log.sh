@@ -54,6 +54,7 @@ readonly PLAN_LOG=" PLAN"
 readonly SORT_LOG=" SORT"
 readonly DEBUG_LOG="DEBUG"
 readonly ERROR_LOG="ERROR"
+readonly ABORT_LOG="ABORT"
 
 # Log file paths (to be set in init_log)
 export JUNJO_LOG_FILE=""
@@ -116,6 +117,7 @@ log() {
     color_secondary
   local -i output_to_console
   local -i format_message=1
+  local -i output_to_stderr=0
 
   # Different log behaviour for differnet log categories
   case "$category" in
@@ -149,6 +151,12 @@ log() {
       output_to_console=$(( DEBUG ? 1 : 0 ))
       color_primary="$COLOR_BOLD_RED"
       color_secondary="$COLOR_BRIGHT_RED"
+      output_to_stderr=1
+      ;;
+    "$ABORT_LOG")
+      color_primary="$COLOR_BOLD_RED"
+      color_secondary="$COLOR_BRIGHT_RED"
+      output_to_stderr=1
       ;;
     *)
       category="$MAIN_LOG" # Default to main log
@@ -167,7 +175,12 @@ log() {
   # Show log message on screen if the category is main
   # or if verbose mode is enabled
   if (( output_to_console == 1 || force_verbose == 1 )); then
-    echo -e "${color_primary}${category} ${color_secondary}${timestamp}${COLOR_RESET} ${formatted_message}"
+    local log_message="${color_primary}${category} ${color_secondary}${timestamp}${COLOR_RESET} ${formatted_message}"
+    if (( output_to_stderr == 1 )); then
+      echo -e "$log_message" >&2
+    else
+      echo -e "$log_message"
+    fi
   fi
 
   # Append the log message to the appropriate log file (no color)
@@ -206,7 +219,11 @@ log_raw() {
 # Log error also outputs to stderr
 log_error() {
   log "$1" "$ERROR_LOG"
-  echo "Error: ${$1}" >&2
+}
+
+# Log abort also outputs to stderr
+log_abort() {
+  log "$1" "$ABORT_LOG"
 }
 
 # Log debug only when DEBUG is set
