@@ -112,10 +112,10 @@ log() {
   local category="$2"
   local -i force_verbose="${3:-0}"
   local timestamp="$(generate_log_timestamp_prefix)"
-  local log_file \
+  local log_file="$JUNJO_LOG_FILE" \
     color_primary \
     color_secondary
-  local -i output_to_console
+  local -i output_to_console=1
   local -i format_message=1
   local -i output_to_stderr=0
 
@@ -147,8 +147,6 @@ log() {
       format_message=0
       ;;
     "$ERROR_LOG")
-      log_file="$JUNJO_LOG_FILE"
-      output_to_console=$(( DEBUG ? 1 : 0 ))
       color_primary="$COLOR_BOLD_RED"
       color_secondary="$COLOR_BRIGHT_RED"
       output_to_stderr=1
@@ -160,10 +158,8 @@ log() {
       ;;
     *)
       category="$MAIN_LOG" # Default to main log
-      log_file="$JUNJO_LOG_FILE"
-      color_primary="$COLOR_BLUE"
-      color_secondary="$COLOR_LIGHT_BLUE"
-      output_to_console=1
+      color_primary="$COLOR_BOLD_CYAN"
+      color_secondary="$COLOR_BRIGHT_CYAN"
   esac
 
   # Format message
