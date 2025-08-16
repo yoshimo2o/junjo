@@ -1,4 +1,11 @@
 junjo_start() {
+  clear
+  show_app_banner
+
+  # Step 0: Onboarding
+  show_log_monitoring_tips
+  show_configuration_summary
+  init_output_dir
 
   # Step 1: Get list of files to analyze
   local files
@@ -10,31 +17,16 @@ junjo_start() {
     exit 0
   fi
 
-  if ! confirm_box \
-    "" \
-    "We are about to analyze ${#files[@]} files found in the directory:" \
-    "  ${COLOR_BRIGHT_BLACK}${JUNJO_SCAN_DIR}${COLOR_RESET}" \
-    "" \
-    "This may take some time depending on the number of files" \
-    "and their file sizes." \
-    "" \
-    "If you are running Junjo without verbose (-v) output," \
-    "you can still view the scan log in verbose detail using:" \
-    "  ${COLOR_BRIGHT_BLACK}less -R +F ${JUNJO_SCAN_LOG_FILE}${COLOR_RESET}" \
-    "" \
-    "Proceed with analyzing ${#files[@]} files?" \
-  ; then
-    log_abort "User opted not proceed with analyzing files."
-    exit 0
-  fi
-
   # Step 2: Analyze the files
+  show_scan_dialog
   analyze_media_files "${files[@]}"
 
   # Step 3: Create a plan to organize the media files
+  show_plan_dialog
   create_organizing_plan
 
   # Step 4: Sort media files
+  show_sort_dialog
   sort_media_files
 }
 
@@ -228,4 +220,161 @@ show_log_monitoring_tips() {
     ""
 
   press_any_key
+}
+
+show_app_banner() {
+  log_raw ""
+  log_raw ""
+  log_raw "$COLOR_BOLD_BLUE"
+  log_raw '888 8888 8888 888 8e  888  e88 88e '
+  log_raw '888 8888 8888 888 88b 888 d888 888b'
+  log_raw '888 Y888 888P 888 888 888 Y888 888P'
+  log_raw '888  "88 88"  888 888 888  "88 88" '
+  log_raw '88P                   88P          '
+  log_raw '8"                    8"           '
+  log_raw "$COLOR_RESET"
+  log_raw ""
+}
+
+show_configuration_summary() {
+  log_raw "$COLOR_BOLD_BLUE"
+  log_raw "Junjo Configuration Summary"
+  log_raw "$COLOR_RESET"
+  log_raw "Log directory: $JUNJO_LOG_DIR"
+  log_raw "├── Main log: $JUNJO_LOG_FILE_NAME"
+  log_raw "├── Scan log: $JUNJO_SCAN_LOG_FILE_NAME"
+  log_raw "├── Plan log: $JUNJO_PLAN_LOG_FILE_NAME"
+  log_raw "└── Sort log: $JUNJO_SORT_LOG_FILE_NAME"
+  log_raw "Scan directory: $JUNJO_SCAN_DIR"
+  log_raw "├── Directory: $(realpath "$JUNJO_SCAN_DIR")"
+  log_raw "├── Recursive scan: $(yes_or_no $JUNJO_SCAN_RECURSIVE)"
+  log_raw "├── Include files: ${JUNJO_INCLUDE_FILES[*]}"
+  log_raw "└── Exclude files: ${JUNJO_EXCLUDE_FILES[*]}"
+  log_raw "Output directory: $JUNJO_OUTPUT_DIR"
+  log_raw "Grouping structure:"
+  # Loop through JUNJO_OUTPUT_DIR_STRUCTURE and output with log_raw
+  for idx in "${!JUNJO_OUTPUT_DIR_STRUCTURE[@]}"; do
+    item="${JUNJO_OUTPUT_DIR_STRUCTURE[$idx]}"
+    if [[ $idx -lt $((${#JUNJO_OUTPUT_DIR_STRUCTURE[@]} - 1)) ]]; then
+      log_raw "├── ${GROUPING_DESCRIPTIONS[$item]}"
+    else
+      log_raw "└── ${GROUPING_DESCRIPTIONS[$item]}"
+    fi
+  done
+  log_raw "Operations:"
+  log_raw "├── Copy or move files: ${JUNJO_FILE_OPERATION^}"
+  log_raw "├── Set EXIF timestamp: $(yes_or_no $JUNJO_SET_EXIF_TIMESTAMP)"
+  log_raw "├── Set EXIF geodata: $(yes_or_no $JUNJO_SET_EXIF_GEODATA)"
+  log_raw "├── Set file create time: $(yes_or_no $JUNJO_SET_FILE_CREATE_TIME)"
+  log_raw "└── Set file modify time: $(yes_or_no $JUNJO_SET_FILE_MODIFY_TIME)"
+  log_raw ""
+
+  if ! confirm_box \
+    "We will be running Junjo based on the configuration set above." \
+    "Proceed with the configuration above?"; then
+    log_abort "User stopped at configuration checking."
+    exit 1
+  fi
+}
+
+show_scan_dialog() {
+  if ! confirm_box \
+    "" \
+    "${COLOR_BOLD_BLUE}SCAN & ANALYZE${COLOR_RESET}" \
+    "" \
+    "We are about to analyze ${#files[@]} media files found in the directory:" \
+    "  ${COLOR_BRIGHT_BLACK}${JUNJO_SCAN_DIR}${COLOR_RESET}" \
+    "" \
+    "This operation involves:" \
+    " - Extracting file path components" \
+    " - Extracting Google Takeout metadata" \
+    " - Extracting EXIF metadata" \
+    " - Determining the most reliable photo/video taken time" \
+    " - Determining the device used to capture the photo/video" \
+    " - Determining the software used to create the photo/video" \
+    " - Identifying the file media type" \
+    " - Pairing live photo and video files" \
+    " - Finding live photos/videos with duplicates" \
+    " - Finding live photos with missing video pair" \
+    " - Finding live videos with missing photo pair" \
+    "" \
+    "This may take some time depending on the number of media files" \
+    "and their file sizes." \
+    "" \
+    "If you are running Junjo without verbose (-v) output," \
+    "you can still view the full detailed scan log using:" \
+    "  ${COLOR_BRIGHT_BLACK}less -R +F ${JUNJO_SCAN_LOG_FILE}${COLOR_RESET}" \
+    "" \
+    "Proceed with analyzing ${#files[@]} files?" \
+  ; then
+    log_abort "User did not proceed with analyzing files."
+    exit 0
+  fi
+}
+
+show_plan_dialog() {
+  if ! confirm_box \
+    "" \
+    "${COLOR_BOLD_YELLOW}PLAN & STRATEGIZE${COLOR_RESET}" \
+    "" \
+    "We are about to create a plan to organize your media files." \
+    "" \
+    "This operation involves:" \
+    " - Computing file destination using sub-directory" \
+    "   grouping rules configured in your config file." \
+    " - Identifying duplicate files." \
+    " - Scoring duplicates to determine which is the preferred file." \
+    " - Checking if its possible to remove duplicate markers from filename." \
+    " - Resolving potential naming conflicts." \
+    " - Resolving filename mismatches between live photo/video pairs" \
+    " - Create a list of planned actions to be performed on the file." \
+    "" \
+    "This may take some time depending on the number of media files" \
+    "and their file sizes." \
+    "" \
+    "If you are running Junjo without verbose (-v) output," \
+    "you can still view the full detailed plan log using:" \
+    "  ${COLOR_BRIGHT_BLACK}less -R +F ${JUNJO_PLAN_LOG_FILE}${COLOR_RESET}" \
+    "" \
+    "Proceed with creating an organizing plan for ${#files[@]} media files?" \
+  ; then
+    log_abort "User did not to proceed with creating an organizing plan."
+    exit 0
+  fi
+}
+
+show_sort_dialog() {
+  if ! confirm_box \
+    "" \
+    "${COLOR_BOLD_GREEN}SORT & ORGANIZE${COLOR_RESET}" \
+    "" \
+    "We are about to begin organizing the files in your folder." \
+    "" \
+    "This operation involves:" \
+    " - [${COLOR_GREEN}$(check_if "$([[ $JUNJO_FILE_OPERATION == $FILE_OPERATION_COPY ]] && echo 1 || echo 0)")${COLOR_RESET}] Copying files to their computed destination folders" \
+    " - [${COLOR_GREEN}$(check_if "$([[ $JUNJO_FILE_OPERATION == $FILE_OPERATION_MOVE ]] && echo 1 || echo 0)")${COLOR_RESET}] Moving files to their computed destination folders" \
+    " - [${COLOR_GREEN}$(check_if $JUNJO_SET_EXIF_TIMESTAMP)${COLOR_RESET}] Setting timestamp on EXIF metadata ${COLOR_BRIGHT_BLACK}(using most reliable timestamp found)${COLOR_RESET}" \
+    " - [${COLOR_GREEN}$(check_if $JUNJO_SET_EXIF_GEODATA)${COLOR_RESET}] Setting geodata on EXIF metadata ${COLOR_BRIGHT_BLACK}(from Google Takeout metadata)${COLOR_RESET}" \
+    " - [${COLOR_GREEN}$(check_if $JUNJO_SET_FILE_CREATE_TIME)${COLOR_RESET}] Setting the file creation time ${COLOR_BRIGHT_BLACK}(using most reliable timestamp found)${COLOR_RESET}" \
+    " - [${COLOR_GREEN}$(check_if $JUNJO_SET_FILE_MODIFY_TIME)${COLOR_RESET}] Setting the file modification time ${COLOR_BRIGHT_BLACK}(using most reliable timestamp found)${COLOR_RESET}" \
+    "" \
+    "You can review the organizing plan by inspecting the plan log file:" \
+    "  ${COLOR_BRIGHT_BLACK}less -R +F ${JUNJO_PLAN_LOG_FILE}${COLOR_RESET}" \
+    "" \
+    "If you are running Junjo without verbose (-v) output," \
+    "you can still view the full detailed sort log using:" \
+    "  ${COLOR_BRIGHT_BLACK}less -R +F ${JUNJO_SORT_LOG_FILE}${COLOR_RESET}" \
+    "" \
+    "${COLOR_BOLD_RED}CAUTION! WRITE OPERATION AHEAD!${COLOR_RESET}" \
+    "" \
+    "If you are performing a move operation, please make sure that:" \
+    " - You have reviewed the organizing plan" \
+    " - You are satisfied with the organizing plan" \
+    " - You have a backup of the source folder" \
+    "" \
+    "Proceed with organizing ${#files[@]} files?" \
+  ; then
+    log_abort "User did not to proceed with organizing files."
+    exit 0
+  fi
 }

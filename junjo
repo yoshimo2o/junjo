@@ -105,6 +105,8 @@ fi
 
 # If media_path is not a directory, print error and exit.
 if [[ ! -d "$media_path" ]]; then
+  JUNJO_SCAN_DIR="$media_path"
+else
   echo "Error: Source folder '$media_path' does not exist." >&2
   exit 1
 fi
@@ -117,58 +119,5 @@ check_dependencies
 # If unable to write logs, stop.
 init_log || exit 1
 
-# If media_path is a folder, scan it.
-if [[ -d "$media_path" ]]; then
-
-  clear
-
-  JUNJO_SCAN_DIR="$media_path"
-
-  # Print initial log message
-  log_raw "$COLOR_BOLD_BLUE"
-  log_raw '888 8888 8888 888 8e  888  e88 88e '
-  log_raw '888 8888 8888 888 88b 888 d888 888b'
-  log_raw '888 Y888 888P 888 888 888 Y888 888P'
-  log_raw '888  "88 88"  888 888 888  "88 88" '
-  log_raw '88P                   88P          '
-  log_raw '8"                    8"           '
-  log_raw "$COLOR_RESET"
-
-  show_log_monitoring_tips
-
-  log_raw "$COLOR_BOLD_BLUE"
-  log_raw "Junjo Configuration Summary"
-  log_raw "$COLOR_RESET"
-  log_raw "Log directory: $JUNJO_LOG_DIR"
-  log_raw "├── Main log: $JUNJO_LOG_FILE_NAME"
-  log_raw "├── Scan log: $JUNJO_SCAN_LOG_FILE_NAME"
-  log_raw "├── Plan log: $JUNJO_PLAN_LOG_FILE_NAME"
-  log_raw "└── Sort log: $JUNJO_SORT_LOG_FILE_NAME"
-  log_raw "Scan directory: $JUNJO_SCAN_DIR"
-  log_raw "├── Directory: $(realpath "$JUNJO_SCAN_DIR")"
-  log_raw "├── Recursive scan: $(yes_or_no $JUNJO_SCAN_RECURSIVE)"
-  log_raw "├── Include files: ${JUNJO_INCLUDE_FILES[*]}"
-  log_raw "└── Exclude files: ${JUNJO_EXCLUDE_FILES[*]}"
-  log_raw "Output directory: $JUNJO_OUTPUT_DIR"
-  log_raw "Grouping structure:"
-  # Loop through JUNJO_OUTPUT_DIR_STRUCTURE and output with log_raw
-  for item in "${JUNJO_OUTPUT_DIR_STRUCTURE[@]}"; do
-    if [[ "$item" == "${JUNJO_OUTPUT_DIR_STRUCTURE[-1]}" ]]; then
-      log_raw "└── ${GROUPING_DESCRIPTIONS[$item]}"
-    else
-      log_raw "├── ${GROUPING_DESCRIPTIONS[$item]}"
-    fi
-  done
-  log_raw "Operations:"
-  log_raw "├── Copy or move files: ${JUNJO_FILE_OPERATION^}"
-  log_raw "├── Set EXIF timestamp: $(yes_or_no $JUNJO_SET_EXIF_TIMESTAMP)"
-  log_raw "├── Set EXIF timestamp: $(yes_or_no $JUNJO_SET_EXIF_TIMESTAMP)"
-  log_raw "├── Set EXIF geodata: $(yes_or_no $JUNJO_SET_EXIF_TIMESTAMP)"
-  log_raw "├── Set file create time: $(yes_or_no $JUNJO_SET_FILE_CREATE_TIME)"
-  log_raw "└── Set file modify time: $(yes_or_no $JUNJO_SET_FILE_MODIFY_TIME)"
-  log_raw ""
-
-  init_output_dir
-
-  junjo_start
-fi
+# Start junjo
+junjo_start

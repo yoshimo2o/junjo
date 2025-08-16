@@ -93,10 +93,19 @@ press_any_key() {
 
 yes_or_no() {
   local test="$1"
-  if [[ $test -eq 1 || $test == "true" || $test == "yes" ]]; then
+  if [[ "$test" == "1" || "$test" == "true" || "$test" == "yes" ]]; then
     echo "Yes"
   else
     echo "No"
+  fi
+}
+
+check_if() {
+  local test="$1"
+  if [[ "$test" == "1" || "$test" == "true" || "$test" == "yes" ]]; then
+    echo "✔"
+  else
+    echo " "
   fi
 }
 
