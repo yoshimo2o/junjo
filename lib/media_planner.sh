@@ -474,14 +474,14 @@ create_action_plan() {
 
     if add_set_file_create_time_action "$fid"; then
       log_plan_tree_start "Set file creation time"
-        log_plan_tree     "From: ${file_src_create_date[$fid]}"
+        log_plan_tree     "From: $(to_exif_ts "${file_src_create_date[$fid]}")"
         log_plan_tree_end "  To: ${file_dest_create_date[$fid]} (Source: ${file_timestamp_source[$fid]})"
     fi
 
     if add_set_file_modify_time_action "$fid"; then
       log_plan_tree_start "Set file modification time"
-        log_plan_tree     "From: ${file_src_modify_date[$fid]}"
-        log_plan_tree_end "  To: ${file_dest_modify_date[$fid]} (Source: ${file_timestamp_source[$fid]})"
+        log_plan_tree     "From: $(to_exif_ts "${file_src_create_date[$fid]}")"
+        log_plan_tree_end "  To: $(to_exif_ts "${file_dest_modify_date[$fid]}") (Source: ${file_timestamp_source[$fid]})"
     fi
 
     log_plan_tree_end
