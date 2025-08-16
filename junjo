@@ -128,6 +128,9 @@ if [[ -d "$media_path" ]]; then
   log_raw "░░█ █░█ █▄░█ ░░█ █▀█ "
   log_raw "█▄█ █▄█ █░▀█ █▄█ █▄█ "
   log_raw "$COLOR_RESET"
+
+  show_log_monitoring_tips
+
   log_raw ""
   log_raw "Log directory: $JUNJO_LOG_DIR"
   log_raw "├── Main log: $JUNJO_LOG_FILE_NAME"
