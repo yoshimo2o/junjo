@@ -162,10 +162,11 @@ init_output_dir() {
   # ask user whether to overwrite the directory.
   # Existing files in the directory will be overwritten.
   if [[ -d "$JUNJO_OUTPUT_DIR" && "$(ls -A "$JUNJO_OUTPUT_DIR")" ]]; then
-    log_raw "It appears that the output directory '$JUNJO_OUTPUT_DIR' is not empty."
-    log_raw "If a file being copied or moved has the same name as one already in the directory, the existing file will be replaced."
-
-    if ! confirm "Would you like to proceed?"; then
+    if ! confirm_box \
+      "It appears that the output directory '$JUNJO_OUTPUT_DIR' is not empty." \
+      "Files computed to the same name will replace existing files in the directory." \
+      "Overwrite files when computed file names match?" \
+    ; then
       log_abort "User opted not to proceed."
       exit 1
     fi
@@ -186,7 +187,8 @@ init_output_dir() {
 
     if ! confirm_box \
      "Output directory '$JUNJO_OUTPUT_DIR' does not exist. " \
-     "Create output directory now?"; then
+     "Create output directory now?" \
+    ; then
       log_abort "User opted not to create output directory."
       exit 1
     fi
